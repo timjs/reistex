@@ -1,6 +1,9 @@
 # Mac OS X
 .DS_Store
 
+# Vim
+.swp
+
 # Default
 *.log
 *.tmp
