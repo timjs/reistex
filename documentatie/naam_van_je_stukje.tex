@@ -1,0 +1,136 @@
+% mode=reader
+\startcomponent naam_van_je_stukje
+\environment travellayout
+
+\report{Titel}{\date[d=1,m=1,y=2011]}{Naam}
+
+\section{Inleiding}
+
+Dit is een sjabloon dat je kunt gebruiken om een stukje te schijven voor het reisverslag of de reader. Vergeet niet:
+
+\startitemize
+\item De titel, datum en naam aan te passen in het \type{\report}-commando.
+\item De \type{\startcomponent}-, \type{\stopcomponent}- en \type{\environment}-regels \emph{nooit} te verwijderen!
+\item Dit bestand altijd op te slaan in \emph{Unicode/UTF-8} codering.
+\item Geen spaties te gebruiken in je bestandsnaam.
+\item Er voor te zorgen dat de naam achter \type{\startcomponent} overeenkomt met je bestandsnaam (zonder extensie).
+\stopitemize
+
+De rest van dit document bevat voorbeelden van commando's die je kunt gebruiken.\footnote{De meeste spreken voor zich.} Dit hoef je natuurlijk niet in je reisverslagstukje te laten staan. Meer informatie over de commando's in dit sjabloon kun je vinden in de handleiding.
+
+\section{Knippen en plakken}
+
+\subsection{Tekst}
+
+% Regels die beginnen met een procent-teken zijn commentaar en komen niet in je stukje terecht.
+
+\emph{Benadrukken}, \cap{KAPitalen}, \quote{aanhaling met daarbinnen een \quote{aanhaling}}, \high{hoge} en \low{lage} tekst, voetnoot\footnote{Komt onder aan de pagina.}, iets langer streepje --, puntjes\periods
+
+Alinea's worden gescheiden door een witregel. Špéçiåłe tëkèñß kün jê éénvœđïg zø ĭnŧıkkēn. Dit kan met het hele αλφαβητος, maar ook vóór bedragen €5,42 en zelfs Chinees 你好! Let verder op \%, \#, \$, \&, \{, \}, \backslash\ en $\sim$.
+
+\subsection{Opsommingen}
+
+\startitemize
+\item puntje
+\item ander puntje
+\stopitemize
+
+\startitemize[n]
+\item een
+\item twee
+\item etc.
+\stopitemize
+
+\startitemize
+\head Term
+
+Omschrijving
+
+\head Andere term
+
+Andere omschrijving
+\stopitemize
+
+\subsection{Figuren}
+
+Het figuur met een label is \in{figuur}[fig:label], hij staat op \at{pagina}[fig:label].
+
+\placefigure[][fig:label]
+  {Figuur met een label zodat je er naar kunt verwijzen (met ingestelde breedte)}
+  {\externalfigure[bestandsnaam_zonder_extensie][width=0.5\textwidth]}
+
+\placefigure
+  {Figuur zonder een label (met ingestelde hoogte)}
+  {\externalfigure[andere_bestandsnaam_zonder_extensie][height=0.1\textheight]}
+
+\subsection{Tabellen}
+
+Verwijzen gaat net zo als bij figuren en formules (zie \in{tabel}[tab:nummers]).
+
+\placetable[][tab:nummers]
+  {Even en oneven getallen}
+\starttabulate[|c|c|]
+\HL
+\NC  even  \NC  oneven  \NR
+\HL
+\NC  0     \NC  1       \NR
+\NC  2     \NC  3       \NR
+\NC  4     \NC  5       \NR
+\NC  6     \NC  7       \NR
+\NC  8     \NC  9       \NR
+\HL
+\stoptabulate
+
+\subsection{Formules}
+
+\placeformula[for:schrödinger]
+\startformula
+i\hbar \frac{\partial}{\partial t} \Psi
+= \left( -\frac{\hbar^2}{2m} \nabla^2 + \hat{V} \right) \Psi
+\stopformula
+
+De Schrödingervergelijking staat in \in{formule}[for:schrödinger]. Tijdsonafhankelijk is dit:
+\startformula
+E \psi = \left( -\frac{\hbar^2}{2m} \nabla^2 + \hat{V} \right) \psi.
+\stopformula
+
+Dit kun je natuurlijk ook schrijven als $\hat{H}\psi=E\psi$.
+
+\subsection{Afkortingen}
+
+\abbreviation{EM}{Elektromagnetisme}
+
+\EM\ beschrijft de fysica van het elektrische- en het magnetische veld. Dit staat voor \infull{EM}.
+
+\subsection{Eenheden}
+
+\startfact
+\fact plaats      \\ x \\ 13.37\Meter                \\
+\fact snelheid    \\ v \\ 10\Meter\Per\Second        \\
+\fact versnelling \\ a \\ -3\Meter\Per\Square\Second \\
+\fact tijd        \\ t \\ 42\Second                  \\
+\stopfact
+
+De elektronmassa wordt gegeven door $m_{\text{e}} = 0.510\,998\,910\,(13)\Mega\eVolt$.
+
+\section{Compileren}
+
+Je kunt je eigen stukje compileren met het commando:
+
+\starttyping
+> texexec naam_van_je_stukje.tex
+\stoptyping
+
+Je krijgt dan een mooi \cap{PDF}'je met al je tekst en plaatjes. Vergeet niet om alle plaatjes en het bestand \type{travellayout.tex} in \emph{dezelfde map} te zetten!
+
+\section{Bronnen}
+
+Zoals beschreven in \inbib[Schrödinger:1926].
+
+\startbibliography
+\item[Griffiths:2008] David J. Griffiths. \emph{Introduction to Electrodynamics}. Benjamin Cummings, San Francisco, 3rd edition, 2008.
+\item[Schrödinger:1926] Erwin Schrödinger. An Undulatory Theory of the Mechanics of Atoms and Molecules. \emph{Physical Review}, 28(6):1049--1070, 1926.
+\item \online{http://en.wikipedia.org/wiki/Electron_rest_mass}
+\stopbibliography
+
+\stopcomponent

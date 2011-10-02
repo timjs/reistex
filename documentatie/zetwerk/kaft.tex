@@ -1,0 +1,28 @@
+\startcomponent _kaft
+\product handleiding
+\environment handleidinglayout
+
+\startstandardmakeup
+
+\framed
+  [frame=off,
+   align=flushright,
+   offset=overlay]
+  {{\ss\bfc\getvalue{travellayout::lowrightwaved}{Reis\TeX en voor iedereen}}\\
+   {\ss\bf
+    \doifmode{deelnemer}{Deelnemershandleiding\\}
+    Tim Steenvoorden\\
+    \currentdate[month,year]}}
+
+\vfill
+
+\startalignment[flushright]
+  \startlines
+  Een introductie in \CONTEXT\ voor
+  reisdeelnemers en verslagleggers
+  \stoplines
+\stopalignment
+
+\stopstandardmakeup
+
+\stopcomponent

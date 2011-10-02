@@ -1,0 +1,112 @@
+\startenvironment handleidinglayout
+\enablemode[electronic]
+\environment travellayout
+
+\mainlanguage[nl]
+
+% ------------------------------------------------------------------------------
+% Definities
+% ------------------------------------------------------------------------------
+
+\starttexdefinition seedocumentation #1#2
+  \inmargin{\from[excursion] §#1\\
+            \from[manual] §#2}
+\stoptexdefinition
+
+\definetabulate[argumenttable]
+  [|lTb{.}a{.}|lT|l|]
+\definedescription[errormessage]
+  [location=serried,
+   width=fit,
+   headstyle=\tt]
+
+% ------------------------------------------------------------------------------
+% Instellingen
+% ------------------------------------------------------------------------------
+
+\setupheads
+  [sectionnumber=yes]
+
+\setupcombinedlist[content]
+  [level=subsection,
+   headnumber=yes]
+\setuplist[part]
+  [headnumber=no,
+   after={\blank[big]}]
+\setuplist[chapter]
+  [before=\blank,
+   style=\ss\bf,
+   pagenumber=no,
+   margin=0em,
+   width=2em]
+\setuplist[section]
+  [margin=2em,
+   width=3em]
+\setuplist[subsection]
+  [margin=5em,
+   width=3em]
+
+%\setupfootertexts
+  %[][{\getmarking[chapter] \quad \pagenumber}]
+  %[{\pagenumber \quad Reis\TeX en voor iedereen}][]
+
+\setupinteraction
+  [title={Reis\TeX en voor iedereen},
+   author={Tim Steenvoorden},
+   subtitle={Handleiding voor het gebruik van ConTeXt bij verslagen van de SMCR},
+   keyword={ConTeXt, TeX, SMCR, Marie Curie, reizen, verslag, reisverslag, reader, draaiboek, commando, commando's}]
+
+\setupsectionblock[backpart]
+  [page=no]% Zodat we geen extra pagina aan het einde krijgen.
+
+% ------------------------------------------------------------------------------
+% Url's TODO: BibTeX gebruiken
+% ------------------------------------------------------------------------------
+
+\useurl[excursion]
+  [http://www.pragma-ade.com][general/manuals/ms-cb-en.pdf]
+  [Excursion]
+\useurl[manual]
+  [http://www.pragma-ade.com][general/manuals/cont-eni.pdf]
+  [Manual]
+\useurl[wiki]
+  [http://wiki.contextgarden.net][Main_Page]
+  [Wiki]
+\useurl[mathalign]
+  [http://dl.contextgarden.net/myway][mathalign.pdf]
+  [Using \tex{startalign} and friends]
+\useurl[tabulating]
+  [http://www.ntg.nl/maps/22][28.pdf]
+  [Tabulating in \CONTEXT]
+\useurl[eenheden]
+  [http://www.ntg.nl/maps/21][16.pdf]
+  [Eenheid in Eenheden]
+\useurl[detexify]
+  [http://detexify.kirelabs.org][classify.html]
+  [De\TEX ify]
+
+% ------------------------------------------------------------------------------
+% Logo's, afkortingen en eenheden
+% ------------------------------------------------------------------------------
+
+\usemodule[abr-01]
+\logo[MACTEX]{Mac\TeX}
+
+\abbreviation{PDF}    {Portable Document Format}
+\abbreviation{PNG}    {Portable Network Graphics}
+\abbreviation{JPG}    {Joint Photographic experts Group}
+\abbreviation{TIFF}   {Tagged Image File Format}
+\abbreviation{EPS}    {Encapsulated PostScript}
+\abbreviation{URL}    {Uniform Resource Locator}
+
+%\unit[Point]{pt}{point}%FIXME
+\define\Point{pt}
+
+\startbuffer[example:abbreviations]
+\abbreviation{MC}   {Studievereniging Marie Curie}
+\abbreviation{FLARE}{Free-electron Laser for Advanced spectroscopy
+                     and high-Resolution Experiments}
+\stopbuffer
+\getbuffer[example:abbreviations]
+
+\stopenvironment

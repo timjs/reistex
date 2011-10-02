@@ -1,0 +1,245 @@
+\startcomponent samenvoegen
+\product        handleiding
+\environment    handleidinglayout
+
+\report[chp:samenvoegen,chp:verslag]
+  {Stukjes samenvoegen}
+  {}
+  {\getmarking[part]}
+
+\startemphasize
+We hebben nu alleen nog maar losse stukjes. Deze moeten natuurlijk gecombineerd worden tot een geheel: een document inclusief voorwoord, inhoudsopgave, colofon etc. Dit doen we met een \emph{product}. In de volgende secties maken we stap voor stap een product aan. Een compleet voorbeeld van een reisverslag kun je vinden in de mappen van de \SMCR.
+\stopemphasize
+
+\placecontent
+
+\todo{\type{\\} in secties}
+
+\section[sec:mapstructuur]{Mapstructuur}
+
+Allereerst moeten we even stilstaan bij een overzichtelijke mapstructuur. We hebben immers te maken met een tig aantal stukjes van verschillende deelnemers, die ook nog eens meerdere figuren kunnen bevatten.
+
+Figuren moeten voor \TEX\ eigenlijk in dezelfde map staan waarin ook de bron staat. Anders moeten we paden gaan specificeren. We moeten er niet alleen rekening mee houden dat we de stukjes afzonderlijk willen \TEX en. Ook als we alles samenvoegen willen we dezelfde figuren gebruiken.
+
+\CONTEXT\ heeft de mogelijkheid om mappen op te geven waarin zij naar figuren moet zoeken. In \type{travellayout} staat gedefinieerd in welke mappen \CONTEXT\ op zoek kan gaan.
+
+\startitemize
+\item figuren
+\item afbeeldingen
+\item figures
+\item images
+\stopitemize
+
+We kunnen dus figuren plaatsen in deze submappen of in mappen met die namen een niveau hoger in de mapstructuur.
+
+We kunnen nu de volgende mapstructuur opbouwen.
+\starttyping
++-- verslag/
+    +-- cultuur/
+        +-- museum.tex
+    +-- figuren/
+        +-- groep.jpg
+        +-- schilderij.png
+        +-- laser.jpg
+        +-- standbeeld.jpg
+        +-- universiteit.jpg
+    +-- fysica/
+        +-- instituut.tex
+        +-- universiteit.tex
+    +-- colofon.tex
+    +-- proloog.tex
+    +-- travellayout.tex
+    +-- verslag.tex
+\stoptyping
+
+Stel, we willen het cultuurstukje \type{museum.tex} compileren. Dit stukje maakt gebruik van de figuren \type{schilderij.png} en \type{standbeeld.jpg}. \CONTEXT\ gaat op zoek naar deze figuren. De eerste plek waar \CONTEXT\ kijkt is de map zelf. Helaas daar zijn ze niet te vinden. Stap twee is in een submap met een van de namen die we hierboven hebben opgegeven. Weer mis, die bestaan niet. Tot slot stap drie, zo'n map maar dan een hoger in de hiërarchie. Check! De map \type{verslag/figuren} bestaat! En daarin staan beide figuren die we nodig hebben.
+
+Met dezelfde redenatie kunnen we zien dat dit ook goed gaat in het geval dat we \type{proloog.tex} compileren. Wanneer deze bijvoorbeeld de afbeelding \type{groep.jpg} nodig heeft, kan \CONTEXT\ deze in stap twee al vinden.\footnote{Misschien denk je nu: maar hoe zit het dan met de omgeving: \type{travellayout}? Die staat namelijk niet in de mappen \type{cultuur/} en \type{fysica/}. Dan krijgen we toch lelijke stukjes? Nou, \CONTEXT\ zoekt inderdaad naar omgevingen in dezelfde map\seedocumentation{--}{2.4}. Wanneer zij die niet kan vinden, en gaat zij tot drie niveaus omhoog in de mapstructuur om het opnieuw te proberen.}
+
+We hebben dus een structuur gecreëerd waarin deelnemers zelf hun stukje kunnen compileren. Zij hebben hoogstwaarschijnlijk de plaatjes in dezelfde map staan. Wij kunnen hun afzonderlijke componenten compileren in deze mapstructuur en ook als we het hele verslag compileren. Maar daarvoor moeten we eerst een \emph{product} maken.
+
+\section{Producten aanmaken}
+
+Net als bij een component moeten we \CONTEXT\ eerst vertellen dat zij met een product te maken heeft\seedocumentation{--}{2.3}. We noemen het product in dit voorbeeld \emph{verslag} en slaan het op in het bestand \type{verslag.tex}. Ook willen we aangeven in welke omgeving we werken.
+
+\starttyping
+\startproduct verslag
+\environment travellayout
+
+\stopproduct
+\stoptyping
+
+\section{Taal instellen}
+
+Standaard staat \CONTEXT\ ingesteld op de Engelse taal. Dat betekend dat zij woorden op z'n Engels afbreekt, figuren \emph{figures} noemt en de inhoud \emph{content}\seedocumentation{37.11}{7.1, 7.5}. Het product dat we nu in elkaar aan het zetten zijn is echter in het Nederlands. Dit geven we aan door de \emph{hoofdtaal} te veranderen in Nederlands.
+
+\starttyping
+\mainlanguage[nl]
+\stoptyping
+
+\section{Componenten aanroepen}
+
+Binnen de \type{product} omgeving kunnen we nu de componenten aanroepen. Hier zorgt \tex{component} voor\seedocumentation{--}{2.3}. Als argument (zonder accolades) geven we de naam van een stukje op, eventueel voorafgegaan door de map waarin die staat. Zo voegen we de stukjes uit de mapstructuur van \in{sectie}[sec:mapstructuur] toe.
+
+\starttyping
+\component proloog
+\component cultuur/museum
+\component fysica/instituut
+\component fysica/universiteit
+\component colofon
+\stoptyping
+
+Dat is alles! Als we nu het bestand \type{verslag.tex} compileren, krijgen we een \PDF'je met daarin de proloog, de colofon en maar liefst drie stukjes van reisdeelnemers!
+
+\section{Inhoudsopgave en andere lijsten toevoegen}
+
+Nou ja, misschien is dat nog niet alles. We willen natuurlijk ook een inhoudsopgave\seedocumentation{22}{9.1}. Houd je vast hoor, hier komt 'ie:
+\starttyping
+\completecontent
+\stoptyping
+
+En voor een complete lijst met alle referenties kunnen we tikken (verrassing):
+\starttyping
+\completepublications
+\stoptyping
+
+In het hoogst onwaarschijnlijke geval dat je ook een lijst van figuren, tabellen, afkortingen en/of eenheden wilt hebben zijn er ook nog:\seedocumentation{24, 37.1}{9.2, 12.2}
+\starttyping
+\completelistoffigures
+\completelistoftables
+\completelistofabbreviations
+\completelistofunits
+\stoptyping
+
+Saai, maar simpel.
+
+\todo{Iets over \tex{placecontent} en familie}
+
+\section{Hoofdstukken groeperen}
+
+Zoals je weet begint elk stukje met \tex{report}. Stiekem is dit gewoon een \tex{chapter} (zie ook \in{sectie}[sec:report])\seedocumentation{5}{8.2}, vandaar dat de reisdeelnemers alleen \tex{section} en lager mogen gebruiken voor kopjes. Een niveau hoger hebben we nog een deel of \tex{part}. Die kunnen we dus gebruiken om ons verslag op te delen naar bijvoorbeeld stad of land.
+
+\starttyping
+\part{Stad}
+\stoptyping
+
+Delen beginnen altijd op een rechter pagina. Die pagina is standaard redelijk leeg. Het is een leuk idee om die op te fleuren met een leuk plaatje. Hier kun je gewoon \tex{externalfigure} voor gebruiken.
+
+\starttyping
+\externalfigure[universiteit][width=\textwidth]
+\stoptyping
+
+Als je een kleiner figuur wilt centreren op de pagina kun je dit doen met behulp van \tex{midaligned}. Met behulp van twee \tex{vfill}'s kun je de afbeelding ook verticaal centreren.
+
+\starttyping
+\vfill
+\midaligned{\externalfigure[universiteit][width=0.5\textwidth]}
+\vfill
+\stoptyping
+
+Je kunt natuurlijk ook een stukje tekst tikken, een tabel neerzetten, verzin het maar!
+
+\section{Metastructuur opgeven}
+
+Het is in boeken gebruikelijk dat de paginanummering pas begint bij het eerste hoofdstuk. De pagina's met de inhoudsopgave en proloog worden dan genummerd met Romeinse cijfers. Dit noemen we de \emph{inleidingen} of \emph{\en frontmatter}\seedocumentation{4}{8.4}. De tegenhanger, aan het einde van het boek, zijn dan de \emph{uitleidingen} of \emph{\en backmatter}. Hierin zijn de epiloog, de index en de colofon te vinden. Daartussenin vinden we dan de \emph{hoofdtekst} of \emph{\en bodymatter}, dat waar het eigenlijk om gaat.
+
+\CONTEXT\ kan ook omgaan met deze indelingen. Alle extra opmaakdetails krijg je er dan gratis bij. Bijvoorbeeld de paginanummering maar ook een anders opgemaakte colofon en toevoegingen aan de inhoudsopgave. Deze \emph{metastructuur} kunnen we aangeven met de volgende commando's.
+
+\starttyping
+\startfrontmatter
+\stopfrontmatter
+
+\startbodymatter
+\stopbodymatter
+
+\startbackmatter
+\stopbackmatter
+\stoptyping
+
+\section{\PDF\ maken}
+
+Wanneer we nu al het bovenstaande combineren krijgen we een product dat er ongeveer als volgt uit ziet.\footnote{De witregels zijn niet verplicht. Ze zijn vooral bedoeld om het overzicht te bewaren.}
+
+\starttyping
+\startproduct verslag
+\environment travellayout
+
+\mainlanguage[nl]
+
+\startfrontmatter
+\component proloog
+\completecontent
+\stopfrontmatter
+
+\startbodymatter
+\part{Stad}
+\externalfigure[universiteit][width=\textwidth]
+
+\component cultuur/museum
+\component fysica/instituut
+\component fysica/universiteit
+\stopbodymatter
+
+\startbackmatter
+\completepublications
+\component colofon
+\stopbackmatter
+
+\stopproduct
+\stoptyping
+
+Nu hoeven we in de map \type{verslag/} alleen nog het commando
+\starttyping
+texexec verslag
+\stoptyping
+uit te voeren, en we hebben een mooi verslag\seedocumentation{2}{1.4}! \CONTEXT\ berekent zelf hoe vaak hij het document moet compileren om alle verwijzingen, nummeringen en inhoud goed te krijgen. Je hoeft het commando dus maar één keer uit te voeren.
+
+\section[sec:imposition]{Boekjes maken}
+
+We hebben nu een standaard verslag op A4 formaat gebouwd. Stel nu dat we bezig waren met een reader. Die willen we het liefst als boekje hebben. Dus twee A5'jes naast elkaar op een A4'tje.
+
+Geen enkel probleem. \CONTEXT\ heeft een functie genaamd \emph{modi} of \emph{\en modes}\seedocumentation{--}{2.6}. Bij het compileren van een component of een product kunnen we \CONTEXT\ vertellen in welke modus zij onze tekst moet zetten. Hetzelfde bronbestand kan dus op verschillende manieren worden uitgevoerd.
+
+\starttabulate[|lT|p|]
+\NC a5  \NC
+    Zet het document op A5 in plaats van A4. Dit is vooral handig om te kijken hoe de pagina's van bijvoorbeeld de reader er uit komen te zien. Daarvoor zijn onderstaande twee modi minder geschikt. \NC\NR
+\NC A5  \NC
+    Zelfde als \type{a5}.  \NC\NR
+\NC sideways  \NC
+    Plaatst twee A5 pagina's naast elkaar op een A4'tje voor papier besparing. Deze impositie is puur enkelzijdig, dus hij houdt geen rekening met linker- en rechter pagina's. Vergeet niet de optie \type{--arrange} mee te geven aan \type{texexec}! Doe je dit niet, dan worden de inhoudsopgave en de verwijzingen niet gegenereerd.  \NC\NR
+\NC booklet  \NC
+    Geeft een boekje als uitvoer, zoals gewenst voor de reader en het draaiboek. Geeft als uitvoer dus twee A5 pagina's op een A4'tje maar de pagina's zijn zo geordend, dat wanneer je ze uit print je een boekje kunt vouwen. Ook hierbij geldt dat je de optie \type{--arrange} mee moet geven, wil je dat alle verwijzingen en lijsten worden gegenereerd. \NC\NR
+\stoptabulate
+
+Dus als we een boekje willen afdrukken van bovenstaand verslag, dan compileren we dit als volgt. (Let op de \type{--arrange}!)
+\starttyping
+texexec --modus=booklet --arrange verslag
+\stoptyping
+Het resultaat zijn een flink aantal liggende A4 vellen met daarop telkens twee A5 pagina's. De pagina's zijn zijn zo geordend dat als je ze dubbelzijdig afdrukt, op elkaar legt en dubbel vouwt er een boekje ontstaat. \inmargin{Let Op!} Let er bij het dubbelzijdig afdrukken op dat je bij de afdrukopties \emph{duplex: short edge} opgeeft in plaats van de standaard \emph{duplex: long edge}!
+
+\section{Conceptversies produceren}
+
+Er zijn ook nog een paar modi die handig zijn bij het nakijken van stukjes of extra informatie geven over het zetwerk dat \CONTEXT\ verricht\seedocumentation{--}{2.5}.
+
+\starttabulate[|lT|p|]
+\NC correction
+\NC Voor bij het corrigeren van ingeleverde stukjes. Zorgt voor extra witruimte tussen de regels, zodat je daar eenvoudig commentaar kunt neerkrabbelen.\footnote{Kan in de toekomst worden uitgebreid met spellingscontrole.} \NC\NR
+\NC draft
+\NC Zoals de naam al zegt, een kladversie. Deze modus geeft extra informatie over niet bestaande verwijzingen, geplaatste figuren en verkeerd uitgelijnde alinea's (zogenaamnde \quote{\en overfull boxes}) in het document zelf. \NC\NR
+\NC quick
+\NC Deze modus laadt wel de afmetingen van de figuren, maar zet ze niet in het document. Dit scheelt vaak tijd bij het zetten en de bestandsgrootte is natuurlijk een stuk kleiner. Ook wordt de lijst met publicaties niet geladen. \NC\NR
+\NC makeup
+\NC Geeft extra informatie over de opmaak. Gebruik deze mode alleen als je echt iets wilt aanpassen aan de omgeving en deze info nodig hebt.
+\NC\NR
+\NC nl
+\NC Bij het compileren van Nederlandstalige componenten willen we graag dat \CONTEXT\ weet dat het met een Nederlandse tekst te maken heeft. Het is vreemd om in elk stukje de taal (opnieuw) in te stellen. De oplossing is om deze mode te gebruiken
+\NC\NR
+\stoptabulate
+
+Je kunt ze op dezelfde manier meegeven aan \CONTEXT\ als de modi uit \in{sectie}[sec:imposition]. Het is zelfs mogelijk om ze te combineren. Voor een kladversie op A5 formaat zonder figuren tikken we
+\starttyping
+texexec --modus=a5,draft,quick verslag
+\stoptyping
+
+\stopcomponent
+

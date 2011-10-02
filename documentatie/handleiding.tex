@@ -1,0 +1,40 @@
+\startproduct handleiding
+\environment handleidinglayout
+
+\version[concept]%TODO: final!
+
+\startfrontmatter
+\component zetwerk/kaft
+\completecontent
+\component hoofdstukken/inleiding
+\stopfrontmatter
+
+\startbodymatter
+
+\part{Voor de reisdeelnemer}
+\placecontent[level=chapter]
+\component hoofdstukken/schrijven
+\component hoofdstukken/compileren
+
+\startnotmode[deelnemer]
+\part{Voor de verslaglegger}
+\placecontent[level=chapter]
+\component hoofdstukken/samenvoegen
+\component hoofdstukken/opmaken
+\stopnotmode
+
+\stopbodymatter
+
+\startappendices
+\part{Appendices}
+\placecontent[level=chapter]
+\component appendices/symbolen
+\component appendices/commandos
+\stopappendices
+
+\startbackmatter
+%\completepublications
+\component zetwerk/colofon
+\stopbackmatter%FIXME: extra page
+
+\stopproduct

@@ -1,0 +1,122 @@
+\startcomponent compileren
+\product        handleiding
+\environment    handleidinglayout
+
+\report[chp:compileren]
+  {Een document compileren}
+  {}
+  {\getmarking[part]}
+
+\startemphasize
+\stopemphasize
+
+\placecontent
+
+\section{\CONTEXT\ installeren}
+
+Op de universiteit zijn alle programma's beschikbaar om je document te compileren. Om dit ook op je eigen computer te kunnen doen, zul je \CONTEXT\ moeten installeren. Je moet daarvoor eerst een \TEX-distributie installeren. Hieronder vind je een overzichtje voor verschillende systemen.
+
+\startitemize 
+\head Microsoft Windows
+
+\MIKTEX\ is een goede keuze. Bij de installatie zal \MIKTEX\ alleen een basis hoeveelheid \TEX\ op je computer zetten. Wanneer je pakketten gebruikt die nog niet geïnstalleerd zijn, zal \MIKTEX\ die automatisch downloaden en installeren. Als alternatief kun je \TEXLIVE\ gebruiken.
+
+\head Mac OS X
+
+\MACTEX\ is verreweg het compleetst en eenvoudigst in gebruik. Stiekem is het \TEXLIVE\ speciaal voor de Mac.
+
+\head Linux
+
+\TEXLIVE\ is de beste optie. De meeste distributies bieden pakketten aan die je kunt installeren met hun pakketbeheerder. Omdat de meeste distributeurs de standaard \TEXLIVE-distributie te groot vinden, splitsen ze deze vaak op in kleinere subpakketen. Het kan zijn dat je extra pakketten moet installeren om \CONTEXT\ te kunnen gebruiken. In \in{tabel}[tab:distros] vind je een overzicht van pakketten die je nodig hebt per distributie.
+\stopitemize
+
+\placetable[][tab:distros]
+  {Te installeren pakketten per Linux distributie om \TEX\ te kunnen gebruiken}
+\starttabulate[|l|lT|]
+\HL
+\RC  Distributie    \RC  Pakketten                              \NR
+\HL
+\NC  Debian/Ubuntu  \NC  texlive, context, texlive-fonts-extra  \NR
+\NC  Fedora         \NC  texlive                                \NR
+\NC  \unknown       \NC                                         \NR
+\HL
+\stoptabulate
+
+\section{Inloggen op de universiteit}
+
+\todo{\type{ssh} uitleggen}
+
+\todo{PuTTY en XWin aanstippen}
+
+\starttyping
+> ssh lilo.science.ru.nl
+\stoptyping
+
+\type{ssh} vraagt dan naar je inlognaam en wachtwoord.\footnote{Let op! Wanneer je je wachtwoord intikt verschijnen er geen tekens op het scherm. Ook geen sterretjes of bolletjes.}
+
+\section{Met de commandoregel werken}
+
+\todo{Commando's bespreken}
+
+Naar andere map gaan (\emph{change directory}):
+\starttyping
+> cd Reisstukjes/
+\stoptyping
+
+Bestanden in de map opnoemen (\emph{list}):
+\starttyping
+> ls
+mijnstukje.tex
+travellayout.tex
+\stoptyping
+
+\todo{Woorden tellen}
+\starttyping
+> detex mijnstukje.tex | wc -w
+\stoptyping
+
+\section{Een stukje compileren}
+
+Een stukje kun je vervolgens compileren door het volgende op de commandoregel in te tikken.
+
+\starttyping
+> texexec mijnstukje.tex
+\stoptyping
+
+Na een hele berg informatie die over je scherm heen vliegt, vind je een nieuw bestand genaamd \type{mijnstukje.pdf} in je map. Zo ziet jouw document er dus uit nadat \CONTEXT\ het opgemaakt heeft!
+
+\startframedtext
+Vergeet niet om alle figuren en het bestand \type{travellayout.tex} in \emph{dezelfde map} te zetten waar je stukje staat. Doe je dit niet, dan krijg je waarschijnlijk een paar foutmeldingen, een saaie opmaak en grijze blokken waar eigenlijk jouw figuren horen te staan.
+
+Het is ook belangrijk dat je geen spaties gebruikt in de bestandsnaam, \TEX\ kan dan je stukje niet vinden. Gebruik in plaats van spaties lage streepjes (\type{_}). Het zelfde geld voor de tekst achter \tex{startcomponent}. Zet hier gewoon de bestandsnaam, maar dan zonder extensie.
+\stopframedtext
+
+%Wanneer je dit compileert krijg je een pagina met daarop de tekst \quote{Dit is een saai stukje.}. Dat is natuurlijk een beetje, tsja, saai. Het is de bedoeling dat je een leuk stukje schrijft! Hier gaan we wat aan doen.
+
+\todo{Bij andere hoofdstukken verwijderen}
+
+\todo{Bij andere secties hiernaar verwijzen}
+
+\section{Veelvoorkomende foutmeldingen}
+
+Foutmeldingen bij \TEX\ komen altijd voor. Hopelijk kun je je foutmelding terugvinden in onderstaande lijst en werkt de opgegeven oplossing. Kom je iets tegen waarvan je echt staat te kijken? Mail de cie! Als de cie een oplossing heeft gevonden, dan zal ze die toevoegen aan deze lijst.
+
+\startitemize
+\head \type{Paragraph ended before \dosplitstring was complete. l.3}
+
+Je hebt de naam van het component of product niet opgegeven aan \tex{startcomponent} of \tex{startproduct}.
+
+\head \type{TeXExec | nothing to process}
+
+Er staat een spatie in je bestandsnaam. \TEX\ kan je bestand niet vinden en kan hem dus ook niet compileren. Gebruik lage streepjes in plaats van spaties.
+\stopitemize
+
+\section{Overbodige bestanden opruimen}
+
+\todo{\type{ctxtools} uitleggen}
+
+\starttyping
+> ctxtools --purge
+\stoptyping
+
+\stopcomponent

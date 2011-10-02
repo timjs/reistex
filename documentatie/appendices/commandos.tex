@@ -1,0 +1,314 @@
+\startcomponent _commandos
+\product handleiding
+\environment handleidinglayout
+
+\chapter[app:commandos]{Commando's in La\TeX\ en Con\TeX t}
+
+\startemphasize
+Hieronder staat een overzicht van de meest gebruikte commando's in \LATEX\ in \CONTEXT. De \LATEX\ commando's staan links, rechts daarvan staan hun equivalenten in \CONTEXT.
+
+Argumenten worden, waar nodig, aangegeven met \type{...}. Bij meerdere argumenten gebruiken we namen tussen puntjes:\footnote{\TEX\ heeft al zoveel haakjes\periods} bijvoorbeeld \type{.label.} en \type{.bijschrift.}.
+
+De commando's zijn geordend onder dezelfde kopjes als in \in{hoofdstuk}[chap:stukje]. Zie de desbetreffende secties voor meer informatie.
+\stopemphasize
+
+\section{Structuur}
+
+\startsidebysidetext
+\starttyping
+\documentclass{.stijl.}
+\begin{document}
+...
+\end{document}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startcomponent .naam.
+\environment .stijl.
+...
+\stopcomponent
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\part{}
+\chapter{}
+\section{}
+\subsection{}
+\subsubsection{}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\part{}
+\chapter{}
+\section{}
+\subsection{}
+\subsubsection{}
+\stoptyping
+\stopsidebysidetext
+
+\section{Tekst}
+
+\startsidebysidetext
+\starttyping
+\emph{}
+\textsc{}
+``...''
+\footnote{}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\emph{}
+\cap{}
+\quote{...}
+\footnote{}
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\begin{quote}
+...
+\end{quote}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startquote
+...
+\stopquote
+\stoptyping
+\stopsidebysidetext
+
+\section{Opsommingen}
+
+\startsidebysidetext
+\starttyping
+\begin{itemize}
+\item .tekst.
+\end{itemize}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startitemize
+\item .tekst.
+\stopitemize
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\begin{enumerate}
+\item .tekst.
+\end{enumerate}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startitemize[n]
+\item .tekst.
+\stopitemize
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\begin{description}
+\item[.kop.]
+.tekst.
+\end{description}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startitemize
+\head .kop.
+
+.tekst.
+
+\stopitemize
+\stoptyping
+\stopsidebysidetext
+
+\section{Figuren}
+
+\startsidebysidetext
+\starttyping
+\begin{figure}
+...
+\caption{.bijschrift.}
+\label{.label.}
+\end{figure}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\placefigure[][.label.]
+  {.bijschrift.}
+  {...}
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\includegraphics
+  [width=0.5\textwidth]
+  {.bestand.}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\externalfigure
+  [.bestand.]
+  [width=0.5\textwidth]
+\stoptyping
+\stopsidebysidetext
+
+\section{Tabellen}
+
+\startsidebysidetext
+\starttyping
+\begin{table}
+...
+\caption{.bijschrift.}
+\label{.label.}
+\end{table}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\placetable[][.label.]
+  {.bijschrift.}
+  {...}
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\begin{tabulate}{ll}
+\hline
+x & y \\
+\hline
+1 & 2 \\
+2 & 4 \\
+3 & 9 \\
+\hline
+\end{tabulate}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\starttabulate[|l|l|]
+\HL
+\NC x \NC y \NR
+\HL
+\NC 1 \NC 2 \NR
+\NC 2 \NC 4 \NR
+\NC 3 \NC 9 \NR
+\HL
+\stoptabulate
+\stoptyping
+\stopsidebysidetext
+
+\section{Formules}
+
+\startsidebysidetext
+\starttyping
+\begin{equation*}
+...
+\end{equation*}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startformula
+...
+\stopformula
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\begin{equation}
+...
+\label{.label.}
+\end{equation}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\placeformula[.label.]
+\startformula
+...
+\stopformula
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\begin{eqnarray*}
+F &= m a           \\
+  &= \frac{dp}{dt} \\
+\end{eqnarray*}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startformula
+\startalign
+\NC F \NC= m a           \NR
+\NC   \NC= \frac{dp}{dt} \NR
+\stopalign
+\stopformula
+\stoptyping
+\stopsidebysidetext
+
+\section{Verwijzingen}
+
+\startsidebysidetext
+\starttyping
+\label{}
+\ref{}
+\pageref{}
+\stoptyping
+\nextsidebysidetext
+(argument bij te verwijzen object)\blank[disable]
+\starttyping
+\in[]
+\at[]
+\stoptyping
+\stopsidebysidetext
+
+\section{Synoniemen}
+
+Niet beschikbaar in standaard \LATEX. Dit is wat er het meest in de buurt komt:
+
+\startsidebysidetext
+\starttyping
+\newcommand{\MC}{\textsc{mc}}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\abbreviation{MC}{Marie Curie}
+\stoptyping
+\stopsidebysidetext
+
+
+\section{Referenties}
+
+\startsidebysidetext
+\starttyping
+\cite{.naam.}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\inbib[.naam.]
+\stoptyping
+\stopsidebysidetext
+
+\startsidebysidetext
+\starttyping
+\begin{thebibliography}
+\bibitem{.naam.} ...
+\end{thebibliography}
+\stoptyping
+\nextsidebysidetext
+\starttyping
+\startbibliography
+\item[.naam.] ...
+\stopbibliography
+\stoptyping
+\stopsidebysidetext
+
+\stopcomponent

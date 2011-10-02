@@ -1,0 +1,428 @@
+\startcomponent _symbolen
+\product handleiding
+\environment handleidinglayout
+% De tabellen in dit bestand zijn overgenomen uit ma-cb-en-math.tex en ma-cb-en-mathcharacters.tex van http://context.aanhet.net/svn/contextman/context-beginners/, waar aangegeven met aanpassingen.
+
+
+\chapter[app:symbolen]{Wiskundige symbolen}
+
+\startemphasize
+Hier vind je een overzicht van veelgebruikte wiskundige symbolen en hun commando's in \TEX. Het zijn er aardig wat, maar lang niet allemaal! Ben je op zoek naar een specifiek symbool? Kijk dan eens op \from[detexify]. Daar kun je een symbool tekenen, waarna de site het juiste \TEX-commando voor je op zoekt.\footnote{Het kan zijn dat een symbool dat je op \from[detexify] vindt niet in \CONTEXT\ beschikbaar is. Mail de cie dan even.}
+\stopemphasize
+
+\section{Griekse letters}
+
+\starttabulate[*3{|lm|l|p}|]
+\NC          \NC \alpha      \NC \tex{alpha}
+\NC          \NC \iota       \NC \tex{iota}
+\NC          \NC \varrho     \NC \tex{varrho}
+\NC\NR
+\NC          \NC \beta       \NC \tex{beta}
+\NC          \NC \kappa      \NC \tex{kappa}
+\NC \Sigma   \NC \sigma      \NC \tex{sigma}
+\NC\NR
+\NC \Gamma   \NC \gamma      \NC \tex{gamma}
+\NC \Lambda  \NC \lambda     \NC \tex{lambda}
+\NC          \NC \varsigma   \NC \tex{varsigma}
+\NC\NR
+\NC \Delta   \NC \delta      \NC \tex{delta}
+\NC          \NC \mu         \NC \tex{mu}
+\NC          \NC \tau        \NC \tex{tau}
+\NC\NR
+\NC          \NC \epsilon    \NC \tex{epsilon}
+\NC          \NC \nu         \NC \tex{nu}
+\NC \Upsilon \NC \upsilon    \NC \tex{upsilon}% Toegevoegd
+\NC\NR
+\NC          \NC \varepsilon \NC \tex{varepsilon}
+\NC \Xi      \NC \xi         \NC \tex{xi}
+\NC \Phi     \NC \phi        \NC \tex{phi}
+\NC\NR
+\NC          \NC \zeta       \NC \tex{zeta}
+\NC          \NC \omicron    \NC \tex{omicron}
+\NC          \NC \varphi     \NC \tex{varphi}
+\NC\NR
+\NC          \NC \eta        \NC \tex{eta}
+\NC \Pi      \NC \pi         \NC \tex{pi}
+\NC          \NC \chi        \NC \tex{chi}
+\NC\NR
+\NC \Theta   \NC \theta      \NC \tex{theta}
+\NC          \NC \varpi      \NC \tex{varpi}
+\NC \Psi     \NC \psi        \NC \tex{psi}
+\NC\NR
+\NC          \NC \vartheta   \NC \tex{vartheta}
+\NC          \NC \rho        \NC \tex{rho}
+\NC \Omega   \NC \omega      \NC \tex{omega}
+\NC\NR
+\stoptabulate
+
+\section{Verzamelingen}
+
+\starttabulate[*3{|lm|p}|]% Toegevoegd
+\NC \naturalnumbers \NC \tex{naturalnumbers}
+\NC \integers       \NC \tex{integers}
+\NC \rationals      \NC \tex{rationals}
+\NC\NR
+\NC \reals          \NC \tex{reals}
+\NC \complexes      \NC \tex{complexes}
+\NC \primes         \NC \tex{primes}
+\NC\NR
+\stoptabulate
+
+\section{Symbolen van variable grootte}
+
+\starttabulate[*3{|lm|p}|]% Herordend
+\NC \sum       \NC \tex{sum}
+\NC \prod      \NC \tex{prod}
+\NC \coprod    \NC \tex{coprod}
+\NC\NR
+\NC \int       \NC \tex{int}
+\NC \oint      \NC \tex{oint}
+\NC \iint      \NC \tex{iint}% Toegevoegd
+\NC\NR
+\NC \bigcup    \NC \tex{bigcup}
+\NC \bigcap    \NC \tex{bigcap}
+\NC \biguplus  \NC \tex{biguplus}
+\NC\NR
+\NC \bigodot   \NC \tex{bigodot}
+\NC \bigotimes \NC \tex{bigotimes}
+\NC \bigoplus  \NC \tex{bigoplus}
+\NC\NR
+\NC \bigvee    \NC \tex{bigvee}
+\NC \bigwedge  \NC \tex{bigwedge}
+\NC \bigsqcup  \NC \tex{bigsqcup}
+\NC\NR
+\stoptabulate
+
+\section{Standaardfuncties}
+
+\starttabulate[*8{|p}|]
+\NC \tex{arccos} \NC \tex{cos} \NC \tex{csc} \NC \tex{exp} \NC \tex{ker} \NC \tex{limsup} \NC \tex{min} \NC \tex{sinh} \NC\NR
+\NC \tex{arcsin} \NC \tex{cosh} \NC \tex{deg} \NC \tex{gcd} \NC \tex{lg} \NC \tex{ln} \NC \tex{Pr} \NC \tex{sup} \NC\NR
+\NC \tex{arctan} \NC \tex{cot} \NC \tex{det} \NC \tex{hom} \NC \tex{lim} \NC \tex{log} \NC \tex{sec} \NC \tex{tan} \NC\NR
+\NC \tex{arg} \NC \tex{coth} \NC \tex{dim} \NC \tex{inf} \NC \tex{liminf} \NC \tex{max} \NC \tex{sin} \NC \tex{tanh} \NC\NR
+\stoptabulate
+
+\section{Haakjes aanvullend op $()$, $\{\}$ en $[]$}
+
+\starttabulate[*4{|lm|p}|]% Herordend
+\NC \langle      \NC \tex{langle}      
+\NC \vert        \NC \tex{vert}        
+\NC \downarrow   \NC \tex{downarrow}   
+\NC \lfloor      \NC \tex{lfloor}      
+\NC\NR
+\NC \rangle      \NC \tex{rangle}      
+\NC \Vert        \NC \tex{Vert}        
+\NC \Downarrow   \NC \tex{Downarrow}   
+\NC \rfloor      \NC \tex{rfloor}      
+\NC\NR
+\NC /            \NC \type{/}            
+\NC \uparrow     \NC \tex{uparrow}     
+\NC \updownarrow \NC \tex{updownarrow} 
+\NC \lceil       \NC \tex{lceil}       
+\NC\NR
+\NC \backslash   \NC \tex{backslash}   
+\NC \Uparrow     \NC \tex{Uparrow}     
+\NC \Updownarrow \NC \tex{Updownarrow} 
+\NC \rceil       \NC \tex{rceil}       
+\NC\NR
+\stoptabulate
+
+\section{Speciale tekens}
+
+\starttabulate[*3{|lm|p}|]
+\NC \aleph       \NC \tex{aleph}
+\NC \prime       \NC \tex{prime}
+\NC \forall      \NC \tex{forall}
+\NC\NR
+\NC \hbar        \NC \tex{hbar}
+\NC \emptyset    \NC \tex{emptyset}
+\NC \exists      \NC \tex{exists}
+\NC\NR
+\NC \imath       \NC \tex{imath}
+\NC \nabla       \NC \tex{nabla}
+\NC \neg         \NC \tex{neg}
+\NC\NR
+\NC \jmath       \NC \tex{jmath}
+\NC \surd        \NC \tex{surd}
+\NC \flat        \NC \tex{flat}
+\NC\NR
+\NC \ell         \NC \tex{ell}
+\NC \top         \NC \tex{top}
+\NC \natural     \NC \tex{natural}
+\NC\NR
+\NC \wp          \NC \tex{wp}
+\NC \bot         \NC \tex{bot}
+\NC \sharp       \NC \tex{sharp}
+\NC\NR
+\NC \Re          \NC \tex{Re}
+\NC \Vert        \NC \tex{Vert}
+\NC \clubsuit    \NC \tex{clubsuit}
+\NC\NR
+\NC \Im          \NC \tex{Im}
+\NC \angle       \NC \tex{angle}
+\NC \diamondsuit \NC \tex{diamondsuit}
+\NC\NR
+\NC \partial     \NC \tex{partial}
+\NC \triangle    \NC \tex{triangle}
+\NC \heartsuit   \NC \tex{heartsuit}
+\NC\NR
+\NC \infty       \NC \tex{infty}
+\NC \backslash   \NC \tex{backslash}
+\NC \spadesuit   \NC \tex{spadesuit}
+\NC\NR
+\stoptabulate
+
+\section{Operatoren aanvullend op $+$, $-$ en $*$}
+
+\starttabulate[*3{|lm|p}|]
+\NC \pm              \NC \tex{pm}
+\NC \cap             \NC \tex{cap}
+\NC \vee             \NC \tex{vee}
+\NC\NR
+\NC \mp              \NC \tex{mp}
+\NC \cup             \NC \tex{cup}
+\NC \wedge           \NC \tex{wedge}
+\NC\NR
+\NC \setminus        \NC \tex{setminus}
+\NC \uplus           \NC \tex{uplus}
+\NC \oplus           \NC \tex{oplus}
+\NC\NR
+\NC \cdot            \NC \tex{cdot}
+\NC \sqcap           \NC \tex{sqcap}
+\NC \ominus          \NC \tex{ominus}
+\NC\NR
+\NC \times           \NC \tex{times}
+\NC \sqcup           \NC \tex{sqcup}
+\NC \otimes          \NC \tex{otimes}
+\NC\NR
+\NC \ast             \NC \tex{ast}
+\NC \triangleleft    \NC \tex{triangleleft}
+\NC \oslash          \NC \tex{oslash}
+\NC\NR
+\NC \star            \NC \tex{star}
+\NC \triangleright   \NC \tex{triangleright}
+\NC \odot            \NC \tex{odot}
+\NC\NR
+\NC \diamond         \NC \tex{diamond}
+\NC \wr              \NC \tex{wr}
+\NC \dagger          \NC \tex{dagger}
+\NC\NR
+\NC \circ            \NC \tex{circ}
+\NC \bigcirc         \NC \tex{bigcirc}
+\NC \ddagger         \NC \tex{ddagger}
+\NC\NR
+\NC \bullet          \NC \tex{bullet}
+\NC \bigtriangleup   \NC \tex{bigtriangleup}
+\NC \amalg           \NC \tex{amalg}
+\NC\NR
+\NC \div             \NC \tex{div}
+\NC \bigtriangledown \NC \tex{bigtriangledown}
+\NC \smallint        \NC \tex{smallint}% Toegevoegd
+\NC\NR
+\stoptabulate
+
+\section{Relaties aanvullend op $>$, $<$ en $=$}
+
+\starttabulate[*3{|lm|p}|]
+\NC \leq        \NC \tex{leq}
+\NC \geq        \NC \tex{geq}
+\NC \equiv      \NC \tex{equiv}
+\NC\NR
+\NC \prec       \NC \tex{prec}
+\NC \succ       \NC \tex{succ}
+\NC \sim        \NC \tex{sim}
+\NC\NR
+\NC \preceq     \NC \tex{preceq}
+\NC \succeq     \NC \tex{succeq}
+\NC \simeq      \NC \tex{simeq}
+\NC\NR
+\NC \ll         \NC \tex{ll}
+\NC \gg         \NC \tex{gg}
+\NC \asymp      \NC \tex{asymp}
+\NC\NR
+\NC \subset     \NC \tex{subset}
+\NC \supset     \NC \tex{supset}
+\NC \approx     \NC \tex{approx}
+\NC\NR
+\NC \subseteq   \NC \tex{subseteq}
+\NC \supseteq   \NC \tex{supseteq}
+\NC \cong       \NC \tex{cong}
+\NC\NR
+\NC \sqsubseteq \NC \tex{sqsubseteq}
+\NC \sqsupseteq \NC \tex{sqsupseteq}
+\NC \bowtie     \NC \tex{bowtie}
+\NC\NR
+\NC \in         \NC \tex{in}
+\NC \ni         \NC \tex{ni}
+\NC \propto     \NC \tex{propto}
+\NC\NR
+\NC \vdash      \NC \tex{vdash}
+\NC \dashv      \NC \tex{dashv}
+\NC \models     \NC \tex{models}
+\NC\NR
+\NC \smile      \NC \tex{smile}
+\NC \mid        \NC \tex{mid}
+\NC \doteq      \NC \tex{doteq}
+\NC\NR
+\NC \frown      \NC \tex{frown}
+\NC \parallel   \NC \tex{parallel}
+\NC \perp       \NC \tex{perp}
+\NC\NR
+\stoptabulate
+
+\section{Ontkennende relaties}
+
+\starttabulate[*3{|lm|p}|]
+\NC \not<           \NC \tex{not<}
+\NC \not>           \NC \tex{not>}
+\NC \not=           \NC \tex{not=}
+\NC\NR
+\NC \not\leq        \NC \tex{not}\tex{leq}
+\NC \not\geq        \NC \tex{not}\tex{geq}
+\NC \not\equiv      \NC \tex{not}\tex{equiv}
+\NC\NR
+\NC \not\prec       \NC \tex{not}\tex{prec}
+\NC \not\succ       \NC \tex{not}\tex{succ}
+\NC \not\sim        \NC \tex{not}\tex{sim}
+\NC\NR
+\NC \not\preceq     \NC \tex{not}\tex{preceq}
+\NC \not\succeq     \NC \tex{not}\tex{succeq}
+\NC \not\simeq      \NC \tex{not}\tex{simeq}
+\NC\NR
+\NC \not\subset     \NC \tex{not}\tex{subset}
+\NC \not\supset     \NC \tex{not}\tex{supset}
+\NC \not\approx     \NC \tex{not}\tex{approx}
+\NC\NR
+\NC \not\subseteq   \NC \tex{not}\tex{subseteq}
+\NC \not\supseteq   \NC \tex{not}\tex{supseteq}
+\NC \not\cong       \NC \tex{not}\tex{cong}
+\NC\NR
+\NC \not\sqsubseteq \NC \tex{not}\tex{sqsubseteq}
+\NC \not\sqsupseteq \NC \tex{not}\tex{sqsupseteq}
+\NC \not\asymp      \NC \tex{not}\tex{asymp}
+\NC\NR
+\stoptabulate
+
+\section{Pijlen}
+
+\starttabulate[*3{|lm|p}|]
+\NC \leftarrow          \NC \tex{leftarrow}
+\NC \longleftarrow      \NC \tex{longleftarrow}
+\NC \uparrow            \NC \tex{uparrow}
+\NC\NR
+\NC \Leftarrow          \NC \tex{Leftarrow}
+\NC \Longleftarrow      \NC \tex{Longleftarrow}
+\NC \Uparrow            \NC \tex{Uparrow}
+\NC\NR
+\NC \rightarrow         \NC \tex{rightarrow}
+\NC \longrightarrow     \NC \tex{longrightarrow}
+\NC \downarrow          \NC \tex{downarrow}
+\NC\NR
+\NC \Rightarrow         \NC \tex{Rightarrow}
+\NC \Longrightarrow     \NC \tex{Longrightarrow}
+\NC \Downarrow          \NC \tex{Downarrow}
+\NC\NR
+\NC \leftrightarrow     \NC \tex{leftrightarrow}
+\NC \longleftrightarrow \NC \tex{longleftrightarrow}
+\NC \updownarrow        \NC \tex{updownarrow}
+\NC\NR
+\NC \Leftrightarrow     \NC \tex{Leftrightarrow}
+\NC \Longleftrightarrow \NC \tex{Longleftrightarrow}
+\NC \Updownarrow        \NC \tex{Updownarrow}
+\NC\NR
+\NC \mapsto             \NC \tex{mapsto}
+\NC \longmapsto         \NC \tex{longmapsto}
+\NC \nearrow            \NC \tex{nearrow}
+\NC\NR
+\NC \hookleftarrow      \NC \tex{hookleftarrow}
+\NC \hookrightarrow     \NC \tex{hookrightarrow}
+\NC \searrow            \NC \tex{searrow}
+\NC\NR
+\NC \leftharpoonup      \NC \tex{leftharpoonup}% Toegevoegd
+\NC \rightharpoonup     \NC \tex{rightharpoonup}% Toegevoegd
+\NC \swarrow            \NC \tex{swarrow}
+\NC\NR
+\NC \leftharpoondown    \NC \tex{leftharpoondown}% Toegevoegd
+\NC \rightharpoondown   \NC \tex{rightharpoondown}% Toegevoegd
+\NC \nwarrow            \NC \tex{nwarrow}
+\NC\NR
+\stoptabulate
+
+%\starttabulate[*3{|lm|p}|]% Toegevoegd
+%\NC \twoheadleftarrow   \NC \tex{twoheadleftarrow}
+%\NC \leftleftarrows     \NC \tex{leftleftarrows}
+%\NC \upuparrows         \NC \tex{upuparrows}
+%\NC\NR
+%\NC \leftarrowtail      \NC \tex{leftarrowtail}
+%\NC \leftrightarrows    \NC \tex{leftrightarrows}
+%\NC \Lsh                \NC \tex{Lsh}
+%\NC\NR
+%\NC \twoheadrightarrow  \NC \tex{twoheadrightarrow}
+%\NC \rightrightarrows   \NC \tex{rightrightarrows}
+%\NC \downdownarrows     \NC \tex{downdownarrows}
+%\NC\NR
+%\NC \rightarrowtail     \NC \tex{rightarrowtail}
+%\NC \rightleftarrows    \NC \tex{rightleftarrows}
+%\NC \Rsh                \NC \tex{Rsh}
+%\NC\NR
+%\stoptabulate
+%\NC \leadsto            \NC \tex{leadsto}% Toegevoegd
+
+\section{Puntjes}
+
+\starttabulate[*4{|lm|p}|]% Toegevoegd
+\NC \cdots \NC \tex{cdots}
+\NC \ldots \NC \tex{ldots}
+\NC \vdots \NC \tex{vdots}
+\NC \ddots \NC \tex{ddots}
+\NC\NR
+\stoptabulate
+
+\section{Accenten}
+
+\starttabulate[*4{|lm|p}|]% Toegevoegd
+\NC \acute{a} \NC \tex{acute\{a\}}
+\NC \dot{a}   \NC \tex{dot\{a\}}
+\NC \check{a} \NC \tex{check\{a\}}
+\NC \bar{a}   \NC \tex{bar\{a\}}
+\NC\NR
+\NC \grave{a} \NC \tex{grave\{a\}}
+\NC \ddot{a}  \NC \tex{ddot\{a\}}
+\NC \hat{a}   \NC \tex{hat\{a\}}
+\NC \tilde{a} \NC \tex{tilde\{a\}}
+\NC\NR
+\NC \breve{a} \NC \tex{breve\{a\}}
+\NC \mathring{a}  \NC \tex{mathring\{a\}}
+\NC \widehat{a}   \NC \tex{widehat\{a\}}
+\NC \widetilde{a} \NC \tex{widetilde\{a\}}
+\NC\NR
+\NC \vec{a}   \NC \tex{vec\{a\}}
+\NC               \NC
+\NC               \NC
+\NC               \NC
+\NC\NR
+\stoptabulate
+\section{Alternatieve commando's}
+
+\starttabulate[*5{|lm|p}|]% Aangepast
+\NC \eq          \NC \tex{eq}
+\NC \ne          \NC \tex{ne}
+\NC \land        \NC \tex{land}
+\NC \to          \NC \tex{to}
+\NC \implies     \NC \tex{implies}
+\NC\NR
+\NC \lt          \NC \tex{lt}
+\NC \le          \NC \tex{le}
+\NC \lor         \NC \tex{lor}
+\NC \gets        \NC \tex{gets}
+\NC \iff         \NC \tex{iff}
+\NC\NR
+\NC \gt          \NC \tex{gt}
+\NC \ge          \NC \tex{ge}
+\NC \lnot        \NC \tex{lnot}
+\NC \owns        \NC \tex{owns}
+\NC \colonequals \NC \tex{colonequals}
+\NC\NR
+\stoptabulate
+
+\stopcomponent
