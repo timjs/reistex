@@ -2,7 +2,7 @@
 .DS_Store
 
 # Vim
-.swp
+*.swp
 
 # Default
 *.log
