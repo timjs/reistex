@@ -1,9 +1,26 @@
-# Ignore all
-*
-!*.tex
-*
+# Mac OS X
+.DS_Store
 
-# except TeX-files
+# Vim
+*.swp
 
-# and figures-directory
-#!figures/
+# Default
+*.log
+*.tmp
+
+# MetaPost
+*mpgraph*
+
+# ConTeXt
+*.tui
+*.tuo
+*.top
+*.toc
+
+# BibTeX
+*.aux
+*.blg
+*.bbl
+
+# Compiled
+*.pdf
