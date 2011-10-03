@@ -1,8 +1,9 @@
 # Ignore all
 *
+!*.tex
+*
 
 # except TeX-files
-!*.tex
-# and figures
-!figures/
 
+# and figures-directory
+#!figures/
