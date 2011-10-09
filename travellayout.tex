@@ -30,7 +30,7 @@
 %M
 %D \module
 %D   [file=travellayout,
-%D    version=22 sep 2011,
+%D    version=7 okt 2011,
 %D    title=Travel Layout,
 %D    subtitle=Omgeving voor reisverslagen en readers,
 %D    author=Tim Steenvoorden,
@@ -164,7 +164,7 @@
   [style=\it]
 
 \setupitemize[each]
-  [packed]
+  [packed,autointro]
   [headstyle=\ss\bf]
 
 \setupquote
@@ -402,16 +402,17 @@
   \mainlanguage[nl]
 \stopmode
 
-\startmode[booklet]
-  \setuppapersize[A5][A4,landscape]
-  \setuparranging[2UP]
-\stopmode
-
 \startmode[scenario]
   \definesymbol[1][{\symbol[square]}]
   \definesymbol[2][{\symbol[1]}]
   \definesymbol[3][{\symbol[1]}]
   \enablemode[electronic]
+\stopmode
+
+\startmode[booklet]
+  \setuppapersize[A5][A4,landscape]
+  \setuparranging[2UP]
+  \disablemode[electronic]
 \stopmode
 
 \startmode[reader,scenario,booklet] % Actief bij een van de drie
@@ -615,6 +616,9 @@ setbounds currentpicture to boundingbox OverlayBox;
 \define[1]\online
   {\useurl[online][#1]
    \goto{\url[online]}[url(#1)]}
+
+\define[1]\vec
+  {\,{\bf #1}}
 
 %D \subsection{Personalia}
 %D
