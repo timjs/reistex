@@ -128,6 +128,8 @@
    leftquotation=\upperleftdoublesixquote,
    rightquotation=\upperrightdoubleninequote]
 
+\setdigitmode 4
+
 %D \section{Korps}
 %D
 %D We gebruiken het lettertype \emph{Utopia}, ontworpen door Robert Slimbach in 1989. Sinds 2006 wordt Utopia gratis verspreid met \TEX, dus hij zou bij elke moderne \TEX-distributie te vinden moeten zijn. De belangrijkste eis is natuurlijk dat we ook wiskunde kunnen zetten. Hiervoor laden we de wiskundige symbolen van de \emph{Fourier} letter. Tot slot gebruiken we standaard \emph{Helvetica} als schreefloze aanvulling voor kopjes en andere stilistische onderdelen. Helvetica heeft standaard een iets grotere x-hoogte dan dan Utopia, dus we moeten die iets bijschalen.
@@ -400,6 +402,7 @@
 \startmode[reader,scenario]
   \setuppapersize[A5][A5]
   \mainlanguage[nl]
+  \setdigitmode 3
 \stopmode
 
 \startmode[scenario]
@@ -652,40 +655,32 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D
 %D Mocht je dit een beetje te veel van het goede vinden, bieden we de mogelijkheid van een handmatige bibliografie, zoiets als de \type{thebibliography}-omgeving in \LATEX. Citeer in dit geval de publicaties \emph{niet} met de \tex{cite}-macro, maar met \tex{inbib}. Deze oplossing is iets minder flexibel, maar heeft als voordeel dat je geen apparte bibliografie aan hoeft te maken.
 
-\defineitemgroup[bibliography]
-\setupbibliography[each]
-  [packed]
-  [symbol=n,
-   left={[},
-   right={]},
-   stopper=,
-   itemalign=flushright,%FIXME: Lijkt niet te werken
-   width=2.5em]
+\setupbibtex
+  [database=\currentcomponent]
 
-\definereferenceformat[inbib]
-  [left={[},
-   right={]}]
-
-%D TODO
-
-%\setupbibtex
-  %[database=\currentcomponent]
+\setuppublications
+  [alternative=num]
 
 \setuppublicationlayout[electronic]
   {\insertauthors{}{.\space}{}%
-   \inserttitle{\bgroup\it}{\egroup.\space}{}%
+   \inserttitle{\bgroup\em}{\egroup.\space}{}%
    \insertbiburl{}{}{}.}
 
-%D \section{Afkortingen, eenheden en \cap{url}'s}
+%D \section{Eenheden}
+
+\define[1]\unit
+  {\mathematics{\rm\,#1}}
+
+\define[2]\quantity
+  {\digits{#1}\unit{#2}}
+
+%D \section{Afkortingen en \cap{url}'s}
 %D
 %D \macros{SMCR,MC,RU,IMAPP,IMM,HFML,DI,WINST,SNUF,NNV,FOM,NIKHEF,EPS,AM,PM,BC,AD,VC}
 %D
 %D Hier definieëren we enkele veelgebruikte afkortingen en \cap{url}'s. Let er op dat de \cap{url}'s kunnen veranderen! Ook laden we een zeer nuttige module, waarmee we op een systematische manier eenheden kunnen zetten.
 
-\usemodule[units]
 \usemodule[chemic]
-\define[1]\unit
-  {{\rm \digits{#1}}}
 
 \abbreviation{SMCR}  {Stichting Marie Curie Reizen}
 \abbreviation{MC}    {Studievereniging Marie Curie}
