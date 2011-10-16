@@ -1,4 +1,3 @@
-% mode=reader
 \startcomponent naam_van_je_stukje
 \environment travellayout
 
@@ -105,13 +104,13 @@ Dit kun je natuurlijk ook schrijven als $\hat{H}\psi=E\psi$.
 \subsection{Eenheden}
 
 \startfact
-\fact plaats      \\ x \\ 13.37\Meter                \\
-\fact snelheid    \\ v \\ 10\Meter\Per\Second        \\
-\fact versnelling \\ a \\ -3\Meter\Per\Square\Second \\
-\fact tijd        \\ t \\ 42\Second                  \\
+\fact plaats      \\ x \\ \quantity{13.37}{m}     \\
+\fact snelheid    \\ v \\ \quantity{10}{m/s}      \\
+\fact versnelling \\ a \\ \quantity{-3e-3}{m/s^2} \\
+\fact tijd        \\ t \\ \quantity{42}{s}        \\
 \stopfact
 
-De elektronmassa wordt gegeven door $m_{\text{e}} = 0.510\,998\,910\,(13)\Mega\eVolt$.
+De elektronmassa wordt gegeven door $m_{\text{e}} = \quantity{0.510998910(13)}{MeV}$.
 
 \section{Compileren}
 
@@ -121,11 +120,13 @@ Je kunt je eigen stukje compileren met het commando:
 > texexec naam_van_je_stukje.tex
 \stoptyping
 
-Je krijgt dan een mooi \cap{PDF}'je met al je tekst en plaatjes. Vergeet niet om alle plaatjes en het bestand \type{travellayout.tex} in \emph{dezelfde map} te zetten!
+Je krijgt dan een mooi \PDF'je met al je tekst en plaatjes. Vergeet niet om alle plaatjes en het bestand \type{travellayout.tex} in \emph{dezelfde map} te zetten!
 
 \section{Bronnen}
 
-Zoals beschreven in \inbib[Schrödinger:1926].
+Zoals beschreven in \cite[Schrödinger:1926].
+
+\placepublications
 
 \startbibliography
 \item[Griffiths:2008] David J. Griffiths. \emph{Introduction to Electrodynamics}. Benjamin Cummings, San Francisco, 3rd edition, 2008.

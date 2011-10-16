@@ -267,12 +267,11 @@
    after=\blank]
 \setuphead[section]
   [style=\ss\bfa]
-\setuphead[subsection]
+\setuphead[subsection,subsubsecion]
   [style=\ss\bf,
    aligntitle=float]         % Zodat float's naast koppen kunnen staan.
 \setuphead[subsubsection]
-  [style=\it,
-   aligntitle=float]         % Zodat float's naast koppen kunnen staan.
+  [style=\it]
 
 %D \section{Lijsten}
 %D
@@ -603,6 +602,9 @@ setbounds currentpicture to boundingbox OverlayBox;
   {{\em #1}}
 \definestartstop[emphasize]
   [style=\em]
+
+\define[1]\alert
+  {{\bf #1}}
 
 %D \macros{online}
 %D
