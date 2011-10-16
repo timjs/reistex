@@ -324,6 +324,8 @@ Er zijn heel veel symbolen die je direct kunt gebruiken door een \backslash\ voo
 
 Heb je behoefte aan uitgebreide uitlijningsmogelijkheden of wil je je formules op een aparte manier nummeren, lees dan \from[mathalign].
 
+\subsection{Uitgebreide formules}
+
 \todo{Voorbeelden uitwerken: sub- en superscript, haakjes, matrices, cases}
 
 \startbuffer
@@ -358,6 +360,40 @@ f(x) = \startcases
 \stopbuffer
 \typebuffer
 \getbuffer
+
+\subsection{Chemische formules}
+
+Ja, ik weet het, we zijn geen scheiko's,\footnote{Net zo goed als we geen wisko's zijn.} maar soms moet je nou eenmaal een chemische formule opschrijven. De verleiding is groot dit in wiskundemodus te zetten.
+
+\startbuffer
+\startformula
+2 H_2O \rightarrow 2 H_2 + O_2
+\stopformula
+\stopbuffer
+\typebuffer
+\getbuffer
+
+Hmm, volgens mij hebben scheikundigen de letters toch liever rechtop\periods\ In \CONTEXT\ kun je een chemische formule zetten met \tex{chemical}. Om molecuulen te scheiden gebruik je komma's, de rest spreekt voor zich.
+
+\startbuffer
+\startformula
+\chemical{2H_2O,->,2H_2,+,O_2}
+\stopformula
+\stopbuffer
+\typebuffer
+\getbuffer
+
+Oeps, volgens mij is dit een evenwichtsreactie. Nog een kleine aanpassing.
+
+\startbuffer
+\startformula
+\chemical{2H_2O,<->,2H_2,+,O_2}
+\stopformula
+\stopbuffer
+\typebuffer
+\getbuffer
+
+Zo, volgens mij zijn de scheiko's nu wel tevreden! \tex{chemical} kun je ook in de lopende tekst gebruiken en ook om een enkel molecuul of ion te zetten. \type{\chemical{HSO_4^-}} geeft netjes \chemical{HSO_4^-}. Met dit commando kun je zelfs hele chemische structuren tekenen! Het gaat iets te ver dat hier ook allemaal uit te leggen, meer informatie kun je vinden in \unknown
 
 \subsection[sec:eenheden]{Eenheden}
 
