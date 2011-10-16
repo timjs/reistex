@@ -215,9 +215,9 @@ Tabellen en figuren zijn zogenaamde \emph{blokken}\seedocumentation{10}{12.2}. \
 
 Om een figuur te plaatsen gebruiken we \tex{placefigure}. Dit commando heeft maar liefst vier argumenten. Twee tussen blokhaakjes (die optioneel zijn) en twee tussen accolades.
 
-Met het eerste argument tussen blokhaakjes hoef je niets mee te doen, die kun je dus leeg laten. Het tweede argument bevat een label. Met dit label kun je later naar je figuur verwijzen. Je weet immers niet welk nummer het figuur heeft en op welke pagina die komt te staan. \CONTEXT\ zoekt dit dan automatisch voor je uit. Verzin duidelijke labels. Andere mensen vinden \quote{plaatje} of \quote{instituut} misschien ook wel een goed label en dan raakt \TEX\ in de war. Als je geen verwijzingen wilt maken, dan kun je beide rechte haakjes van \tex{placefigure} leeg laten. Meer informatie over verwijzingen vind je in \in{sectie}[sec:verwijzingen].
+Met het eerste argument tussen blokhaakjes hoef je niets mee te doen, die kun je dus leeg laten. Het tweede argument bevat een label. Met dit label kun je later naar je figuur verwijzen. Je weet immers niet welk nummer het figuur heeft en op welke pagina die komt te staan. \CONTEXT\ zoekt dit dan automatisch voor je uit. Verzin duidelijke labels! Andere mensen vinden \quote{plaatje} of \quote{instituut} misschien ook wel een goed label en dan raakt \TEX\ in de war. Als je geen verwijzingen wilt maken, dan kun je beide rechte haakjes van \tex{placefigure} leeg laten. Meer informatie over verwijzingen vind je in \in{sectie}[sec:verwijzingen].
 
-Het derde en vierde argument bevatten het bijschrift en het figuur zelf. Een figuur laden we in met \tex{externalfigure}\seedocumentation{10}{13.2 \& 13.3}. Als eerste geven we de bestandsnaam van het figuur op. Hier is dat \type{marielogo}. Hierbij hoef je \emph{geen extensie} op te geven, \CONTEXT\ zoekt zelf uit wat voor type figuur het is. Daarnaast melden we hoe groot het figuur moet zijn. In plaats van een vaste breedte of hoogte zoals $4 \Centi\Meter$ of $50 \Point$ doen we dit meestal relatief aan de breedte van het tekstvak (\tex{textwidth}) of de hoogte van het tekstvak (\tex{textheight}). Wanneer we alleen de breedte opgeven wordt de hoogte automatisch aangepast, het figuur behoud dus zijn verhouding.
+Het derde en vierde argument bevatten het bijschrift en het figuur zelf. Een figuur laden we in met \tex{externalfigure}\seedocumentation{10}{13.2 \& 13.3}. Als eerste geven we de bestandsnaam van het figuur op. Hier is dat \type{marielogo}. Hierbij hoef je \emph{geen extensie} op te geven, \CONTEXT\ zoekt zelf uit wat voor type figuur het is. Daarnaast melden we hoe groot het figuur moet zijn. In plaats van een vaste breedte of hoogte zoals \quantity{4}{cm} of \quantity{50}{pt} doen we dit meestal relatief aan de breedte van het tekstvak (\tex{textwidth}) of de hoogte van het tekstvak (\tex{textheight}). Wanneer we alleen de breedte opgeven wordt de hoogte automatisch aangepast, het figuur behoud dus zijn verhouding.
 
 Je kunt figuren inladen van de volgende formaten:\footnote{Voor de \LATEX-adepten, je hoeft ze dus niet te converteren naar \EPS!}
 
@@ -239,18 +239,18 @@ Tussen \tex{starttabulate} en \tex{stoptabulate} geef je de inhoud van de tabel.
   {Specificaties van de \quote{\infull{FLARE}} in Nijmegen}
 \starttabulate[|l|r|]
 \HL
-\NC Specification                   \NC Value                   \NR
+\NC Specification                   \NC Value                     \NR
 \HL
-\NC Spectral range                  \NC 0.1 -- 1.5 \Milli\Meter \NR
-\NC Micro-pulse frequency           \NC 3 \Giga\Hertz           \NR
-\NC Micro-pulse duration            \NC 10 -- 100 \Pico\Second  \NR
-\NC Macro-pulse duration            \NC 10 -- 15 \Micro\Second  \NR
-\NC Repetition rate of macro-pulses \NC 10 \Hertz               \NR
-\NC Electron beam energy            \NC 10 -- 15 \Mega\EVolt    \NR
-\NC Undulator period                \NC 110 \Milli\Meter        \NR
-\NC Number of undulator periods     \NC 40                      \NR
-\NC Undulator parameter Krms        \NC 0.7 -- 3.4              \NR
-\NC Optical cavity length           \NC 7.5 \Meter              \NR
+\NC Spectral range                  \NC 0.1 -- \quantity{1.5}{mm} \NR%FIXME: -- in \quantity?
+\NC Micro-pulse frequency           \NC \quantity{3}{GHz}         \NR
+\NC Micro-pulse duration            \NC 10 -- \quantity{100}{ps}  \NR
+\NC Macro-pulse duration            \NC 10 -- \quantity{15}{μs}   \NR
+\NC Repetition rate of macro-pulses \NC \quantity{10}{Hz}         \NR
+\NC Electron beam energy            \NC 10 -- \quantity{15}{MeV}  \NR
+\NC Undulator period                \NC \quantity{110}{mm}        \NR
+\NC Number of undulator periods     \NC 40                        \NR
+\NC Undulator parameter Krms        \NC 0.7 -- 3.4                \NR
+\NC Optical cavity length           \NC \quantity{7.5}{m}         \NR
 \HL
 \stoptabulate
 \stopbuffer
@@ -359,6 +359,52 @@ f(x) = \startcases
 \typebuffer
 \getbuffer
 
+\subsection[sec:eenheden]{Eenheden}
+
+Vaak zul je in je tekst natuurkundige grootheden gebruiken zoals \quantity{6,626068e-34}{m^2kg/s} en \quantity{2,99792458}{m/s}. Laten we even kijken wat er gebeurt wanneer we dit in wiskundemodus zetten.
+
+\startbuffer
+\startformulas
+\startformula
+\hbar = 6,626068\cdot10^{-34} m^2kg/s
+\stopformula
+\startformula
+c = 2,99792458 m/s
+\stopformula
+\stopformulas
+\stopbuffer
+\typebuffer
+\getbuffer
+
+Lelijk! \TeX\ maakt van de letters wiskundige symbolen: ze zijn cursief en staan een beetje uit elkaar.\footnote{Na de komma plaatst \TeX\ ook nog extra ruimte. \TeX\ is van oorsprong Amerikaans en vindt dat je een punt moet gebruiken om decimale getallen aan te geven. Een komma wordt gebruikt om elementen van verzamelingen of rijtjes te scheiden, en daar is extra ruimte fijn. Dit is natuurlijk een heikel punt voor typografiepuristen als ik.}
+
+De oplossing komt in de vorm van het commando \tex{quantity}. Je geeft het commando twee argumenten: een getal en een eenheid. \tex{quantity} zorgt dan voor twee\footnote{Twee is duidelijk het magische getal hier.} dingen: de eenheid blijft \emph{altijd} netjes rechtop en het getal wordt \emph{nooit} gescheiden van de eenheid. Dat betekend dus nooit meer een getal aan het einde van de regel en een losse \quote{m} op de volgende!
+
+Zoals je nu al vermoedt hoef je \tex{quantity} niet allen in wiskundemodus te gebruiken. Vooral de eigenschap dat getal en eenheid bij elkaar blijven zijn juist handig in de lopende tekst. Als bonus\footnote{Hier komt de magie om de hoek kijken.} kun je de handige e-syntaxis \footnote{Wel bekend van welke rekenmachine dan ook.} gebruiken om tienmachten aan te geven. Vergelijk dit met bovenstaande.
+
+\startbuffer
+\startformulas
+\startformula
+\hbar = \quantity{6,626068e-34}{m^2kg/s}
+\stopformula
+\startformula
+c = \quantity{2,99792458}{m/s}
+\stopformula
+\stopformulas
+\stopbuffer
+\typebuffer
+\getbuffer
+
+%Een speciale form van synoniemen zijn eenheden\seedocumentation{9}{--}. In \CONTEXT\ zijn een hoop eenheden voorgedefinieerd. Op deze manier kunnen we eenheden consistent zetten, zowel in de tekst als in wiskundemodus. Ook kunnen we een lijst met gebruikte eenheden generen. Alle voorgedefinieerde afkortingen kun je vinden in \from[eenheden].
+%
+%\startbuffer
+%Nu vraag je je natuurlijk af, waarom zouden we zo ingewikkeld doen? De ruimte tussen waarde en eenheid is niet altijd even groot. Het maakt uit of je in de tekst gewoon 10 cm tikt of netjes 10 \Centi\Meter. Daarbij zorgen de commando's er ook nog voor dat de regel niet ineens afgebroken wordt, zoals in de vorige zin. In wiskundemodus ziet zo'n simpele eenheid er ineens anders uit. Vergelijk $10 cm$ met $10 \Centi\Meter$.
+%\stopbuffer
+%\getbuffer
+%
+%Bovenstaande tekst is gezet met:
+%\typebuffer
+
 \section[sec:verwijzingen]{Verwijzingen}
 
 Zoals we eerder al aanstipten kun je aan tabellen, figuren en formules labels meegeven. Die labels kun je gebruiken om naar het object te verwijzen. Dit doen we met \tex{in}\seedocumentation{25}{9.5}. Wanneer we aan \tex{in} een label meegeven (tussen blokhaakjes), zoekt \CONTEXT\ op welk nummer het label heeft en wordt dat in de tekst ingevoegd. Soms wil je ook de pagina weten waarop het label staat. Dit kun je invoegen met \tex{at}.
@@ -373,13 +419,11 @@ Bovenstaande is gezet met:
 
 Je ziet dat we niet alleen het label meegeven maar ook nog een extra stukje tekst. \tex{in} en \tex{at} zorgen er voor dat de regel niet opeens afgebroken wordt tussen het woord \emph{figuur} en het nummer.
 
-\section[sec:synoniemen]{Synoniemen}
-
-\subsection{Afkortingen}
+\section[sec:synoniemen,sec:afkortingen]{Afkortingen}
 
 Fysici zijn lui. Fysici korten alles af. Het komt vaak genoeg voor dat je meerdere keren in je stukje dezelfde afkorting moet gebruiken. Pfff, en dan elke keer weer \tex{cap} gebruiken, dat is gewoon veel te veel moeite\periods
 
-Gelukkig kan \CONTEXT\ goed omgaan met \emph{synoniemen} (\emph{\en synonyms})\seedocumentation{24}{9.2}. We hoeven een afkorting maar één keer te definiëren, en daarna kun je hem steeds weer opnieuw gebruiken. We zijn er onderweg al twee tegengekomen. Namelijk \MC\ en \FLARE. Ze zijn gedefinieerd met \tex{abbreviation}.
+Gelukkig kan \CONTEXT\ goed omgaan met zogenaamde \emph{synoniemen} (\emph{\en synonyms})\seedocumentation{24}{9.2}. We hoeven een afkorting maar één keer te definiëren, en daarna kun je hem steeds weer opnieuw gebruiken. We zijn er onderweg al twee tegengekomen. Namelijk \MC\ en \FLARE. Ze zijn gedefinieerd met \tex{abbreviation}.
 
 \typebuffer[example:abbreviations]
 
@@ -414,18 +458,6 @@ In \type{travellayout.tex} hebben we een paar extra afkortingen voorgedefinieerd
 \item \BC
 \item \AD
 \stopitemize
-
-\subsection[sec:eenheden]{Eenheden}
-
-Een speciale form van synoniemen zijn eenheden\seedocumentation{9}{--}. In \CONTEXT\ zijn een hoop eenheden voorgedefinieerd. Op deze manier kunnen we eenheden consistent zetten, zowel in de tekst als in wiskundemodus. Ook kunnen we een lijst met gebruikte eenheden generen. Alle voorgedefinieerde afkortingen kun je vinden in \from[eenheden].
-
-\startbuffer
-Nu vraag je je natuurlijk af, waarom zouden we zo ingewikkeld doen? De ruimte tussen waarde en eenheid is niet altijd even groot. Het maakt uit of je in de tekst gewoon 10 cm tikt of netjes 10 \Centi\Meter. Daarbij zorgen de commando's er ook nog voor dat de regel niet ineens afgebroken wordt, zoals in de vorige zin. In wiskundemodus ziet zo'n simpele eenheid er ineens anders uit. Vergelijk $10 cm$ met $10 \Centi\Meter$.
-\stopbuffer
-\getbuffer
-
-Bovenstaande tekst is gezet met:
-\typebuffer
 
 \section[sec:publicaties]{Referenties}
 
