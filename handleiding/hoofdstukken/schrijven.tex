@@ -234,6 +234,8 @@ Tabellen in \TEX\ zijn iets ingewikkelder. In \CONTEXT\ maak je een tabel met \t
 
 Tussen \tex{starttabulate} en \tex{stoptabulate} geef je de inhoud van de tabel. Een nieuwe kolom begin je met \tex{NC} ({\en New Column}). Een nieuwe rij met \tex{NR} ({\en New Row}). Je kunt ook horizontale lijnen trekken met \tex{HL} ({\en Horizontal Line}). Een eenvoudige tabel met twee kolommen, de eerste links uitgelijnd en de tweede rechts, ziet er dan als volgt uit.\footnote{Voor meer info over de eenheden in de tweede kolom zie \in{sectie}[sec:eenheden].}
 
+\todo{-- in \tex{quantity}?}
+
 \startbuffer
 \placetable[][tab:flarespecs]
   {Specificaties van de \quote{\infull{FLARE}} in Nijmegen}
@@ -241,7 +243,7 @@ Tussen \tex{starttabulate} en \tex{stoptabulate} geef je de inhoud van de tabel.
 \HL
 \NC Specification                   \NC Value                     \NR
 \HL
-\NC Spectral range                  \NC 0.1 -- \quantity{1.5}{mm} \NR%FIXME: -- in \quantity?
+\NC Spectral range                  \NC 0.1 -- \quantity{1.5}{mm} \NR
 \NC Micro-pulse frequency           \NC \quantity{3}{GHz}         \NR
 \NC Micro-pulse duration            \NC 10 -- \quantity{100}{ps}  \NR
 \NC Macro-pulse duration            \NC 10 -- \quantity{15}{μs}   \NR
@@ -412,7 +414,7 @@ c = 2,99792458 m/s
 \typebuffer
 \getbuffer
 
-Lelijk! \TeX\ maakt van de letters wiskundige symbolen: ze zijn cursief en staan een beetje uit elkaar.\footnote{Na de komma plaatst \TeX\ ook nog extra ruimte. \TeX\ is van oorsprong Amerikaans en vindt dat je een punt moet gebruiken om decimale getallen aan te geven. Een komma wordt gebruikt om elementen van verzamelingen of rijtjes te scheiden, en daar is extra ruimte fijn. Dit is natuurlijk een heikel punt voor typografiepuristen als ik.}
+Lelijk! \TEX\ maakt van de letters wiskundige symbolen: ze zijn cursief en staan een beetje uit elkaar.\footnote{Na de komma plaatst \TEX\ ook nog extra ruimte. \TEX\ is van oorsprong Amerikaans en vindt dat je een punt moet gebruiken om decimale getallen aan te geven. Een komma wordt gebruikt om elementen van verzamelingen of rijtjes te scheiden, en daar is extra ruimte fijn. Dit is natuurlijk een heikel punt voor typografiepuristen als ik.}
 
 De oplossing komt in de vorm van het commando \tex{quantity}. Je geeft het commando twee argumenten: een getal en een eenheid. \tex{quantity} zorgt dan voor twee\footnote{Twee is duidelijk het magische getal hier.} dingen: de eenheid blijft \emph{altijd} netjes rechtop en het getal wordt \emph{nooit} gescheiden van de eenheid. Dat betekend dus nooit meer een getal aan het einde van de regel en een losse \quote{m} op de volgende!
 
@@ -497,24 +499,78 @@ In \type{travellayout.tex} hebben we een paar extra afkortingen voorgedefinieerd
 
 \section[sec:publicaties]{Referenties}
 
-Het is de bedoeling dat je je bronnen netjes opgeeft. Dit zul je met je bachelor- en masterstage ook moeten doen, dus kun je er nu net zo goed meteen mee oefenen.
+Je bronnen bijhouden tijdens het schrijven van een stukje kan een hel zijn. Welke bronnen heb ik allemaal gebruikt? Waar stond dit ook al weer in? Hoe moet ik precies verwijzen? Hoe moet ik mijn bronnen opgeven? Een veelgebruikte oplossing in combinatie met \TEX\ is Bib\TEX.\footnote{Goh, waar zou de naam vandaan komen?}
 
-De bronnen die je hebt gebruikt plaats je in een bibliografie aan het einde van je stukje tussen \tex{startbibliography} en \tex{stopbibliography}. Net als bij opsommingen wordt elk onderdeel voorafgegaan met \tex{item}. Natuurlijk is het handig als je naar je bronnen kunt verwijzen. Aan \tex{item} kun je (net als bij figuren en tabellen) een label toevoegen. Je kunt er dan naar verwijzen met \tex{inbib}.
+Met Bib\TEX\ kun je een database bijhouden van al je bronnen, aan elke bron een label toekennen en met dat label naar je bronnen verwijzen. Ook helpt Bib\TEX\ bij het opmaken van al je gebruikte bronnen aan het einde van je tekst.
 
-\startbuffer
-Bron \inbib[Schrödinger:1926] is het artikel van Erwin Schrödinger waarin hij de Schrödingervergelijking introduceert.
+Een Bib\TEX\ database is platte tekst in een bestand eindigend op \type{.bib}. De database bestaat uit bronnen van een bepaald type, \emph{\en entries} genaamd, met daarin alle gegevens van de bron, de \emph{\en fields}. \cite[title][Griffiths:2008] van \cite[author][Griffiths:2008] geef je bijvoorbeeld zo op.
 
-\startbibliography
-\item[Griffiths:2008] David J. Griffiths. \emph{Introduction to Electrodynamics}. Benjamin Cummings, San Francisco, 3rd edition, 2008.
-\item[Schrödinger:1926] Erwin Schrödinger. An Undulatory Theory of the Mechanics of Atoms and Molecules. \emph{Physical Review}, 28(6):1049--1070, 1926.
-\item \online{http://en.wikipedia.org/wiki/Electron_rest_mass}
-\stopbibliography
-\stopbuffer
-\typebuffer
+\todo{Kommas!}
 
-\getbuffer
+\starttyping
+@book{Griffiths:2008,
+	author    = {David J. Griffiths},
+	title     = {Introduction to Electrodynamics},
+	publisher = {Benjamin Cummings},
+	year      = {2008},
+	address   = {San Francisco},
+	edition   = {3},
+}
+\stoptyping
 
-\todo{Bib\TEX}
+Dit is een entry van het type \type{book}, wat we opgeven achter het apenstaartje. \type{Griffiths:2008} is het label waarmee we naar deze entry kunnen verwijzen. De overige regels bestaan uit velden met een naam en hun waarde tussen accolades. Wil je verwijzen naar een bepaald hoofdstuk in een boek of bepaalde pagina's, dan kun je het type \type{inbook} gebruiken.
+
+\starttyping
+@book{Kuhn:2004,
+  author    = {Kuhn, K.F. and Koupelis, T.},
+  title     = {In quest of the universe},
+  chapter   = {4},
+  publisher = {Jones and Bartlett Publishers},
+  year      = {2004},
+}
+\stoptyping
+
+Hier zie je dat, wanneer een boek meerdere auteurs heeft, je die opgeeft in \emph{hetzelfde} veld gescheiden door \type{and}. Verder maakt het niet uit of je de volledige namen van de auteurs kent of niet. Ook kun je eerst de achternaam opgeven en daarna de initialen of voornamen, zolang er maar een komma tussen staat.
+
+Natuurlijk wil je niet alleen maar naar boeken kunnen verwijzen. Een artikel begint met \type{@article}.
+
+\starttyping
+@article{Schrodinger:1926,
+	author  = {Erwin Schr\"odinger},
+	title   = {An Undulatory Theory fo the Mechanics of Atoms and Molecules},
+	journal = {Physical Review},
+	year    = {1926},
+	volume  = {28},
+	number  = {6},
+	pages   = {1049--1070},
+	month   = {dec}
+}
+\stoptyping
+
+Er zijn nog veel meer \emph{\en entry types} en \emph{field names}. Een overzicht kun je vinden in \in{appendix}[app:bibtex]. Bij bepaalde typen zijn sommige velden verplicht en andere niet. Dit verschilt per type. Let hier op.
+
+Om te verwijzen naar een bron uit je Bib\TEX\ database gebruik je \tex{cite}. In zijn simpelste form geef je \tex{cite} het label van je bron. De rest doet \TEX.
+
+\todo{Verwijzen naar excursie en reference}
+
+\todo{\tex{placepublications}}
+
+%Het is de bedoeling dat je je bronnen netjes opgeeft. Dit zul je met je bachelor- en masterstage ook moeten doen, dus kun je er nu net zo goed meteen mee oefenen.
+%
+%De bronnen die je hebt gebruikt plaats je in een bibliografie aan het einde van je stukje tussen \tex{startbibliography} en \tex{stopbibliography}. Net als bij opsommingen wordt elk onderdeel voorafgegaan met \tex{item}. Natuurlijk is het handig als je naar je bronnen kunt verwijzen. Aan \tex{item} kun je (net als bij figuren en tabellen) een label toevoegen. Je kunt er dan naar verwijzen met \tex{inbib}.
+%
+%\startbuffer
+%Bron \inbib[Schrödinger:1926] is het artikel van Erwin Schrödinger waarin hij de Schrödingervergelijking introduceert.
+%
+%\startbibliography
+%\item[Griffiths:2008] David J. Griffiths. \emph{Introduction to Electrodynamics}. Benjamin Cummings, San Francisco, 3rd edition, 2008.
+%\item[Schrödinger:1926] Erwin Schrödinger. An Undulatory Theory of the Mechanics of Atoms and Molecules. \emph{Physical Review}, 28(6):1049--1070, 1926.
+%\item \online{http://en.wikipedia.org/wiki/Electron_rest_mass}
+%\stopbibliography
+%\stopbuffer
+%\typebuffer
+%
+%\getbuffer
 
 \stopcomponent
 
