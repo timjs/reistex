@@ -15,6 +15,8 @@ In dit hoofdstuk geven we een overzicht van de meest gebruikte commando's van \C
 
 \placecontent
 
+\todo{Tekstbewerker <> Tekstverwerker}
+
 \setupheadnumber[section][-1]
 \section[sec:commandos]{Commando's}
 
@@ -234,8 +236,6 @@ Tabellen in \TEX\ zijn iets ingewikkelder. In \CONTEXT\ maak je een tabel met \t
 
 Tussen \tex{starttabulate} en \tex{stoptabulate} geef je de inhoud van de tabel. Een nieuwe kolom begin je met \tex{NC} ({\en New Column}). Een nieuwe rij met \tex{NR} ({\en New Row}). Je kunt ook horizontale lijnen trekken met \tex{HL} ({\en Horizontal Line}). Een eenvoudige tabel met twee kolommen, de eerste links uitgelijnd en de tweede rechts, ziet er dan als volgt uit.\footnote{Voor meer info over de eenheden in de tweede kolom zie \in{sectie}[sec:eenheden].}
 
-\todo{-- in \tex{quantity}?}
-
 \startbuffer
 \placetable[][tab:flarespecs]
   {Specificaties van de \quote{\infull{FLARE}} in Nijmegen}
@@ -243,15 +243,15 @@ Tussen \tex{starttabulate} en \tex{stoptabulate} geef je de inhoud van de tabel.
 \HL
 \NC Specification                   \NC Value                     \NR
 \HL
-\NC Spectral range                  \NC 0.1 -- \quantity{1.5}{mm} \NR
+\NC Spectral range                  \NC \quantity{0.1 -- 1.5}{mm} \NR
 \NC Micro-pulse frequency           \NC \quantity{3}{GHz}         \NR
-\NC Micro-pulse duration            \NC 10 -- \quantity{100}{ps}  \NR
-\NC Macro-pulse duration            \NC 10 -- \quantity{15}{μs}   \NR
+\NC Micro-pulse duration            \NC \quantity{10 -- 100}{ps}  \NR
+\NC Macro-pulse duration            \NC \quantity{10 -- 15}{μs}   \NR
 \NC Repetition rate of macro-pulses \NC \quantity{10}{Hz}         \NR
-\NC Electron beam energy            \NC 10 -- \quantity{15}{MeV}  \NR
+\NC Electron beam energy            \NC \quantity{10 -- 15}{MeV}  \NR
 \NC Undulator period                \NC \quantity{110}{mm}        \NR
-\NC Number of undulator periods     \NC 40                        \NR
-\NC Undulator parameter Krms        \NC 0.7 -- 3.4                \NR
+\NC Number of undulator periods     \NC \quantity{40}{}           \NR
+\NC Undulator parameter Krms        \NC \quantity{0.7 -- 3.4}{}   \NR
 \NC Optical cavity length           \NC \quantity{7.5}{m}         \NR
 \HL
 \stoptabulate
@@ -365,7 +365,7 @@ f(x) = \startcases
 
 \subsection{Chemische formules}
 
-Ja, ik weet het, we zijn geen scheiko's,\footnote{Net zo goed als we geen wisko's zijn.} maar soms moet je nou eenmaal een chemische formule opschrijven. De verleiding is groot dit in wiskundemodus te zetten.
+Ja, ik weet het, je bent geen scheiko,\footnote{Net zo goed als je geen wisko bent.} maar soms moet je nou eenmaal een chemische formule opschrijven. De verleiding is groot dit in wiskundemodus te zetten.
 
 \startbuffer
 \startformula
@@ -375,7 +375,7 @@ Ja, ik weet het, we zijn geen scheiko's,\footnote{Net zo goed als we geen wisko'
 \typebuffer
 \getbuffer
 
-Hmm, volgens mij hebben scheikundigen de letters toch liever rechtop\periods\ In \CONTEXT\ kun je een chemische formule zetten met \tex{chemical}. Om molecuulen te scheiden gebruik je komma's, de rest spreekt voor zich.
+Hmm, volgens mij hebben scheikundigen de letters toch liever rechtop\periods\ In \CONTEXT\ kun je een chemische formule zetten met \tex{chemical}. Om moleculen te scheiden gebruik je komma's, de rest spreekt voor zich.
 
 \startbuffer
 \startformula
@@ -395,7 +395,7 @@ Oeps, volgens mij is dit een evenwichtsreactie. Nog een kleine aanpassing.
 \typebuffer
 \getbuffer
 
-Zo, volgens mij zijn de scheiko's nu wel tevreden! \tex{chemical} kun je ook in de lopende tekst gebruiken en ook om een enkel molecuul of ion te zetten. \type{\chemical{HSO_4^-}} geeft netjes \chemical{HSO_4^-}. Met dit commando kun je zelfs hele chemische structuren tekenen! Het gaat iets te ver dat hier ook allemaal uit te leggen, meer informatie kun je vinden in \unknown
+Volgens mij zijn de scheiko's nu wel tevreden! \tex{chemical} kun je ook in de lopende tekst gebruiken en ook om een enkel molecuul of ion te zetten. \type{\chemical{C_2O_4^{2-}}} geeft netjes \chemical{C_2O_4^{2-}}. Met dit commando kun je zelfs hele chemische structuren tekenen! Het gaat iets te ver dat hier ook allemaal uit te leggen, meer informatie kun je vinden in \unknown
 
 \subsection[sec:eenheden]{Eenheden}
 
@@ -418,7 +418,7 @@ Lelijk! \TEX\ maakt van de letters wiskundige symbolen: ze zijn cursief en staan
 
 De oplossing komt in de vorm van het commando \tex{quantity}. Je geeft het commando twee argumenten: een getal en een eenheid. \tex{quantity} zorgt dan voor twee\footnote{Twee is duidelijk het magische getal hier.} dingen: de eenheid blijft \emph{altijd} netjes rechtop en het getal wordt \emph{nooit} gescheiden van de eenheid. Dat betekend dus nooit meer een getal aan het einde van de regel en een losse \quote{m} op de volgende!
 
-Zoals je nu al vermoedt hoef je \tex{quantity} niet allen in wiskundemodus te gebruiken. Vooral de eigenschap dat getal en eenheid bij elkaar blijven zijn juist handig in de lopende tekst. Als bonus\footnote{Hier komt de magie om de hoek kijken.} kun je de handige e-syntaxis \footnote{Wel bekend van welke rekenmachine dan ook.} gebruiken om tienmachten aan te geven. Vergelijk dit met bovenstaande.
+Zoals je nu al vermoedt hoef je \tex{quantity} niet allen in wiskundemodus te gebruiken. Vooral de eigenschap dat getal en eenheid bij elkaar blijven zijn juist handig in de lopende tekst. Als bonus\footnote{Hier komt de magie om de hoek kijken.} kun je de handige \cap{e}-syntaxis \footnote{Wel bekend van welke rekenmachine dan ook.} gebruiken om tienmachten aan te geven. Vergelijk dit met bovenstaande.
 
 \startbuffer
 \startformulas
@@ -434,12 +434,12 @@ c = \quantity{2,99792458}{m/s}
 \getbuffer
 
 %Een speciale form van synoniemen zijn eenheden\seedocumentation{9}{--}. In \CONTEXT\ zijn een hoop eenheden voorgedefinieerd. Op deze manier kunnen we eenheden consistent zetten, zowel in de tekst als in wiskundemodus. Ook kunnen we een lijst met gebruikte eenheden generen. Alle voorgedefinieerde afkortingen kun je vinden in \from[eenheden].
-%
+
 %\startbuffer
 %Nu vraag je je natuurlijk af, waarom zouden we zo ingewikkeld doen? De ruimte tussen waarde en eenheid is niet altijd even groot. Het maakt uit of je in de tekst gewoon 10 cm tikt of netjes 10 \Centi\Meter. Daarbij zorgen de commando's er ook nog voor dat de regel niet ineens afgebroken wordt, zoals in de vorige zin. In wiskundemodus ziet zo'n simpele eenheid er ineens anders uit. Vergelijk $10 cm$ met $10 \Centi\Meter$.
 %\stopbuffer
 %\getbuffer
-%
+
 %Bovenstaande tekst is gezet met:
 %\typebuffer
 
@@ -499,71 +499,87 @@ In \type{travellayout.tex} hebben we een paar extra afkortingen voorgedefinieerd
 
 \section[sec:publicaties]{Referenties}
 
-Je bronnen bijhouden tijdens het schrijven van een stukje kan een hel zijn. Welke bronnen heb ik allemaal gebruikt? Waar stond dit ook al weer in? Hoe moet ik precies verwijzen? Hoe moet ik mijn bronnen opgeven? Een veelgebruikte oplossing in combinatie met \TEX\ is Bib\TEX.\footnote{Goh, waar zou de naam vandaan komen?}
+Je bronnen bijhouden tijdens het schrijven van een stukje kan een hel zijn. Welke bronnen heb ik allemaal gebruikt? Hoe moet ik precies verwijzen? Hoe moet ik mijn bronnen opgeven? Et cetera. Een veelgebruikte oplossing in combinatie met \TEX\ is \BIBTEX.\footnote{Goh, waar zou de naam toch vandaan komen?}
 
-Met Bib\TEX\ kun je een database bijhouden van al je bronnen, aan elke bron een label toekennen en met dat label naar je bronnen verwijzen. Ook helpt Bib\TEX\ bij het opmaken van al je gebruikte bronnen aan het einde van je tekst.
+Met \BIBTEX\ kun je een database bijhouden van al je bronnen, aan elke bron een label toekennen en met dat label naar je bron verwijzen. Ook helpt \BIBTEX\ bij het opmaken van al je gebruikte bronnen aan het einde van je tekst.\footnote{Drie hoeraatjes voor \BIBTEX! Hoera! Hoera! Hoera!}
 
-Een Bib\TEX\ database is platte tekst in een bestand eindigend op \type{.bib}. De database bestaat uit bronnen van een bepaald type, \emph{\en entries} genaamd, met daarin alle gegevens van de bron, de \emph{\en fields}. \cite[title][Griffiths:2008] van \cite[author][Griffiths:2008] geef je bijvoorbeeld zo op.
-
-\todo{Kommas!}
+Een \BIBTEX-database is platte tekst in een bestand eindigend op \type{.bib}. De database bestaat uit bronnen (\emph{\en entries} genaamd) van een bepaald type met daarin alle gegevens van de bron in velden (\emph{\en fields}). \emph{Introduction to Electrodynamics} van Griffiths geef je bijvoorbeeld zo op.
 
 \starttyping
 @book{Griffiths:2008,
-	author    = {David J. Griffiths},
-	title     = {Introduction to Electrodynamics},
-	publisher = {Benjamin Cummings},
-	year      = {2008},
-	address   = {San Francisco},
-	edition   = {3},
+  author    = {David J. Griffiths},
+  title     = {Introduction to Electrodynamics},
+  publisher = {Benjamin Cummings},
+  address   = {San Francisco},
+  edition   = {3},
+  year      = {2008},
 }
 \stoptyping
 
-Dit is een entry van het type \type{book}, wat we opgeven achter het apenstaartje. \type{Griffiths:2008} is het label waarmee we naar deze entry kunnen verwijzen. De overige regels bestaan uit velden met een naam en hun waarde tussen accolades. Wil je verwijzen naar een bepaald hoofdstuk in een boek of bepaalde pagina's, dan kun je het type \type{inbook} gebruiken.
+Dit is een bron van het type \type{book}, wat we opgeven achter het apenstaartje. \type{Griffiths:2008} is het label waarmee we naar deze bron kunnen verwijzen. De overige regels bestaan uit velden met hun waarde tussen accolades. Let op de komma's aan het eind van elk veld!\footnote{De komma achter het laatste veld is niet verplicht, maar aangezien je ze anders toch vergeet\periods}
+
+Wil je verwijzen naar een bepaald hoofdstuk of bepaalde pagina's in een boek, dan kun je het type \type{inbook} gebruiken.
 
 \starttyping
-@book{Kuhn:2004,
+@inbook{Kuhn:2004,
   author    = {Kuhn, K.F. and Koupelis, T.},
   title     = {In quest of the universe},
-  chapter   = {4},
   publisher = {Jones and Bartlett Publishers},
+  adress    = {Sudbury, Massachusetts},
   year      = {2004},
+  chapter   = {4},
 }
 \stoptyping
 
 Hier zie je dat, wanneer een boek meerdere auteurs heeft, je die opgeeft in \emph{hetzelfde} veld gescheiden door \type{and}. Verder maakt het niet uit of je de volledige namen van de auteurs kent of niet. Ook kun je eerst de achternaam opgeven en daarna de initialen of voornamen, zolang er maar een komma tussen staat.
 
-Natuurlijk wil je niet alleen maar naar boeken kunnen verwijzen. Een artikel begint met \type{@article}.
+Natuurlijk wil je niet alleen naar boeken kunnen verwijzen. Er zijn nog veel meer types. Een voorbeeldje van een artikel en een webpagina.
 
 \starttyping
 @article{Schrodinger:1926,
-	author  = {Erwin Schr\"odinger},
-	title   = {An Undulatory Theory fo the Mechanics of Atoms and Molecules},
-	journal = {Physical Review},
-	year    = {1926},
-	volume  = {28},
-	number  = {6},
-	pages   = {1049--1070},
-	month   = {dec}
+  author  = {Erwin Schr\"odinger},
+  title   = {An Undulatory Theory of the Mechanics
+             of Atoms and Molecules},
+  journal = {Physical Review},
+  year    = {1926},
+  volume  = {28},
+  number  = {6},
+  pages   = {1049--1070},
+  month   = {dec},
+}
+
+@electronic{Wikipedia:Electronmass,
+  author = {Wikipedia},
+  title  = {Electron rest mass},
+  url    = {http://en.wikipedia.org/wiki/Electron_rest_mass},
 }
 \stoptyping
 
-Er zijn nog veel meer \emph{\en entry types} en \emph{field names}. Een overzicht kun je vinden in \in{appendix}[app:bibtex]. Bij bepaalde typen zijn sommige velden verplicht en andere niet. Dit verschilt per type. Let hier op.
+Sommige velden zijn verplicht bij bepaalde types, maar niet bij andere. Een overzicht van alle types en hun verplichte en optionele velden kun je vinden op \online{http://en.wikipedia.org/wiki/BibTeX}% Een overzicht kun je vinden in \in{appendix}[app:bibtex].
 
-Om te verwijzen naar een bron uit je Bib\TEX\ database gebruik je \tex{cite}. In zijn simpelste form geef je \tex{cite} het label van je bron. De rest doet \TEX.
+Sites als Google Books en Picarta kunnen bibliografie informatie exporteren naar \BIBTEX-formaat. Meestal hoef je bovenstaande niet eens zelf te tikken maar kun je het simpelweg kopiëren en plakken in jouw database.
+
+Om te verwijzen naar een bron uit je \BIBTEX\ database gebruik je \tex{cite}. In zijn simpelste form geef je \tex{cite} het label van je bron tussen blokhaken, bijvoorbeeld \type{\cite[Griffiths:2008]}. Dit geeft \cite[Griffiths:2008]. \tex{cite} is ook een uitgebreid commando, meer info over bibliografieën kun je vinden op \from[bibman].
+
+\BIBTEX\ nummert al je bronnen en zet ze, zoals gebruikelijk binnen de natuurkunde, tussen blokhaken. Het enige dat jij nog moet doen is \tex{placepublications} aan het einde van je stukje te zetten!
+
+\subsubject{Bronnen}
+
+\nocite[Schrodinger:1926]
+\nocite[Kuhn:2004]
+\nocite[Wikipedia:Electronmass]
+\placepublications
+
 
 \todo{Lege bronnen? => Verkeerd gespelde labels}
 
-\todo{Verwijzen naar excursie en reference}
-
-\todo{\tex{placepublications}}
-
 %Het is de bedoeling dat je je bronnen netjes opgeeft. Dit zul je met je bachelor- en masterstage ook moeten doen, dus kun je er nu net zo goed meteen mee oefenen.
-%
+
 %De bronnen die je hebt gebruikt plaats je in een bibliografie aan het einde van je stukje tussen \tex{startbibliography} en \tex{stopbibliography}. Net als bij opsommingen wordt elk onderdeel voorafgegaan met \tex{item}. Natuurlijk is het handig als je naar je bronnen kunt verwijzen. Aan \tex{item} kun je (net als bij figuren en tabellen) een label toevoegen. Je kunt er dan naar verwijzen met \tex{inbib}.
-%
+
 %\startbuffer
 %Bron \inbib[Schrödinger:1926] is het artikel van Erwin Schrödinger waarin hij de Schrödingervergelijking introduceert.
-%
+
 %\startbibliography
 %\item[Griffiths:2008] David J. Griffiths. \emph{Introduction to Electrodynamics}. Benjamin Cummings, San Francisco, 3rd edition, 2008.
 %\item[Schrödinger:1926] Erwin Schrödinger. An Undulatory Theory of the Mechanics of Atoms and Molecules. \emph{Physical Review}, 28(6):1049--1070, 1926.
@@ -571,7 +587,7 @@ Om te verwijzen naar een bron uit je Bib\TEX\ database gebruik je \tex{cite}. In
 %\stopbibliography
 %\stopbuffer
 %\typebuffer
-%
+
 %\getbuffer
 
 \stopcomponent
