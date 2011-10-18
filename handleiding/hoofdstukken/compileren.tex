@@ -34,11 +34,14 @@ Op de universiteit zijn alle programma's beschikbaar om je document te compilere
   {Te installeren pakketten per Linux distributie om \TEX\ te kunnen gebruiken}
 \starttabulate[|l|lT|]
 \HL
-\RC  Distributie    \RC  Pakketten                              \NR
+\RC  Distributie    \RC  Pakketten                   \NR
 \HL
-\NC  Debian/Ubuntu  \NC  texlive, context, texlive-fonts-extra  \NR
-\NC  Fedora         \NC  texlive                                \NR
-\NC  \unknown       \NC                                         \NR
+\NC  Debian/Ubuntu  \NC  texlive,
+                         context,
+                         texlive-fonts-recommended,
+                         texlive-fonts-extra         \NR
+\NC  Fedora         \NC  texlive                     \NR
+\NC  \unknown       \NC                              \NR
 \HL
 \stoptabulate
 
@@ -109,6 +112,18 @@ Je hebt de naam van het component of product niet opgegeven aan \tex{startcompon
 \head \type{TeXExec | nothing to process}
 
 Er staat een spatie in je bestandsnaam. \TEX\ kan je bestand niet vinden en kan hem dus ook niet compileren. Gebruik lage streepjes in plaats van spaties.
+\stopitemize
+
+\subsection{Referenties}
+
+\startitemize
+\head Mijn bronnenlijst bevat lege onderdelen.
+
+Heb je alle labels goed gespeld? Staan er geen syntax-fouten in je \BIBTEX-database?
+
+\head Niet alle bronnen verschijnen in mijn bronnenlijst.
+
+Heb je ze geciteerd in je tekst? Niet geciteerde werken komen niet in je bronnenlijst terecht.
 \stopitemize
 
 \section{Overbodige bestanden opruimen}

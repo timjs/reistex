@@ -624,7 +624,9 @@ setbounds currentpicture to boundingbox OverlayBox;
    \goto{\url[online]}[url(#1)]}
 
 \define[1]\vec
-  {\,{\bf #1}}
+  {\,{\bf #1}}%FIXME: Met \, ?
+\define\d
+  {{\rm d}}
 
 %D \subsection{Personalia}
 %D
@@ -659,7 +661,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D Mocht je dit een beetje te veel van het goede vinden, bieden we de mogelijkheid van een handmatige bibliografie, zoiets als de \type{thebibliography}-omgeving in \LATEX. Citeer in dit geval de publicaties \emph{niet} met de \tex{cite}-macro, maar met \tex{inbib}. Deze oplossing is iets minder flexibel, maar heeft als voordeel dat je geen apparte bibliografie aan hoeft te maken.
 
 \setupbibtex
-  [database=\jobname]
+  [database=\currentcomponent]
 
 \setuppublications
   [alternative=num]

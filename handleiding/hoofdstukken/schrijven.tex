@@ -15,8 +15,6 @@ In dit hoofdstuk geven we een overzicht van de meest gebruikte commando's van \C
 
 \placecontent
 
-\todo{Tekstbewerker <> Tekstverwerker}
-
 \setupheadnumber[section][-1]
 \section[sec:commandos]{Commando's}
 
@@ -328,12 +326,12 @@ Heb je behoefte aan uitgebreide uitlijningsmogelijkheden of wil je je formules o
 
 \subsection{Uitgebreide formules}
 
-\todo{Voorbeelden uitwerken: sub- en superscript, haakjes, matrices, cases}
+Enkele voorbeelden van \quote{ingewikkeldere} wiskunde. Let op \tex{d} om een \emph{rechte d} te zetten en \tex{vec} voor vectoren.%Je kunt meerdere formules groeperen tussen \tex{startformulas} en \tex{stopformulas}. \CONTEXT\ kiest dan een mooie uitlijning voor je.
 
 \startbuffer
 \startformula
-f(x) = \left| \int_0^1 (x^2 - 3x) \, {\rm d}x \right|
-+ \left| \int_1^2 (x^2 -5x + 6) \, {\rm d}x \right|
+f(x) = \left| \int_0^1 (x^2 - 3x)    \,\d x \right|
+     + \left| \int_1^2 (x^2 -5x + 6) \,\d x \right|
 \stopformula
 \stopbuffer
 \typebuffer
@@ -341,11 +339,13 @@ f(x) = \left| \int_0^1 (x^2 - 3x) \, {\rm d}x \right|
 
 \startbuffer
 \startformula
-\det A = \det \left[ \startmatrix
-\NC 1 \NC 0 \NC 0 \NR
-\NC 0 \NC 1 \NC 0 \NR
-\NC 0 \NC 0 \NC 1 \NR
-\stopmatrix \right]
+\det A = \det \left[
+         \startmatrix
+         \NC 1 \NC 0 \NC 0 \NR
+         \NC 0 \NC 1 \NC 0 \NR
+         \NC 0 \NC 0 \NC 1 \NR
+         \stopmatrix
+\right]
 \stopformula
 \stopbuffer
 \typebuffer
@@ -354,10 +354,24 @@ f(x) = \left| \int_0^1 (x^2 - 3x) \, {\rm d}x \right|
 \startbuffer
 \startformula
 f(x) = \startcases
-\NC x   \MC 0 \le x < 1 \NR
-\NC 1-x \MC 1 \le x < 2 \NR
-\NC 0   \NC otherwise   \NR
-\stopcases
+       \NC x   \MC 0 \le x < 1 \NR
+       \NC 1-x \MC 1 \le x < 2 \NR
+       \NC 0   \NC otherwise   \NR
+       \stopcases
+\stopformula
+\stopbuffer
+\typebuffer
+\getbuffer
+
+\startbuffer
+\startformula
+\startalign[m=2,distance=6em]
+\NC \nabla\cdot\vec{E}  \NC= \frac{\rho}{\epsilon_0}
+\NC \nabla\cdot\vec{B}  \NC= 0                                    \NR
+\NC \nabla\times\vec{E} \NC= -\frac{\partial \vec{B}}{\partial t}
+\NC \nabla\times\vec{B} \NC= \mu_0 \vec{J} + \mu_0\epsilon_0
+                             \frac{\partial \vec{E}}{\partial t}  \NR
+\stopalign
 \stopformula
 \stopbuffer
 \typebuffer
@@ -518,13 +532,13 @@ Een \BIBTEX-database is platte tekst in een bestand eindigend op \type{.bib}. De
 
 Dit is een bron van het type \type{book}, wat we opgeven achter het apenstaartje. \type{Griffiths:2008} is het label waarmee we naar deze bron kunnen verwijzen. De overige regels bestaan uit velden met hun waarde tussen accolades. Let op de komma's aan het eind van elk veld!\footnote{De komma achter het laatste veld is niet verplicht, maar aangezien je ze anders toch vergeet\periods}
 
-Wil je verwijzen naar een bepaald hoofdstuk of bepaalde pagina's in een boek, dan kun je het type \type{inbook} gebruiken.
+Heb je specifieke pagina's of hoofdstukken uit een boek gebruikt, dan kun je het type \type{inbook} gebruiken.
 
 \starttyping
 @inbook{Kuhn:2004,
   author    = {Kuhn, K.F. and Koupelis, T.},
   title     = {In quest of the universe},
-  publisher = {Jones and Bartlett Publishers},
+  publisher = {Jones and Bartlett},
   adress    = {Sudbury, Massachusetts},
   year      = {2004},
   chapter   = {4},
@@ -555,11 +569,11 @@ Natuurlijk wil je niet alleen naar boeken kunnen verwijzen. Er zijn nog veel mee
 }
 \stoptyping
 
-Sommige velden zijn verplicht bij bepaalde types, maar niet bij andere. Een overzicht van alle types en hun verplichte en optionele velden kun je vinden op \online{http://en.wikipedia.org/wiki/BibTeX}% Een overzicht kun je vinden in \in{appendix}[app:bibtex].
+Sommige velden zijn verplicht bij bepaalde types, maar niet bij andere. Een overzicht van alle types en hun verplichte en optionele velden kun je vinden in \in{appendix}[app:bibtex].
 
-Sites als Google Books en Picarta kunnen bibliografie informatie exporteren naar \BIBTEX-formaat. Meestal hoef je bovenstaande niet eens zelf te tikken maar kun je het simpelweg kopiëren en plakken in jouw database.
+Vaak hoef je al deze gegevens zelf niet in te tikken. Sites als Google Books en Picarta kunnen bibliografie-informatie exporteren naar \BIBTEX-formaat. Even kopiëren en plakken in je eigen database en klaar!
 
-Om te verwijzen naar een bron uit je \BIBTEX\ database gebruik je \tex{cite}. In zijn simpelste form geef je \tex{cite} het label van je bron tussen blokhaken, bijvoorbeeld \type{\cite[Griffiths:2008]}. Dit geeft \cite[Griffiths:2008]. \tex{cite} is ook een uitgebreid commando, meer info over bibliografieën kun je vinden op \from[bibman].
+Om te verwijzen naar een bron uit je \BIBTEX\ database gebruik je \tex{cite}. In zijn simpelste form geef je \tex{cite} het label van je bron tussen blokhaken, bijvoorbeeld \type{\cite[Griffiths:2008]}. Dit geeft \cite[Griffiths:2008]. Meer info over bibliografieën kun je vinden op \from[bibman].
 
 \BIBTEX\ nummert al je bronnen en zet ze, zoals gebruikelijk binnen de natuurkunde, tussen blokhaken. Het enige dat jij nog moet doen is \tex{placepublications} aan het einde van je stukje te zetten!
 
@@ -569,9 +583,6 @@ Om te verwijzen naar een bron uit je \BIBTEX\ database gebruik je \tex{cite}. In
 \nocite[Kuhn:2004]
 \nocite[Wikipedia:Electronmass]
 \placepublications
-
-
-\todo{Lege bronnen? => Verkeerd gespelde labels}
 
 %Het is de bedoeling dat je je bronnen netjes opgeeft. Dit zul je met je bachelor- en masterstage ook moeten doen, dus kun je er nu net zo goed meteen mee oefenen.
 
