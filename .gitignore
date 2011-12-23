@@ -9,8 +9,10 @@
 # ConTeXt
 *.tui
 *.tuo
+*.tuc
 *.top
 *.toc
+*.ted
 
 # BibTeX
 *.aux
