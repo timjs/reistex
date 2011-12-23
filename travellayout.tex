@@ -516,8 +516,9 @@
 %D De laatste definitie is een pad dat ons golfje bevat. Het is geschaald naar een breedte van 1 en een hoogte van 1.
 
 \startMPinclusions
-numeric wavePeriods, waveWidth;
+numeric CutSpace, wavePeriods, waveWidth;
 path waveline; 
+CutSpace    := \the\cutspace;
 wavePeriods := 3 + 1/4; 
 waveWidth   := wavePeriods * 2*pi; 
 waveline    := (origin for x=0 step 0.1 until waveWidth:
@@ -530,7 +531,6 @@ waveline    := (origin for x=0 step 0.1 until waveWidth:
 %D De figuren zijn \emph{unique}. Dat wil zeggen dat ze opnieuw berekend worden voor verschillende waarden van OverlayWidth en OverlayHeight. Maar wanneer er al een figuur geproduceerd is met een bepaalde OverlayWidth en OverlayHeight, dan wordt deze hergebruikt.
 
 \startuniqueMPgraphic{travellayout::rightwave}
-LoadPageState;
 pickup pencircle scaled 1pt; 
 draw origin -- (OverlayWidth,0);
 draw waveline xscaled CutSpace yscaled LineHeight shifted (OverlayWidth,0);
@@ -538,7 +538,6 @@ setbounds currentpicture to boundingbox OverlayBox;
 \stopuniqueMPgraphic 
 
 \startuniqueMPgraphic{travellayout::leftwave}
-LoadPageState;
 pickup pencircle scaled 1pt; 
 draw waveline xscaled (-1*CutSpace) yscaled LineHeight;
 draw origin -- (OverlayWidth,0);
