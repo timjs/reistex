@@ -1,0 +1,892 @@
+\startcomponent code
+\product        handleiding
+\environment    handleidinglayout
+
+\define[1]\macros
+  {\inmargin{#1}}
+\definetyping[definition]
+  [before={\setupparagraphnumbering[state=start]},
+   after={\setupparagraphnumbering[state=stop]}]
+
+\setupparagraphnumbering
+  [distance=0pt]
+
+\useurl[wiki]
+  [http://wiki.contextgarden.net][Main_Page]
+  [\CONTEXT\ wiki]
+\useurl[commands]
+  [http://wiki.contextgarden.net][Category:Reference/en]
+  [Command Reference]
+\useurl[excursion]
+  [http://www.pragma-ade.com][general/manuals/ms-cb-en.pdf]
+  [\CONTEXT\ an Excursion]
+\useurl[units]
+  [http://www.ntg.nl][maps/21/16.pdf]
+  [Eenheid in Eenheden]
+\useurl[bib]
+  [http://dl.contextgarden.net][modules/bibmod-doc-2009.11.04.zip]
+  [Bibliographies Module Documentation]
+
+\part{Code}
+
+\startemphasize
+Als je dit leest ben jij waarschijnlijk de commisaris verslaglegging van een reis van Marie Curie\footnote{Door sommigen ookwel \emph{\TEX-slet} genoemd, maar laten we dat woord hier maar niet gebruiken\ldots}. Het is jou taak om alle reisverslagstukjes, readerstukjes en misschien zelfs draaiboekinfo samen te voegen in een mooi documentje. \TEX gaat jou daar bij helpen! Deze \emph{omgeving} zorgt er (hopelijk) voor dat je in relatief weinig tijd een gelikt document kunt produceren die alle informatie overzichtelijk presenteerd.
+
+Alleereerst iets over dit document zelf. Het is niet alleen een stijlbestand (of een \emph{omgeving} in \CONTEXT-jargon), maar ook meteen de documentatie ervan. De \type{%} geeft, zoals gebruikelijk in \TEX, een commentaarregel aan. Regels die beginnen met \type{%D} zijn commentaar voor \TEX, maar worden gebruikt uitleg te geven, bijvoorbeeld over macro's. Deze regels komen in een PDF'je te staan als dit document op een speciale manier gecompileerd word. Dit doe je door
+\starttyping
+texexec --module travellayout
+\stoptyping
+op de commandoregel uit te voeren. Dan krijg je een mooie PDF, die je nu waarschijnlijk leest. Verder zijn er nog regels die beginnen met \type{%M} en \type{%C}. De eerste wordt gebruikt voor macro's binnen de documentatie en de tweede wordt geheel genegeerd.
+
+Laten we beginnen!
+\stopemphasize
+
+\startdefinition
+\startenvironment travellayout
+\stopdefinition
+
+\starthiding
+\section{Documentatie}
+
+Zie de handleiding.
+
+\section{Aanpassingen}
+
+\subsubsubject{juli – augustus 2010}
+
+Initiële versie.
+
+\startitemize
+\item Opmaak zoals bij het oude reisverslag
+\item Macro voor hoofdstukken met auteur en datum
+\item \LATEX-compatibele macro's
+\item Zijfiguren
+\item Vele afkortingen en \cap{url}'s
+\item Modes voor boekjes en correctieversies
+\stopitemize
+
+Tim Steenvoorden
+
+\subsubject{oktober – november 2010}
+
+Versies 0.5 en 0.7
+
+\startitemize
+\item Paginamarges
+\item Microtyping
+\item Onderlijnde koppen
+\item Inhoudsopgave
+\item Bibliografieën en referenties
+\item Lijnen van tabellen en tabulaties
+\item Opmaak koppen
+\stopitemize
+
+Tim Steenvoorden
+
+\subsubject{januarie 2011}
+
+Versie 0.9
+
+\startitemize
+\item Citaten
+\item Sjabloondocument voor reisdeelnemers
+\stopitemize
+
+Tim Steenvoorden
+
+\section{Te doen}
+
+\startitemize
+\item Draaiboek
+\item Documentatie uitbreiden
+\item Samenvatting schrijven
+\item \tex{E} toevoegen?
+\stopitemize
+\stophiding
+
+\chapter{Ontwerp en opmaak}
+
+Nu komt het echte opmaakwerk! In dit hoofdstuk stellen we het uiterlijk van de reisverslagen en readers in. De meeste macro's spreken (hopelijk) voor zich. Je kunt alle commando's en hun opties terugvinden in de \from[commands] op \from[wiki].
+
+\section{Taal}
+
+\startdefinition
+\setuplanguage[en]
+  [date={weekday,{,~},month,day+},
+   spacing=packed]
+\setuplanguage[nl]
+  [date={weekday,day,month},
+   leftquote=\upperleftsinglesixquote,
+   rightquote=\upperrightsingleninequote,
+   leftquotation=\upperleftdoublesixquote,
+   rightquotation=\upperrightdoubleninequote]
+\stopdefinition
+
+\startdefinition
+\setdigitmode 4
+\stopdefinition
+
+\section{Korps}
+
+We gebruiken het lettertype \emph{Utopia}, ontworpen door Robert Slimbach in 1989. Sinds 2006 wordt Utopia gratis verspreid met \TEX, dus hij zou bij elke moderne \TEX-distributie te vinden moeten zijn. De belangrijkste eis is natuurlijk dat we ook wiskunde kunnen zetten. Hiervoor laden we de wiskundige symbolen van de \emph{Fourier} letter. Tot slot gebruiken we standaard \emph{Helvetica} als schreefloze aanvulling voor kopjes en andere stilistische onderdelen. Helvetica heeft standaard een iets grotere x-hoogte dan dan Utopia, dus we moeten die iets bijschalen.
+
+Het \type{hanging}-typescript zorgt voor een typografisch extratje. Die zorgt ervoor dat komma's, punten en afbreekstreepjes iets in de rechter marge worden geplaatst. Het gevolg is dat de kantlijn minder rafelig oogt.
+
+\startdefinition
+\usetypescript[serif][hanging][normal]
+\stopdefinition
+
+\startdefinition
+\definetypeface[UtopiaHelvetica][rm][serif][fourier]
+\definetypeface[UtopiaHelvetica][ss][sans][helvetica][default][rscale=0.87]
+\definetypeface[UtopiaHelvetica][tt][mono][modern]
+\definetypeface[UtopiaHelvetica][mm][math][fourier]
+\stopdefinition
+
+\startdefinition
+\setupbodyfont[UtopiaHelvetica,11pt]
+\stopdefinition
+
+\startdefinition
+\setupbodyfontenvironment[default]
+  [em=\it]
+\stopdefinition
+
+\section{Broodtekst}
+
+Het korps is ingesteld. Nu het uiterlijk van de tekst nog. Zoals hierboven vermeld vullen we de tekst uit met daarbij hangende komma's en afbreekstreepjes. Een strikte tolerantie geeft aan dat we gaten bij het uitlijnen zoveel mogelijk willen vermijde, maar dat eventueel een extra rek mag worden toegevoegd. Dit is vooral van belang bij het zetten van figuren naast de lopende tekst (zijfiguren dus). Tot slot kiezen we voor witruimte tussen alinea's in plaats van inspringen.
+
+Opsommingen willen we op elkaar. De kopjes die we in een opsomming kunnen zetten, geven we eenzelfde stijl als andere stilistische elementen in de tekst. Het instellen van \tex{quotation} heeft als doel dat de aanhalingstekens automatisch gekozen worden, naar gelang de diepte.
+
+\startdefinition
+\setupalign[hanging]
+\stopdefinition
+
+\startdefinition
+\setuptolerance[strict,stretch]
+\stopdefinition
+
+\startdefinition
+\setupwhitespace[medium]
+\stopdefinition
+
+\startdefinition
+\setupblank[medium]
+\stopdefinition
+
+\startdefinition
+\setupurl
+  [style=\it]
+\stopdefinition
+
+\startdefinition
+\setupitemize[each]
+  [packed,autointro]
+  [headstyle=\ss\bf]
+\stopdefinition
+
+\startdefinition
+\setupquote
+  [location=margin,
+   leftmargin=standard,
+   style=\it]
+\setupquote[2]
+  [left={\symbol[leftquotation]},
+   right={\symbol[rightquotation]}]
+\setupquotation[2]
+  [left={\symbol[leftquote]},
+   right={\symbol[rightquote]}]
+\stopdefinition
+
+\startdefinition
+\setupfootnotes
+  [way=bychapter,
+   rulethickness=1pt,
+   numbercommand=] % We willen geen superscript
+\setupfootnotedefinition
+  [location=left,
+   distance=0.5em]
+\stopdefinition
+
+\startdefinition
+\setupinmargin
+  [style={\tfx\it\setupinterlinespace[small]}]
+\stopdefinition
+
+\startdefinition
+\setupframedtexts
+  [width=broad,
+   rulethickness=1pt]
+\stopdefinition
+
+\section{Paginalayout}
+
+We zetten de tekst op een pagina met A4-formaat. Voor de reader en het draaiboek willen we natuurlijk A5-formaat hebben. Hier is een speciale mode voor, zie \in{hoofdstuk}[chap:var] \quote{Versies en variaties}.
+
+De marges berekenen we op eenvoudige wijze. Voor het snijwit (\type{cutspace}) nemen we $\frac18$ van de paginabreedte net als voor het kopwit (\type{topspace}). Vervolgens nemen we voor het rugwit (\type{backspace}) en het bodemwit (\type{bottomspace}) $\frac15$ van de paginabreedte. We vinden dan $\type{cutspace} : \type{backspace} = \type{topspace} : \type{bottomspace} = \frac18 : \frac15 \approx 1 : \varphi$ de \emph{Gulden Snede}. De overgebleven ruimte is voor het tekstblok, en laat dat tekstblok nu ook een verhouding van $\type{textwidth} : \type{textheight} = 1 : \varphi$ hebben!\footnote{Reken zelf maar na als je het niet geloofd\periods}
+
+Voel je vrij om de marges aan te passen als dit echt nodig is. Houd er echter rekening mee dat een regel tussen de 45 en 80~tekens bevat met een optimum van 66~tekens. Minder zorg ervoor dat je teveel met je ogen moet scannen en meer zorgt ervoor dat je het begin van de volgende regel niet meer terug kunt vinden. Verder is een verhouding van hoogte en breedte van het tekstblok die voldoet aan de Gulde Snede prettig voor het oog.
+
+Let op dat de \emph{marge} een extra kolom is naast het tekstblok (dus in het snij- of rugwit) waar we tekst en figuren in kunnen zetten. Dit heeft \emph{niets} te maken met de afstand van het tekstblok tot de rand van het papier!
+
+We willen natuurlijk een dubbelzijdig document met de paginanummers over de hele tekst doorgenummerd. \CONTEXT\ nummert standaard de pagina's namerlijk per deel.
+
+Aangezien we geen kopteksten gaan gebruiken, zetten we deze uit. Bij het instellen van de voetteksten slaan de eerste twee haakjes op de rechter pagina, en de laatste twee op de linker pagina.
+
+\startdefinition
+\setuppapersize[A4][A4]
+\stopdefinition
+
+\startdefinition
+\setuplayout
+  [width=middle,               % Laten we \CONTEXT zelf uitrekenen
+   backspace=26mm,
+   cutspace=42mm,
+   height=middle,
+   topspace=26mm,
+   bottomspace=42mm,
+   margin=26mm,
+   header=\lineheight,
+   headerdistance=\lineheight,
+   footerdistance=\lineheight,
+   footer=\lineheight]
+\stopdefinition
+
+\startdefinition
+\setuppagenumbering
+  [alternative=doublesided,
+   location=,               % Die plaatsen we hieronder zelf.
+   way=bytext,
+   partnumber=no]
+\stopdefinition
+
+\startdefinition
+\setupheader
+  [state=none]
+\setupfooter
+  [style=\ss\bfx]
+\stopdefinition
+
+\startdefinition
+\setupfootertexts
+  [][{\getmarking[chapter] \quad \pagenumber}] % Rechter pagina
+  [{\pagenumber \quad \getmarking[part]}][]    % Linker pagina
+\stopdefinition
+
+\section{Koppen}
+
+Koppen zijn door het hele document niet genummerd. Daarnaast stellen we per soort kop de stijl in (hetzij met een macro, hetzij direct) en de witruimte eromheen. Ook willen we \tex{part}s graag op een rechter pagina laten beginnen, en \tex{chapter}s op een willekeurige nieuwe pagina.
+
+\startdefinition
+\setupsection[part]
+  [conversion=Romannumerals]
+\stopdefinition
+
+\startdefinition
+\setupheads
+  [sectionnumber=no]
+\stopdefinition
+
+\startdefinition
+\setuphead[part]
+  [resetnumber=no,
+   placehead=yes,
+   number=no,
+   page=right,
+   textcommand=\getvalue{travellayout::lowrightwaved},
+   style=\ss\bfc]
+\setuphead[chapter]
+  [page=yes,
+   style=\ss\bfc,
+   after={\getvalue{travellayout::placedecoration}\blank[2*big]}]
+\stopdefinition
+
+\startdefinition
+\setuphead[section,subsection]
+  [page=preference,
+   before=\blank,
+   after=\blank]
+\setuphead[section]
+  [style=\ss\bfa]
+\setuphead[subsection]
+  [style=\ss\bf,
+   aligntitle=float]         % Zodat float's naast koppen kunnen staan.
+\setuphead[subsubsection]
+  [style=\it,
+   aligntitle=float]
+\stopdefinition
+
+\section{Lijsten}
+
+Aangezien we koppen toch niet nummeren, is het onzin deze nummers in de inhoud op te nemen. We stellen de stijl van de paginanummers anders in en prutsen nog wat met de lijst van \tex{part}s, zodat deze de stijl van de colofon overeenkomt.
+
+\startdefinition
+\setupcombinedlist[content]
+  [alternative=a,
+   level=chapter,
+   interaction=pagenumber,
+   headnumber=no,
+   partnumber=no,            % Slaat op part-toevoeging aan paginanummering.
+   pagestyle=\quad\it]
+\stopdefinition
+
+\startdefinition
+\setuplist[part]
+  [label=no,
+   pagenumber=no,
+   style=\ss\bf,
+   textcommand=\getvalue{travellayout::broadbottomframed}]
+\setuplist[chapter]
+  [before={\blank[none]},
+   margin=1em]
+\stopdefinition
+
+\section[sec:floats]{Tabellen en figuren}
+
+Om figuren in het document in te voegen, moet je het pad naar het desbetreffende bestand opgeven aan \tex{externalfigure}. De extentie is hierbij overbodig, \CONTEXT\ zal zelf het optimale formaat uitzoeken als er meerdere type bestanden (\type{.pdf}, \type{.jpg}, \type{.png}) met dezelfde naam zijn. Figuren die in de volgende submappen staan worden automatisch gevonden, zodat je alleen maar de naam van het bestand hoeft op te geven:
+
+\startitemize
+\item \type{figuren}
+\item \type{afbeeldingen}
+\item \type{figures}
+\item \type{images}
+\stopitemize
+
+Bijschriften krijgen weer eenzelfde stijl als andere elementen. Voor tabelbijschriften maken we een kleine uitzondering, die willen we boven de tabel hebben in plaats van onder.
+
+Als laatste stellen we nog de lijndikte in van de \tex{HL} in tabellen en geven we aan dat we geen deelnummer willen wanneer we naar objecten verwijzen. We nummeren namelijk geen enkel kopje.
+
+\startdefinition
+\setupexternalfigures
+  [directory={figuren,afbeeldingen,figures,images,
+              ../figuren,../afbeeldingen,../figures,../images}]
+\stopdefinition
+
+\startdefinition
+\setupcaptions
+  [style={\ss\bfx\setupinterlinespace[small]},
+   align=flushleft,
+   width=max]
+\setupcombinations
+  [style={\ss\bfx\setupinterlinespace[small]},
+   align=flushleft]
+\stopdefinition
+
+\startdefinition
+\setupcaption[table]
+  [location=top]
+\stopdefinition
+
+\startdefinition
+\setupfloat[figure]
+  [sidespacebefore=1ex,
+   sidespaceafter=1ex]
+\definefloat[marginfigure][marginfigures][figure]
+\setupfloat[marginfigure]
+  [default=outermargin,
+   maxwidth=\marginwidth]
+\stopdefinition
+
+\startdefinition
+\setuptabulate
+  [rulethickness=1pt]
+\stopdefinition
+
+\startdefinition
+\setupreferencing
+  [partnumber=no]
+\stopdefinition
+
+\section{Sectieblokken}
+
+Sectieblokken geven een metastructuur aan. De eerste pagina's van een boek worden vaak genummerd met Romeinse cijvers. Dat doen we hier ook. Bij het eerste stukje beginnen we netjes overnieuw, met paginanummer 1. Verder plaatsen we een extra witruimte in de inhoudsopgave als we van het ene sectieblok naar het andere gaan. Dit zorgt voor extra overzicht tussen de inleidingen en de uitleidingen.
+
+\startdefinition
+\startsectionblockenvironment[frontpart]
+  \setuppagenumbering
+    [conversion=romannumerals]
+\stopsectionblockenvironment
+\stopdefinition
+
+\startdefinition
+\startsectionblockenvironment[bodypart]
+  \writebetweenlist[chapter]{\blank}
+  \setuppagenumber
+    [number=1]
+\stopsectionblockenvironment
+\stopdefinition
+
+\startdefinition
+\startsectionblockenvironment[appendix]
+  \writebetweenlist[chapter]{\blank}
+\stopsectionblockenvironment
+\stopdefinition
+
+\startdefinition
+\startsectionblockenvironment[backpart]
+  \writebetweenlist[chapter]{\blank}
+  \switchtobodyfont[small]
+  \setuphead[section]
+    [textcommand=\getvalue{travellayout::broadbottomframed}]
+\stopsectionblockenvironment
+\stopdefinition
+
+\chapter[chap:var]{Versies en variaties}
+
+Modes zijn een handige functie van \CONTEXT\ die er voor zorgen dat dezelfde bronbestanden op verschillende manieren kunnen worden uitgevoerd. Geef de mode op op de commandoregel met de optie \type{--mode=..,..}, waarbij de \type{..,..} een lijst van modes is gescheiden door komma's. Een andere manier om modes op te geven, is ze aan het begin van \type{tex}-bestand op te geven met deze regel (dus inclusief de \type{%}!):
+
+\starttyping
+% mode=..,..
+\stoptyping
+
+In de handleiding vind je meer uitleg over onderstaande modi.
+
+\section{Verschillende versies}
+
+\startdefinition
+\startmode[correction]
+  \setupinterlinespace[big]
+  %\setupspellchecking% Jammergenoeg alleen in MKVI
+    %[state=on]
+  \version[concept]
+\stopmode
+\stopdefinition
+
+\startdefinition
+\startmode[draft]
+  \version[temporary]
+  \enablemode[quick]
+\stopmode
+\stopdefinition
+
+\startdefinition
+\startmode[quick]
+  \setupexternalfigures
+    [option=empty]
+  %TODO: geen BibTeX?
+  %TODO: geen MetaPost?
+\stopmode
+\stopdefinition
+
+\section{Papierformaat en impositie}
+
+\startdefinition
+\startmode[reader,scenario]
+  \setuppapersize[A5][A5]
+  \mainlanguage[nl]
+  \setdigitmode 3
+\stopmode
+\stopdefinition
+
+\startdefinition
+\startmode[scenario]
+  \definesymbol[1][{\symbol[square]}]
+  \definesymbol[2][{\symbol[1]}]
+  \definesymbol[3][{\symbol[1]}]
+  \enablemode[electronic]
+\stopmode
+\stopdefinition
+
+\startdefinition
+\startmode[booklet]
+  \setuppapersize[A5][A4,landscape]
+  \setuparranging[2UP]
+  \disablemode[electronic]
+\stopmode
+\stopdefinition
+
+\startdefinition
+\startmode[reader,scenario,booklet] % Actief bij een van de drie
+  \setupbodyfont[10pt]
+  \setuplayout
+    [width=middle,
+     backspace=18mm,
+     cutspace=29mm,
+     height=middle,
+     topspace=18mm,
+     bottomspace=29mm,
+     margin=18mm,
+     leftmargin=0mm,
+     header=\lineheight,
+     headerdistance=\lineheight,
+     footerdistance=\lineheight,
+     footer=\lineheight]
+\stopmode
+\stopdefinition
+
+\startdefinition
+\startmode[electronic]
+  \setupcolors
+    [state=start]
+  \setuptyping
+    [palet=graypretty,
+     option=TEX]
+  \setupinteraction
+    [state=start,
+     focus=standard,
+     style=,
+     color=darkgray,
+     contrastcolor=darkgray]
+  \placebookmarks[chapter,section,subsection][chapter]
+  \appendtoks
+    \let\lbrace\empty
+    \let\rbrace\empty
+  \to\simplifiedcommands
+\stopmode
+\stopdefinition
+
+\section{Debug}
+
+\startdefinition
+\startmode[makeup]
+  \showsetups
+  \showframe
+  \showbodyfont
+  \showfontstrip
+  \version[temporary]
+  \page[right]
+\stopmode
+\stopdefinition
+
+\section{Extra voorbeeld}
+
+Wanneer je functionaliteit wilt toevoegen aan deze omgeving, overweeg dan of het een goed idee is hier een mode van te maken. Je zorgt er dan voor dat de basis van de layout niet verandert, maar andere mensen hebben wel toegang tot jouw eigen verzonnen nieuwe opties! We geven een voorbeeldje om figuren toch niet te laten nummeren. Misschien handig als je toch nooit naar figuren verwijst in de reader ofzo.
+
+\startdefinition
+\startmode[unnumbered]
+  \setupcaptions
+    [number=no]
+\stopmode
+\stopdefinition
+
+\chapter{Dessin en decoratie}
+
+De commando's die in dit hoofdstuk worden gedefinieerd zijn \emph{geen} gebruikerscommando's. Om conflicten te voorkomen, laten we ze voorafgaan met \type{travellayout::}.
+
+\section{Kaders}
+
+We definieeren twee kaders. De eerste is bedoeld om een lijntje van 1 punt onder een stuk tekst te zetten. De tweede om een golf rechts te tekenen in een kader met een vastgestelde hoogte.
+
+\startdefinition
+\defineframed[travellayout::broadbottomframed]
+  [frame=off,
+   bottomframe=on,
+   offset=0pt,
+   width=broad,
+   align=flushleft,
+   rulethickness=1pt]
+\stopdefinition
+
+\startdefinition
+\defineframed[travellayout::lowrightwaved]
+  [frame=off,
+   offset=0pt,
+   height=\bottomspace,
+   align=low,
+   background=travellayout::rightwave]
+\stopdefinition
+
+\section{Tekeningen}
+
+Standaard worden figuren die buiten een kader vallen afgekapt. Om dit te voorkomen herdefinieren we \tex{objectoffset}.
+
+\startdefinition
+\redefine\objectoffset
+  {\cutspace}
+\stopdefinition
+
+Nu gaan we een golfje tekenen. Een extra stukje decoratie dat we gaan gebruiken om nieuwe hoofdstukken aan te geven. Dit doen we met in de tekentaal \METAPOST. Eerst moeten we \CONTEXT\ vertellen dat zij \METAPOST\ niet tijdens de \TEX-run kan uitvoeren. Hiervoor is \tex{write18} nodig, dat op de universiteit standaard uit staat. In plaats daarvan wordt \METAPOST\ uitgevoerd tussen de \TEX-runs.
+
+\startdefinition
+\startmode[*mkii]
+\runMPgraphicsfalse
+\stopmode
+\stopdefinition
+
+Nu definieeren we enkele grootheden die we in de \METAPOST\ figuren gaan gebruiken. De eerste is de breedte van het snijwit, dit wordt de breedte van ons golfje. Vervolgens geven we het aantal periodes op van het golfje en berekenen we de breedte van het golfje.
+
+De laatste definitie is een pad dat ons golfje bevat. Het is geschaald naar een breedte van 1 en een hoogte van 1.
+
+\startdefinition
+\startMPinclusions
+numeric CutSpace, wavePeriods, waveWidth;
+path waveline;
+CutSpace    := \the\cutspace;
+wavePeriods := 3 + 1/4;
+waveWidth   := wavePeriods * 2*pi;
+waveline    := (origin for x=0 step 0.1 until waveWidth:
+                 .. (x,x*sin(x))
+                endfor) scaled (1/waveWidth);
+\stopMPinclusions
+\stopdefinition
+
+Met bovenstaande definities kunnen we gaan tekenen. We hebben twee figuren nodig. Eentje voor de rechter pagina, waarbij het golfje naar rechts uitsteekt, en eentje voor de linker pagina, waar het golfje naar links uitsteekt. Let op de prachtige manier waarop we ons eenheidsgolfje kunnen manipuleren, zodat het daar komt te staan waar wij willen.
+
+De figuren zijn \emph{unique}. Dat wil zeggen dat ze opnieuw berekend worden voor verschillende waarden van OverlayWidth en OverlayHeight. Maar wanneer er al een figuur geproduceerd is met een bepaalde OverlayWidth en OverlayHeight, dan wordt deze hergebruikt.
+
+\startdefinition
+\startuniqueMPgraphic{travellayout::rightwave}
+pickup pencircle scaled 1pt;
+draw origin -- (OverlayWidth,0);
+draw waveline xscaled CutSpace yscaled LineHeight shifted (OverlayWidth,0);
+setbounds currentpicture to boundingbox OverlayBox;
+\stopuniqueMPgraphic
+\stopdefinition
+
+\startdefinition
+\startuniqueMPgraphic{travellayout::leftwave}
+pickup pencircle scaled 1pt;
+draw waveline xscaled (-1*CutSpace) yscaled LineHeight;
+draw origin -- (OverlayWidth,0);
+setbounds currentpicture to boundingbox OverlayBox;
+\stopuniqueMPgraphic
+\stopdefinition
+
+Om de figuren achter de tekst te plaatsen, maken we zogenaamde \emph{overlays} aan. Die kunnen we vervolgens gebruiken als achtergrond van een \tex{framed}.
+
+\startdefinition
+\defineoverlay[travellayout::rightwave]
+  [\uniqueMPgraphic{travellayout::rightwave}]
+\defineoverlay[travellayout::leftwave]
+  [\uniqueMPgraphic{travellayout::leftwave}]
+\stopdefinition
+
+Uiteindelijk is dit het commando dat we gebruiken om de auteur en datum te plaatsen én de lijn met het golfje. Let op de \type{background=} waar we, naar gelang we op en rechter- of linker pagina zitten, de juiste overlay kiezen. Ook moeten we er op letten dat we de variabelen, die we bij \tex{report} hebben ingesteld, weer leeg maken. Anders krijgt de volgende \tex{chapter} dezelfde datum en auteur als de vorige. Dit betekend dat we de decoratie met de huidige waarden maar een keer kunnen plaatsen!
+
+\startdefinition
+\starttexdefinition travellayout::placedecoration
+  \framed
+    [frame=off,
+     offset=0pt,
+     width=broad,
+     background=travellayout::\doifoddpageelse{rightwave}{leftwave}]
+    {\ss\bfx \getvariable{chapter}{date} \hfill \getvariable{chapter}{author}}
+  \setvariables[chapter]
+    [title=,
+     date=,
+     author=]
+\stoptexdefinition
+\stopdefinition
+
+\chapter{Aanpassingen en aanvullingen}
+
+We hebben ook nog enkele extra macro's nodig, die ons leven makelijker maken bij het zetten van een reisverslag of reader. Dit zijn macro's die voorgedefinieerd zijn door \CONTEXT-modules, macro's specifiek voor dit type document maar ook macro's voor compatabiliteit met \LATEX.
+
+\startdefinition
+\enableregime[utf8]%FIXME: Niet meer nodig in MKIV.
+\stopdefinition
+
+\startdefinition
+\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
+\stopdefinition
+
+\section{Koppen van stukjes}
+
+\macros{report}
+
+De \tex{report}-macro gebruik je om een nieuw hoofdstuk met een eigen auteur en datum aan te duiden. Effectief maakt het een nieuw hoofdstuk aan met daarbij de naam van de auteur en de opgegeven datum. Het label is een optioneel argument.
+
+Zie meer informatie in de handleiding.
+
+\startdefinition
+\starttexdefinition complexreport [#1]#2#3#4
+  \setvariables[chapter] % Hier slaan we de opgegeven variabelen op.
+    [title={#2},
+     date={#3},
+     author={#4}]
+  \chapter[#1]{#2}       % En we maken een nieuw hoofdstuk aan
+\stoptexdefinition
+\stopdefinition
+
+\startdefinition
+\definecomplexorsimpleempty\report
+\stopdefinition
+
+\section{In de tekst}
+
+\subsection{Opmaak}
+
+\macros{emph,startemphasize}
+
+In \CONTEXT wordt benadrukte tekst gezet met de \tex{em}-declaratie. Om de \LATEX\ gebruiker te hulp te schieten, en omdat het er (naar mijn mening) netter uit ziet, definieeren we de oude vertrouwde \tex{emph} hier. Om meerdere alinea's te benadrukken definieeren we ook de omgeving \tex{start/stopemphasize}
+
+\startdefinition
+\define[1]\emph
+  {{\em #1}}
+\definestartstop[emphasize]
+  [style=\em]
+\stopdefinition
+
+\startdefinition
+\define[1]\alert
+  {{\bf #1}}
+\stopdefinition
+
+\macros{online}
+
+De standaard methode om in \CONTEXT\ methode zou zijn
+\starttyping
+\useurl[eenurl][http://www.adres.nl/van/een/url]
+De url is nu her te gebruiken met \url[eenurl].
+\stoptyping
+We kunnen dit nu zetten als
+\starttyping
+De url is een keer te gebruiken met \online{http://www.adres.nl/van/een/url}.
+\stoptyping
+
+\startdefinition
+\define[1]\online
+  {\useurl[online][#1]
+   \goto{\url[online]}[url(#1)]}
+\stopdefinition
+
+\startdefinition
+\define[1]\vec
+  {\,{\bf #1}}%FIXME: Met \, ?
+\define\d
+  {{\rm d}}
+\stopdefinition
+
+\subsection{Personalia}
+
+\macros{personalia,startpersonalia,nextpersonalia}
+
+\startdefinition
+\defineparagraphs[personalia]
+  [n=3]
+\setupparagraphs[personalia][1]
+  [width=5em]
+\setupparagraphs[personalia][3]
+  [width=8em,
+   align=flushright]
+\stopdefinition
+
+TODO
+
+\startdefinition
+\defineparagraphs[sidebysidetext]
+  [n=2]
+\stopdefinition
+
+\section{Figuren}
+
+We definieëren twee standaardformaten voor figuren. \type{passphoto} is goed te gebruiken bij \tex{personalia}, aangezien die even breedt is als de eerste kolom. \type{broad} is een handigheidje voor figuren die de tekstbreedte en de marge innemen.
+
+\startdefinition
+\defineexternalfigure[passphoto][width=5em]
+\defineexternalfigure[broad][width=\dimexpr(\outermargintotal+\textwidth)]
+\stopdefinition
+
+\section{Publicaties}
+
+\macros{startbibliography,inbib}
+
+Om de bibliografie te zetten kunnen we gebruik maken van een apparte \BIBTEX-biliografie. Deze leest \CONTEXT\ in en met behulp van de macro \tex{placepublications} kun je per hoofdstuk (of \type{report}) een lijst plaatsen van de (in dat hoofdstuk) geciteerde werken. Deze oplossing is het best gestructureerd en je weet zeker dat alle referenties op de zelfde manier zijn opgemaakt.
+
+Mocht je dit een beetje te veel van het goede vinden, bieden we de mogelijkheid van een handmatige bibliografie, zoiets als de \type{thebibliography}-omgeving in \LATEX. Citeer in dit geval de publicaties \emph{niet} met de \tex{cite}-macro, maar met \tex{inbib}. Deze oplossing is iets minder flexibel, maar heeft als voordeel dat je geen apparte bibliografie aan hoeft te maken.
+
+\startdefinition
+\setupbibtex
+  [database=\jobname]
+\stopdefinition
+
+\startdefinition
+\setuppublications
+  [alternative=num]
+\stopdefinition
+
+\startdefinition
+\setuppublicationlayout[electronic]
+  {\insertauthors{}{.\space}{}%
+   \inserttitle{\bgroup\em}{\egroup.\space}{}%
+   \insertbiburl{}{}{}.}
+\stopdefinition
+
+\section{Eenheden}
+
+\startdefinition
+\define[1]\unit
+  {\mathematics{\rm\,#1}}
+\stopdefinition
+
+\startdefinition
+\define[2]\quantity
+  {\digits{#1}\unit{#2}}
+\stopdefinition
+
+\section{Afkortingen en \cap{url}'s}
+
+\macros{SMCR,MC,RU,IMAPP,IMM,HFML,DI,WINST,SNUF,NNV,FOM,NIKHEF,EPS,AM,PM,BC,AD,VC}
+
+Hier definieëren we enkele veelgebruikte afkortingen en \cap{url}'s. Let er op dat de \cap{url}'s kunnen veranderen! Ook laden we een zeer nuttige module, waarmee we op een systematische manier eenheden kunnen zetten.
+
+\startdefinition
+\usemodule[chemic]
+\stopdefinition
+
+\startdefinition
+\abbreviation{SMCR}  {Stichting Marie Curie Reizen}
+\abbreviation{MC}    {Studievereniging Marie Curie}
+\abbreviation{RU}    {Radboud Universiteit Nijmegen}
+\abbreviation{IMAPP} {Institute for Mathematics, Astrophysics and Particle Physics}
+\abbreviation{IMM}   {Institute for Molecules and Materials}
+\abbreviation{HFML}  {High Field Magnet Laboratory}
+\abbreviation{DI}    {Donders Institute for Brain, Cognition and Behaviour}
+\abbreviation[WINST] {W\nocap{i}NS\nocap{t}}
+                     {Onderwijsinstituut voor Wiskunde, Natuur- en Sterrenkunde}
+\abbreviation{SNUF}  {Stichting Nijmeegs Universiteitsfonds}
+\abbreviation{NNV}   {Nederlandse Natuurkunde Vereniging}
+\abbreviation{FOM}   {Stichting Fundamenteel Onderzoek der Materie}
+\abbreviation{NIKHEF}{Nationaal Instituut voor Kernfysica en Hoge-Energyfysica}
+\abbreviation{EPS}   {European Physical Society}
+\stopdefinition
+
+\startdefinition
+\abbreviation{AM}{Ante Meridiem}
+\abbreviation{PM}{Post Meridiem}
+\abbreviation{BC}{Before Christ}
+\abbreviation{AD}{Anno Domini}
+\abbreviation[VC]{\nocap{v.}C\nocap{hr}}{voor Christus}%TODO: compatible met \VC in tabulaties?
+\stopdefinition
+
+\startdefinition
+\useurl[www:marie]
+  [http://www.marie-curie.nl][]
+  [website \infull{MC}]
+\useurl[www:smcr]
+  [http://www.marie-curie.nl][page/show/10]
+  [website \infull{SMCR}]
+\useurl[mailto:smcr]
+  [smcr@science.ru.nl]
+\useurl[mailto:marie]
+  [bestuur@marie-curie.nl]
+\stopdefinition
+
+\section{Te doen}
+
+\startdefinition
+\definelist[todo]
+  [alternative=a,
+   partnumber=no,
+   pagestyle=\quad\it]
+\definecombinedlist[todos]
+  [chapter,todo]
+\setupcombinedlist[todos]
+  [level=current,% Waarom weet ik ook niet, maar het werkt.
+   interaction=pagenumber]
+\stopdefinition
+
+\startdefinition
+\starttexdefinition todo #1
+  \inmargin{Todo}
+  \underbar{#1}
+  \writetolist[todo]{}{#1}
+\stoptexdefinition
+\stopdefinition
+
+Dit is het laatste wat we nog wilden definieeren in de omgeving en hiermee zijn we ook aan het eind gekomen.
+
+\startdefinition
+\stopenvironment
+\stopdefinition
+\stopproduct
