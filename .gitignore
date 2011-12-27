@@ -1,4 +1,5 @@
 # Default
+.DS_Store
 *.log
 *.swp
 *.tmp
