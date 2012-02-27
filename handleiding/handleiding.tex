@@ -7,43 +7,53 @@
   [database=handleiding]
 
 \startfrontmatter
-\component zetwerk/kaft
-\completecontent
-\component hoofdstukken/inleiding
+
+  \component zetwerk/kaft
+  \completecontent
+  \component hoofdstukken/inleiding
+
 \stopfrontmatter
 
 \startbodymatter
 
-\part{Voor de reisdeelnemer}
-\placecontent
+  \part{Voor de reisdeelnemer}
+  \placecontent
 
-\component hoofdstukken/schrijven
-\component hoofdstukken/compileren
+  \component hoofdstukken/schrijven
+  \component hoofdstukken/compileren
 
-\startnotmode[deelnemer]
+  \startnotmode[deelnemer]
   \part{Voor de verslaglegger}
   \placecontent
 
   \component hoofdstukken/samenvoegen
   \component hoofdstukken/opmaken
-\stopnotmode
+
+  \part{Voor de \TeX nerd}
+  \placecontent
+
+  \component hoofdstukken/code
+  \stopnotmode
 
 \stopbodymatter
 
 \startappendices
-\part{Appendices}
-\placecontent
 
-\component appendices/symbolen
-\component appendices/commandos
-\component appendices/bibtex
-%\component zetwerk/code
+  \part{Appendices}
+  \placecontent
+
+  \component appendices/symbolen
+  \component appendices/commandos
+  \component appendices/bibtex
+
 \stopappendices
 
 \startbackmatter
-%\completepublications
-%\component zetwerk/code
-\component zetwerk/colofon
+
+  %\completepublications
+  \component zetwerk/colofon
+
 \stopbackmatter%FIXME: extra page
 
 \stopproduct
+
