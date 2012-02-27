@@ -1,17 +1,3 @@
-%M \usemodule[units]
-%M \enableregime[utf8]
-%M \mainlanguage[nl]
-%M
-%M \setuphead[section]
-%M   [page=no]
-%M \setupitemize[each]
-%M   [packed]
-%M
-%M \abbreviation{SMCR}{Stichting Marie Curie Reizen}
-%M
-%M \define[1]\emph
-%M   {{\em #1}}
-%M
 %M \useurl[wiki]
 %M   [http://wiki.contextgarden.net][Main_Page]
 %M   [\CONTEXT\ wiki]
@@ -28,16 +14,14 @@
 %M   [http://dl.contextgarden.net][modules/bibmod-doc-2009.11.04.zip]
 %M   [Bibliographies Module Documentation]
 %M
-%D \module
-%D   [file=travellayout,
-%D    version=7 okt 2011,
-%D    title=Travel Layout,
-%D    subtitle=Omgeving voor reisverslagen en readers,
-%D    author=Tim Steenvoorden,
-%D    date=\currentdate,
-%D    copyright=\infull{SMCR}]
-%D 
-%D \completecontent
+%C \module
+%C   [file=travellayout,
+%C    version=7 okt 2011,
+%C    title=Travel Layout,
+%C    subtitle=Omgeving voor reisverslagen en readers,
+%C    author=Tim Steenvoorden,
+%C    date=\currentdate,
+%C    copyright=\infull{SMCR}]
 
 %C -----------------------------------------------------------------------------
 %D \chapter{Introductie}
@@ -447,7 +431,7 @@
      style=,
      color=darkgray,
      contrastcolor=darkgray]
-  \placebookmarks[chapter,section,subsection][chapter]     
+  \placebookmarks[part,chapter,section,subsection][chapter]     
   \appendtoks
     \let\lbrace\empty
     \let\rbrace\empty
@@ -475,7 +459,7 @@
 \stopmode
 
 %C -----------------------------------------------------------------------------
-%D \chapter{Dessin en decoratie}
+%D \chapter{Dessign en decoratie}
 %D
 %D De commando's die in dit hoofdstuk worden gedefinieerd zijn \emph{geen} gebruikerscommando's. Om conflicten te voorkomen, laten we ze voorafgaan met \type{travellayout::}.
 
@@ -573,7 +557,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \enableregime[utf8]%FIXME: Niet meer nodig in MKIV.
 
-\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
+%\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
 
 %D \section{Koppen van stukjes}
 %D
@@ -623,7 +607,8 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \define[1]\online
   {\useurl[online][#1]
-   \goto{\url[online]}[url(#1)]}
+   \url[online]}
+   %\goto{\url[online]}[url(#1)]}
 
 \define[1]\vec
   {\,{\bf #1}}%FIXME: Met \, ?
@@ -671,7 +656,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 \setuppublicationlayout[electronic]
   {\insertauthors{}{.\space}{}%
    \inserttitle{\bgroup\em}{\egroup.\space}{}%
-   \insertbiburl{}{}{}.}
+   \inserturl{}{}{}.}
 
 %D \section{Eenheden}
 
