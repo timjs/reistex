@@ -1,3 +1,17 @@
+%M \usemodule[units]
+%M \enableregime[utf8]
+%M \mainlanguage[nl]
+%M
+%M \setuphead[section]
+%M   [page=no]
+%M \setupitemize[each]
+%M   [packed]
+%M
+%M \abbreviation{SMCR}{Stichting Marie Curie Reizen}
+%M
+%M \define[1]\emph
+%M   {{\em #1}}
+%M
 %M \useurl[wiki]
 %M   [http://wiki.contextgarden.net][Main_Page]
 %M   [\CONTEXT\ wiki]
@@ -14,14 +28,16 @@
 %M   [http://dl.contextgarden.net][modules/bibmod-doc-2009.11.04.zip]
 %M   [Bibliographies Module Documentation]
 %M
-%C \module
-%C   [file=travellayout,
-%C    version=7 okt 2011,
-%C    title=Travel Layout,
-%C    subtitle=Omgeving voor reisverslagen en readers,
-%C    author=Tim Steenvoorden,
-%C    date=\currentdate,
-%C    copyright=\infull{SMCR}]
+%D \module
+%D   [file=travellayout,
+%D    version=7 okt 2011,
+%D    title=Travel Layout,
+%D    subtitle=Omgeving voor reisverslagen en readers,
+%D    author=Tim Steenvoorden,
+%D    date=\currentdate,
+%D    copyright=\infull{SMCR}]
+%D 
+%D \completecontent
 
 %C -----------------------------------------------------------------------------
 %D \chapter{Introductie}
@@ -38,7 +54,7 @@
 
 \startenvironment travellayout
 
-%\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
+\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
 
 %D \section{Documentatie}
 %D
@@ -433,7 +449,7 @@
      style=,
      color=darkgray,
      contrastcolor=darkgray]
-  \placebookmarks[part,chapter,section,subsection][chapter]     
+  \placebookmarks[chapter,section,subsection][chapter]     
   \appendtoks
     \let\lbrace\empty
     \let\rbrace\empty
@@ -461,7 +477,7 @@
 \stopmode
 
 %C -----------------------------------------------------------------------------
-%D \chapter{Dessign en decoratie}
+%D \chapter{Dessin en decoratie}
 %D
 %D De commando's die in dit hoofdstuk worden gedefinieerd zijn \emph{geen} gebruikerscommando's. Om conflicten te voorkomen, laten we ze voorafgaan met \type{travellayout::}.
 
@@ -493,9 +509,7 @@
 
 %D Nu gaan we een golfje tekenen. Een extra stukje decoratie dat we gaan gebruiken om nieuwe hoofdstukken aan te geven. Dit doen we met in de tekentaal \METAPOST. Eerst moeten we \CONTEXT\ vertellen dat zij \METAPOST\ niet tijdens de \TEX-run kan uitvoeren. Hiervoor is \tex{write18} nodig, dat op de universiteit standaard uit staat. In plaats daarvan wordt \METAPOST\ uitgevoerd tussen de \TEX-runs.
 
-\startmode[*mkii]
 \runMPgraphicsfalse
-\stopmode
 
 %D Nu definieeren we enkele grootheden die we in de \METAPOST\ figuren gaan gebruiken. De eerste is de breedte van het snijwit, dit wordt de breedte van ons golfje. Vervolgens geven we het aantal periodes op van het golfje en berekenen we de breedte van het golfje.
 %D
@@ -503,11 +517,11 @@
 
 \startMPinclusions
 numeric CutSpace, wavePeriods, waveWidth;
-path waveline; 
+path unitwave; 
 CutSpace    := \the\cutspace;
 wavePeriods := 3 + 1/4; 
 waveWidth   := wavePeriods * 2*pi; 
-waveline    := (origin for x=0 step 0.1 until waveWidth:
+unitwave    := (origin for x=0 step 0.1 until waveWidth:
                  .. (x,x*sin(x)) 
                 endfor) scaled (1/waveWidth);
 \stopMPinclusions
@@ -519,13 +533,13 @@ waveline    := (origin for x=0 step 0.1 until waveWidth:
 \startuniqueMPgraphic{travellayout::rightwave}
 pickup pencircle scaled 1pt; 
 draw origin -- (OverlayWidth,0);
-draw waveline xscaled CutSpace yscaled LineHeight shifted (OverlayWidth,0);
+draw unitwave xscaled CutSpace yscaled (LineHeight/2) shifted (OverlayWidth,0);
 setbounds currentpicture to boundingbox OverlayBox;
 \stopuniqueMPgraphic 
 
 \startuniqueMPgraphic{travellayout::leftwave}
 pickup pencircle scaled 1pt; 
-draw waveline xscaled (-1*CutSpace) yscaled LineHeight;
+draw unitwave xscaled (-1*CutSpace) yscaled (LineHeight/2);
 draw origin -- (OverlayWidth,0);
 setbounds currentpicture to boundingbox OverlayBox;
 \stopuniqueMPgraphic 
@@ -607,8 +621,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \define[1]\online
   {\useurl[online][#1]
-   \url[online]}
-   %\goto{\url[online]}[url(#1)]}
+   \goto{\url[online]}[url(#1)]}
 
 \define[1]\vec
   {\,{\bf #1}}%FIXME: Met \, ?
@@ -648,7 +661,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D Mocht je dit een beetje te veel van het goede vinden, bieden we de mogelijkheid van een handmatige bibliografie, zoiets als de \type{thebibliography}-omgeving in \LATEX. Citeer in dit geval de publicaties \emph{niet} met de \tex{cite}-macro, maar met \tex{inbib}. Deze oplossing is iets minder flexibel, maar heeft als voordeel dat je geen apparte bibliografie aan hoeft te maken.
 
 \setupbibtex
-  [database=\jobname]
+  [database=\currentcomponent]
 
 \setuppublications
   [alternative=num]
@@ -656,7 +669,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 \setuppublicationlayout[electronic]
   {\insertauthors{}{.\space}{}%
    \inserttitle{\bgroup\em}{\egroup.\space}{}%
-   \inserturl{}{}{}.}
+   \insertbiburl{}{}{}.}
 
 %D \section{Eenheden}
 
