@@ -651,11 +651,12 @@ setbounds currentpicture to boundingbox OverlayBox;
   [database=\jobname]
 
 \setuppublications
-  [alternative=num]
+  %[alternative=num]
+  [alternative=ams]
 
 \setuppublicationlayout[electronic]
-  {\insertauthors{}{.\space}{}%
-   \inserttitle{\bgroup\em}{\egroup.\space}{}%
+  {\insertauthors{}{,\space}{}%
+   \inserttitle{\bgroup\em}{\egroup,\space}{}%
    \inserturl{}{}{}.}
 
 %D \section{Eenheden}
