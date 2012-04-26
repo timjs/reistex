@@ -1,0 +1,26 @@
+\startcomponent code
+\product        handleiding
+\environment    handleidinglayout
+
+\def\startmodule[#1]{}
+\def\stopmodule{}
+\def\startdocumentation{}
+\def\stopdocumentation{}
+
+\define[1]\macros
+  {\margintitle{\processcommalist[#1]\domacro}}
+\define[1]\domacro
+  {\tex{\doboundtext{#1}{\marginwidth}{\periods}}\\}
+
+\definetyping[definition]
+  [before={\setupparagraphnumbering[state=start]},
+   after={\setupparagraphnumbering[state=stop]}]
+
+\setupparagraphnumbering
+  [distance=0pt,
+   style=\tfx\it]
+
+\processfile{../travellayout.ted}
+
+\stopcomponent
+

@@ -1,0 +1,24 @@
+# Default
+.DS_Store
+*.log
+*.swp
+*.tmp
+
+# MetaPost
+*mpgraph*
+
+# ConTeXt
+*.tui
+*.tuo
+*.tuc
+*.top
+*.toc
+*.ted
+
+# BibTeX
+*.aux
+*.blg
+*.bbl
+
+# Compiled
+*.pdf

@@ -1,0 +1,126 @@
+\startcomponent _symbolen
+\product        handleiding
+\environment    handleidinglayout
+% De tabel in dit bestand is overgenomen van http://nl.wikipedia.org/wiki/BibTeX en http://en.wikipedia.org/wiki/BibTeX.
+
+\chapter[app:bibtex]{Bib\TeX\ documenttypes}
+
+\startemphasize
+Hieronder vind je een overzicht van alle \emph{\en entry types} van \BIBTEX\ met een omschrijving van het type. Ook zijn alle verplichte en optionele velden aangegeven.
+\stopemphasize
+
+\startitemize[unpacked]
+\head \type{article}
+
+Artikel in een wetenschappelijk tijdschrift.
+
+Verplicht: \type{author}, \type{title}, \type{journal}, \type{year}
+
+Optioneel: \type{volume}, \type{number}, \type{pages}, \type{month}, \type{note}, \type{key}
+
+\head \type{book}
+
+Een boek met een uitgever.
+
+Verplicht: \type{author/editor}, \type{title}, \type{publisher}, \type{year}
+
+Optioneel: \type{volume}, \type{series}, \type{address}, \type{edition}, \type{month}, \type{note}, \type{key}
+
+\head \type{booklet}
+
+Een gebundeld werk zonder uitgever.
+
+Verplicht: \type{title}
+
+Optioneel: \type{author}, \type{howpublished}, \type{address}, \type{month}, \type{year}, \type{note}, \type{key}
+
+\head \type{electronic}
+
+Webpagina.
+
+Verplicht: \type{url}
+
+Optioneel: \type{author}, \type{title}
+
+\head \type{inbook}
+
+Deel van een boek, bijvoorbeeld een hoofdstuk.
+
+Verplicht: \type{author/editor}, \type{title}, \type{chapter/pages}, \type{publisher}, \type{year}
+
+Optioneel: \type{volume}, \type{series}, \type{address}, \type{edition}, \type{month}, \type{note}, \type{key}
+
+\head \type{incollection}
+
+Deel van een boek met eigen titel.
+
+Verplicht: \type{author}, \type{title}, \type{booktitle}, \type{publisher}, \type{year}
+
+Optioneel: \type{editor}, \type{pages}, \type{organization}, \type{publisher}, \type{address}, \type{month}, \type{note}, \type{key}
+
+\head \type{inproceedings}
+
+Artikel in een conferentiebundel.
+
+Verplicht: \type{author}, \type{title}, \type{booktitle}, \type{year}
+
+Optioneel: \type{editor}, \type{series}, \type{pages}, \type{organization}, \type{publisher}, \type{address}, \type{month}, \type{note}, \type{key}
+
+\head \type{manual}
+
+Technische handleiding.
+
+Verplicht: \type{title}
+
+Optioneel: \type{author}, \type{organization}, \type{address}, \type{edition}, \type{month}, \type{year}, \type{note}, \type{key}
+
+\head \type{mastersthesis}
+
+Afstudeerverslag.
+
+Verplicht: \type{author}, \type{title}, \type{school}, \type{year}
+
+Optioneel: \type{address}, \type{month}, \type{note}, \type{key}
+
+\head \type{misc}
+
+Alles wat niet in een andere type past.
+
+Verplicht: \emph{geen}
+
+Optioneel: \type{author}, \type{title}, \type{howpublished}, \type{month}, \type{year}, \type{note}, \type{key}
+
+\head \type{phdthesis}
+
+Dissertatie.
+
+Verplicht: \type{author}, \type{title}, \type{school}, \type{year}
+
+Optioneel: \type{address}, \type{month}, \type{note}, \type{key}
+
+\head \type{proceedings}
+
+Conferentiebundel.
+
+Verplicht: \type{title}, \type{year}
+
+Optioneel: \type{editor}, \type{publisher}, \type{organization}, \type{address}, \type{month}, \type{note}, \type{key}
+
+\head \type{techreport}
+
+Onderzoeksrapport door een instituut.
+
+Verplicht: \type{author}, \type{title}, \type{institution}, \type{year}
+
+Optioneel: \type{type}, \type{number}, \type{address}, \type{month}, \type{note}, \type{key}
+
+\head \type{unpublished}
+
+Niet formeel gepubliceerd.
+
+Verplicht: \type{author}, \type{title}, \type{note}
+
+Optioneel: \type{month}, \type{year}, \type{key}
+\stopitemize
+
+\stopcomponent

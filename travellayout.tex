@@ -1,17 +1,3 @@
-%M \usemodule[units]
-%M \enableregime[utf8]
-%M \mainlanguage[nl]
-%M
-%M \setuphead[section]
-%M   [page=no]
-%M \setupitemize[each]
-%M   [packed]
-%M
-%M \abbreviation{SMCR}{Stichting Marie Curie Reizen}
-%M
-%M \define[1]\emph
-%M   {{\em #1}}
-%M
 %M \useurl[wiki]
 %M   [http://wiki.contextgarden.net][Main_Page]
 %M   [\CONTEXT\ wiki]
@@ -28,16 +14,14 @@
 %M   [http://dl.contextgarden.net][modules/bibmod-doc-2009.11.04.zip]
 %M   [Bibliographies Module Documentation]
 %M
-%D \module
-%D   [file=travellayout,
-%D    version=22 sep 2011,
-%D    title=Travel Layout,
-%D    subtitle=Omgeving voor reisverslagen en readers,
-%D    author=Tim Steenvoorden,
-%D    date=\currentdate,
-%D    copyright=\infull{SMCR}]
-%D 
-%D \completecontent
+%C \module
+%C   [file=travellayout,
+%C    version=7 okt 2011,
+%C    title=Travel Layout,
+%C    subtitle=Omgeving voor reisverslagen en readers,
+%C    author=Tim Steenvoorden,
+%C    date=\currentdate,
+%C    copyright=\infull{SMCR}]
 
 %C -----------------------------------------------------------------------------
 %D \chapter{Introductie}
@@ -53,6 +37,8 @@
 %D Laten we beginnen!
 
 \startenvironment travellayout
+
+%\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
 
 %D \section{Documentatie}
 %D
@@ -128,6 +114,8 @@
    leftquotation=\upperleftdoublesixquote,
    rightquotation=\upperrightdoubleninequote]
 
+\setdigitmode 4
+
 %D \section{Korps}
 %D
 %D We gebruiken het lettertype \emph{Utopia}, ontworpen door Robert Slimbach in 1989. Sinds 2006 wordt Utopia gratis verspreid met \TEX, dus hij zou bij elke moderne \TEX-distributie te vinden moeten zijn. De belangrijkste eis is natuurlijk dat we ook wiskunde kunnen zetten. Hiervoor laden we de wiskundige symbolen van de \emph{Fourier} letter. Tot slot gebruiken we standaard \emph{Helvetica} als schreefloze aanvulling voor kopjes en andere stilistische onderdelen. Helvetica heeft standaard een iets grotere x-hoogte dan dan Utopia, dus we moeten die iets bijschalen.
@@ -164,7 +152,7 @@
   [style=\it]
 
 \setupitemize[each]
-  [packed]
+  [packed,autointro]
   [headstyle=\ss\bf]
 
 \setupquote
@@ -270,7 +258,7 @@
    aligntitle=float]         % Zodat float's naast koppen kunnen staan.
 \setuphead[subsubsection]
   [style=\it,
-   aligntitle=float]         % Zodat float's naast koppen kunnen staan.
+   aligntitle=float]
 
 %D \section{Lijsten}
 %D
@@ -400,11 +388,7 @@
 \startmode[reader,scenario]
   \setuppapersize[A5][A5]
   \mainlanguage[nl]
-\stopmode
-
-\startmode[booklet]
-  \setuppapersize[A5][A4,landscape]
-  \setuparranging[2UP]
+  \setdigitmode 3
 \stopmode
 
 \startmode[scenario]
@@ -412,6 +396,12 @@
   \definesymbol[2][{\symbol[1]}]
   \definesymbol[3][{\symbol[1]}]
   \enablemode[electronic]
+\stopmode
+
+\startmode[booklet]
+  \setuppapersize[A5][A4,landscape]
+  \setuparranging[2UP]
+  \disablemode[electronic]
 \stopmode
 
 \startmode[reader,scenario,booklet] % Actief bij een van de drie
@@ -443,7 +433,7 @@
      style=,
      color=darkgray,
      contrastcolor=darkgray]
-  \placebookmarks[chapter,section,subsection][chapter]     
+  \placebookmarks[part,chapter,section,subsection][chapter]     
   \appendtoks
     \let\lbrace\empty
     \let\rbrace\empty
@@ -471,7 +461,7 @@
 \stopmode
 
 %C -----------------------------------------------------------------------------
-%D \chapter{Dessin en decoratie}
+%D \chapter{Dessign en decoratie}
 %D
 %D De commando's die in dit hoofdstuk worden gedefinieerd zijn \emph{geen} gebruikerscommando's. Om conflicten te voorkomen, laten we ze voorafgaan met \type{travellayout::}.
 
@@ -503,7 +493,9 @@
 
 %D Nu gaan we een golfje tekenen. Een extra stukje decoratie dat we gaan gebruiken om nieuwe hoofdstukken aan te geven. Dit doen we met in de tekentaal \METAPOST. Eerst moeten we \CONTEXT\ vertellen dat zij \METAPOST\ niet tijdens de \TEX-run kan uitvoeren. Hiervoor is \tex{write18} nodig, dat op de universiteit standaard uit staat. In plaats daarvan wordt \METAPOST\ uitgevoerd tussen de \TEX-runs.
 
+\startmode[*mkii]
 \runMPgraphicsfalse
+\stopmode
 
 %D Nu definieeren we enkele grootheden die we in de \METAPOST\ figuren gaan gebruiken. De eerste is de breedte van het snijwit, dit wordt de breedte van ons golfje. Vervolgens geven we het aantal periodes op van het golfje en berekenen we de breedte van het golfje.
 %D
@@ -511,11 +503,11 @@
 
 \startMPinclusions
 numeric CutSpace, wavePeriods, waveWidth;
-path unitwave; 
+path waveline; 
 CutSpace    := \the\cutspace;
 wavePeriods := 3 + 1/4; 
 waveWidth   := wavePeriods * 2*pi; 
-unitwave    := (origin for x=0 step 0.1 until waveWidth:
+waveline    := (origin for x=0 step 0.1 until waveWidth:
                  .. (x,x*sin(x)) 
                 endfor) scaled (1/waveWidth);
 \stopMPinclusions
@@ -527,13 +519,13 @@ unitwave    := (origin for x=0 step 0.1 until waveWidth:
 \startuniqueMPgraphic{travellayout::rightwave}
 pickup pencircle scaled 1pt; 
 draw origin -- (OverlayWidth,0);
-draw unitwave xscaled CutSpace yscaled (LineHeight/2) shifted (OverlayWidth,0);
+draw waveline xscaled CutSpace yscaled LineHeight shifted (OverlayWidth,0);
 setbounds currentpicture to boundingbox OverlayBox;
 \stopuniqueMPgraphic 
 
 \startuniqueMPgraphic{travellayout::leftwave}
 pickup pencircle scaled 1pt; 
-draw unitwave xscaled (-1*CutSpace) yscaled (LineHeight/2);
+draw waveline xscaled (-1*CutSpace) yscaled LineHeight;
 draw origin -- (OverlayWidth,0);
 setbounds currentpicture to boundingbox OverlayBox;
 \stopuniqueMPgraphic 
@@ -567,8 +559,6 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \enableregime[utf8]%FIXME: Niet meer nodig in MKIV.
 
-\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
-
 %D \section{Koppen van stukjes}
 %D
 %D \macros{report}
@@ -600,6 +590,9 @@ setbounds currentpicture to boundingbox OverlayBox;
 \definestartstop[emphasize]
   [style=\em]
 
+\define[1]\alert
+  {{\bf #1}}
+
 %D \macros{online}
 %D
 %D De standaard methode om in \CONTEXT\ methode zou zijn
@@ -614,7 +607,13 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \define[1]\online
   {\useurl[online][#1]
-   \goto{\url[online]}[url(#1)]}
+   \url[online]}
+   %\goto{\url[online]}[url(#1)]}
+
+\define[1]\vec
+  {\,{\bf #1}}%FIXME: Met \, ?
+\define\d
+  {{\rm d}}
 
 %D \subsection{Personalia}
 %D
@@ -648,40 +647,36 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D
 %D Mocht je dit een beetje te veel van het goede vinden, bieden we de mogelijkheid van een handmatige bibliografie, zoiets als de \type{thebibliography}-omgeving in \LATEX. Citeer in dit geval de publicaties \emph{niet} met de \tex{cite}-macro, maar met \tex{inbib}. Deze oplossing is iets minder flexibel, maar heeft als voordeel dat je geen apparte bibliografie aan hoeft te maken.
 
-\defineitemgroup[bibliography]
-\setupbibliography[each]
-  [packed]
-  [symbol=n,
-   left={[},
-   right={]},
-   stopper=,
-   itemalign=flushright,%FIXME: Lijkt niet te werken
-   width=2.5em]
+\setupbibtex
+  [database=\jobname]
 
-\definereferenceformat[inbib]
-  [left={[},
-   right={]}]
-
-%D TODO
-
-%\setupbibtex
-  %[database=\currentcomponent]
+\setuppublications
+  %[alternative=num]
+  [alternative=ams]
 
 \setuppublicationlayout[electronic]
-  {\insertauthors{}{.\space}{}%
-   \inserttitle{\bgroup\it}{\egroup.\space}{}%
-   \insertbiburl{}{}{}.}
+  {\insertauthors{}{,\space}{}%
+   \inserttitle{\bgroup\em}{\egroup,\space}{}%
+   \inserturl{}{}{}.}
 
-%D \section{Afkortingen, eenheden en \cap{url}'s}
+%D \section{Eenheden}
+
+\define[1]\unit
+  {\mathematics{\rm\,#1}}
+
+\define[2]\quantity
+  {\digits{#1}\unit{#2}}
+
+\define\degree
+  {{\math{^{\circ}}}} % Ja, echt met zoveel haakjes!!!
+
+%D \section{Afkortingen en \cap{url}'s}
 %D
 %D \macros{SMCR,MC,RU,IMAPP,IMM,HFML,DI,WINST,SNUF,NNV,FOM,NIKHEF,EPS,AM,PM,BC,AD,VC}
 %D
 %D Hier definieëren we enkele veelgebruikte afkortingen en \cap{url}'s. Let er op dat de \cap{url}'s kunnen veranderen! Ook laden we een zeer nuttige module, waarmee we op een systematische manier eenheden kunnen zetten.
 
-\usemodule[units]
 \usemodule[chemic]
-\define[1]\unit
-  {{\rm \digits{#1}}}
 
 \abbreviation{SMCR}  {Stichting Marie Curie Reizen}
 \abbreviation{MC}    {Studievereniging Marie Curie}

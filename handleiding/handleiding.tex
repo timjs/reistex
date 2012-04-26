@@ -1,0 +1,59 @@
+\startproduct handleiding
+\environment handleidinglayout
+
+\version[concept]%TODO: final!
+
+\setupbibtex
+  [database=handleiding]
+
+\startfrontmatter
+
+  \component zetwerk/kaft
+  \completecontent
+  \component hoofdstukken/inleiding
+
+\stopfrontmatter
+
+\startbodymatter
+
+  \part{Voor de reisdeelnemer}
+  \placecontent
+
+  \component hoofdstukken/schrijven
+  \component hoofdstukken/compileren
+
+  \startnotmode[deelnemer]
+  \part{Voor de verslaglegger}
+  \placecontent
+
+  \component hoofdstukken/samenvoegen
+  \component hoofdstukken/opmaken
+
+  \part{Voor de \TeX nerd}
+  \placecontent
+
+  \component hoofdstukken/code
+  \stopnotmode
+
+\stopbodymatter
+
+\startappendices
+
+  \part{Appendices}
+  \placecontent
+
+  \component appendices/symbolen
+  \component appendices/commandos
+  \component appendices/bibtex
+
+\stopappendices
+
+\startbackmatter
+
+  %\completepublications
+  \component zetwerk/colofon
+
+\stopbackmatter%FIXME: extra page
+
+\stopproduct
+
