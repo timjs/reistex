@@ -672,6 +672,8 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 %D \section{Chemical}
 
+\usemodule[chemic]
+
 \setupchemical
   [offset=high,
    size=medium]
@@ -703,7 +705,7 @@ setbounds currentpicture to boundingbox OverlayBox;
                          \rawcharacter{\recurselevel}}}}%
    \uccode `\~=`\F \uppercase{\def~{\finishchem F\fluortrue}}%
    \catcode`\-=\active \uccode`\~=`\- \uppercase{\def~{--}}%
-   \loggingall
+   %\loggingall
    \domolecule }%
 
 \def\domolecule#1%
@@ -715,8 +717,6 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D \macros{SMCR,MC,RU,IMAPP,IMM,HFML,DI,WINST,SNUF,NNV,FOM,NIKHEF,EPS,AM,PM,BC,AD,VC}
 %D
 %D Hier definieëren we enkele veelgebruikte afkortingen en \cap{url}'s. Let er op dat de \cap{url}'s kunnen veranderen! Ook laden we een zeer nuttige module, waarmee we op een systematische manier eenheden kunnen zetten.
-
-\usemodule[chemic]
 
 \abbreviation{SMCR}  {Stichting Marie Curie Reizen}
 \abbreviation{MC}    {Studievereniging Marie Curie}
