@@ -670,6 +670,46 @@ setbounds currentpicture to boundingbox OverlayBox;
 \define\degree
   {{\math{^{\circ}}}} % Ja, echt met zoveel haakjes!!!
 
+%D \section{Chemical}
+
+\setupchemical
+  [offset=high,
+   size=medium]
+
+% TODO: Onderstaande zit standaard in MKIV, dus we kunnen er nu ook gebruik van maken.
+\newbox\chemlowbox
+\def\chemlow#1%
+  {\setbox\chemlowbox\hbox{{\switchtobodyfont[small]#1}}}
+
+\def\chemhigh#1%
+  {\ifvoid\chemlowbox \high{{\switchtobodyfont[small]#1}}%
+   \else \/\lohi{\box\chemlowbox}{{\switchtobodyfont[small]#1}}\fi }
+
+\def\finishchem%
+   {\ifvoid\chemlowbox \else
+     \iffluor \fluorfalse \kern-.1em \fi\low{\box\chemlowbox}\fi}
+
+% for "kerning" after F
+\newif\iffluor
+
+\unexpanded\def\molecule%
+  {\bgroup
+   \catcode`\_=\active \uccode`\~=`\_ \uppercase{\let~\chemlow}%
+   \catcode`\^=\active \uccode`\~=`\^ \uppercase{\let~\chemhigh}%
+   \dostepwiserecurse {65}{90}{1}
+      {\catcode \recurselevel = \active
+       \uccode`\~=\recurselevel
+       \uppercase{\edef~{\noexpand\finishchem
+                         \rawcharacter{\recurselevel}}}}%
+   \uccode `\~=`\F \uppercase{\def~{\finishchem F\fluortrue}}%
+   \catcode`\-=\active \uccode`\~=`\- \uppercase{\def~{--}}%
+   \loggingall
+   \domolecule }%
+
+\def\domolecule#1%
+  {\expandafter\scantokens\expandafter
+        {\detokenize{#1\finishchem}}\egroup}
+
 %D \section{Afkortingen en \cap{url}'s}
 %D
 %D \macros{SMCR,MC,RU,IMAPP,IMM,HFML,DI,WINST,SNUF,NNV,FOM,NIKHEF,EPS,AM,PM,BC,AD,VC}
