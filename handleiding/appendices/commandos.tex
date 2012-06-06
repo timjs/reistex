@@ -9,7 +9,7 @@ Hieronder staat een overzicht van de meest gebruikte commando's in \LATEX\ in \C
 
 Argumenten worden, waar nodig, aangegeven met \type{...}. Bij meerdere argumenten gebruiken we namen tussen puntjes:\footnote{\TEX\ heeft al zoveel haakjes\periods} bijvoorbeeld \type{.label.} en \type{.bijschrift.}.
 
-De commando's zijn geordend onder dezelfde kopjes als in \in{hoofdstuk}[chap:stukje]. Zie de desbetreffende secties voor meer informatie.
+De commando's zijn geordend onder dezelfde kopjes als in \in{hoofdstuk}[chap:schrijven]. Zie de desbetreffende secties voor meer informatie.
 \stopemphasize
 
 \section{Structuur}
@@ -293,22 +293,32 @@ Niet beschikbaar in standaard \LATEX. Dit is wat er het meest in de buurt komt:
 \stoptyping
 \nextsidebysidetext
 \starttyping
-\inbib[.naam.]
+\cite[.naam.]
 \stoptyping
 \stopsidebysidetext
 
 \startsidebysidetext
 \starttyping
-\begin{thebibliography}
-\bibitem{.naam.} ...
-\end{thebibliography}
+\bibliography{}
 \stoptyping
 \nextsidebysidetext
 \starttyping
-\startbibliography
-\item[.naam.] ...
-\stopbibliography
+\placepublications
 \stoptyping
 \stopsidebysidetext
+
+%\startsidebysidetext
+%\starttyping
+%\begin{thebibliography}
+%\bibitem{.naam.} ...
+%\end{thebibliography}
+%\stoptyping
+%\nextsidebysidetext
+%\starttyping
+%\startbibliography
+%\item[.naam.] ...
+%\stopbibliography
+%\stoptyping
+%\stopsidebysidetext
 
 \stopcomponent
