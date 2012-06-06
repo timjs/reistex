@@ -82,9 +82,9 @@ Bovenstaande alinea is namelijk gezet met:
 \typebuffer
 
 \startframedtext
-Het belangrijkste \emph{blok} waarmee \TEX\ een tekst opbouwd is de \emph{alinea} (\emph{\en paragraph}). Alinea's worden gescheiden door een of meerdere \emph{witregels}. Let erop dat je dit niet vergeet.
+Het belangrijkste \emph{blok} waarmee \TEX\ een tekst opbouwt is de \emph{alinea} (\emph{\en paragraph}). Alinea's worden gescheiden door een of meerdere \emph{witregels}. Let erop dat je dit niet vergeet.
 
-Forceer \TEX\ \emph{nooit} om binnen een alinea regels af te breken. Dit levert niet alleen een lelijk uitgelijnde tekst op. Het zorgt er ook voor dat \TEX\ meer moeite heeft om je alinea af te breken en over pagina's te verdelen. Bedenk dus goed waar je een nieuwe alinea begint en gebruik geen \emph{subalinea's} of iets dergelijks. Het in \LATEX\ veelgebruikte commando \tex{\} is in \CONTEXT\ niet eens gedefinieerd!
+Forceer \TEX\ \emph{nooit} om binnen een alinea regels af te breken. Dit levert niet alleen een lelijk uitgelijnde tekst op. Het zorgt er ook voor dat \TEX\ meer moeite heeft om je alinea af te breken en over pagina's te verdelen. Bedenk dus goed waar je een nieuwe alinea begint en gebruik geen \emph{subalinea's} of iets dergelijks. Het in \LATEX\ veelgebruikte commando \type{\\} is in \CONTEXT\ niet eens gedefinieerd!
 \stopframedtext
 
 \subsection{Escapes}
@@ -95,7 +95,8 @@ Ook \sim\ is een speciaal teken dat je niet zomaar kunt gebruiken. Met een \sim\
 
 \subsection{Accenten}
 
-Als je \TEX\ nog niet gewend bent, hoef je nergens bang voor te zijn. Je kunt accenten op letters gewoon zo intikken als je gewend bent in Word of een andere tekstverwerker: é, ü, ì, â enzovoorts. Dit kun je ook doen met Griekse letters (αλφαβητος), het €-teken en andere vreemde letters als ß, œ, Æ enzovoorts. Voor de \LATEX-nerds misschien een kleine schok, maar je hoeft dus geen accenten te zetten met backslashes.\footnote{Als je dat wilt, kan het wel.}
+Als je \TEX\ nog niet gewend bent, hoef je nergens bang voor te zijn. Je kunt accenten op letters gewoon zo intikken als je gewend bent in Word of een andere tekstverwerker: é, ü, ì, â enzovoorts. Dit kun je ook doen met Griekse letters (αλφαβητος), het euro%€
+-teken en andere vreemde letters als ß, œ, Æ enzovoorts. Voor de \LATEX-nerds misschien een kleine schok, maar je hoeft dus geen accenten te zetten met backslashes.\footnote{Als je dat wilt, kan het wel.}
 
 \section{Tekst}
 
@@ -379,7 +380,7 @@ f(x) = \startcases
 
 \subsection{Chemische formules}
 
-Ja, ik weet het, je bent geen scheiko,\footnote{Net zo goed als je geen wisko bent.} maar soms moet je nou eenmaal een chemische formule opschrijven. De verleiding is groot dit in wiskundemodus te zetten.
+Ja, ik weet het, je bent geen scheikundige,\footnote{Net zo goed als je geen wiskundige bent.} maar soms moet je nou eenmaal een chemische formule opschrijven. De verleiding is groot dit in wiskundemodus te zetten.
 
 \startbuffer
 \startformula
@@ -399,7 +400,7 @@ Hmm, volgens mij hebben scheikundigen de letters toch liever rechtop\periods\ In
 \typebuffer
 \getbuffer
 
-Oeps, volgens mij is dit een evenwichtsreactie. Nog een kleine aanpassing.
+Oeps, dit is eigenlijk een evenwichtsreactie. Nog een kleine aanpassing.
 
 \startbuffer
 \startformula
@@ -409,7 +410,7 @@ Oeps, volgens mij is dit een evenwichtsreactie. Nog een kleine aanpassing.
 \typebuffer
 \getbuffer
 
-Volgens mij zijn de scheiko's nu wel tevreden! \tex{chemical} kun je ook in de lopende tekst gebruiken en ook om een enkel molecuul of ion te zetten. \type{\chemical{C_2O_4^{2-}}} geeft netjes \chemical{C_2O_4^{2-}}. Met dit commando kun je zelfs hele chemische structuren tekenen! Het gaat iets te ver dat hier ook allemaal uit te leggen, meer informatie kun je vinden in \unknown
+Zo, nu zijn de scheikundigen wel tevreden! \tex{chemical} kun je ook in de lopende tekst gebruiken en ook om een enkel molecuul of ion te zetten. \type{\chemical{C_2O_4^{2-}}} geeft netjes \chemical{C_2O_4^{2-}}. Met dit commando kun je zelfs hele chemische structuren tekenen! Het gaat iets te ver dat hier ook allemaal uit te leggen, meer informatie kun je vinden in \unknown.
 
 \subsection[sec:eenheden]{Eenheden}
 
