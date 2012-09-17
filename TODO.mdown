@@ -1,0 +1,61 @@
+Te Doen
+=======
+
+Layout
+------
+
+* Todo's als register
+* Op rechter pagina beginnen na `\part`
+* `\nonknutmode` toevoegen
+* URL's in BibTeX
+  (zie ook mail van Stan)
+
+Handleiding
+-----------
+
+* Stijltips toevoegen aan handleiding
+  - Voetnoten zijn hele zinnen, dus met punt aan het eind!
+  - \head vs \subsection
+  - Actieve zinnen!
+  - \quote vs \emph
+  - " " vs \quote
+* Unicode heformuleren
+* Draaiboektips toevoegen aan handleiding
+* Inleiding herschrijven
+* Voetnoot kapitalen grieks
+* Wiskunde in bronnen aanstippen
+* Geen et. al. in bib maar alle auteurs
+* Bra's en ket's toevoegen
+* Expliciet uitleggen wat "figuur" betekent in \in{figuur}
+* Apart compileren componenten benadrukken
+* Mini inhoud bij delen opperen
+* gather-omgeving toevoegen
+* grep voor spelfouten enzo aanstippen
+* \page[yes] enzo
+* Abbreviaties naar boven halen wanneer ze in titels staan
+* Verschil haakjes latex context
+* Verwijzen naar figuren binnen combinatie
+* \placepublications geeft alleen uitvoer bij gebruik van \cite
+* Plaatjes met tikz
+* wdiff om verschil tussen stukjes te bekijken
+* Omzetten naar \unit
+* BibTeX gebruiken ipv \useurl
+* pipen: ls -l | grep .tex
+* redirecten: wdiff faal1.tex faal2.tex > verschillen.tex
+* bash_unset commando toevoegen (evt.)
+* Chemical toch als wiskunde?
+* \periods door \dots (?)
+* ssh uitleggen
+* PuTTY en XWin aanstippen
+* Inleiding splitsen voor deelnemers en rest
+* Stuk over plagiaat toevoegen
+* Uitleg over hulpbestanden
+* completelistofunits eruit
+* p31 betekend --> betekent
+* p13 allen --> alleen
+* modes updaten
+* Commando's mail Esther
+* Extra haakjes om expliciete element in BibTeX (waarom word mijn tekst afgekort?)
+* Alle hulpbestande verwijderen (nodig bij hetschrijven van .bib) (goede manier vinden)
+* geen spaties in labels en voor BibTeX keys!
+* \nonknuthmode verwerken
