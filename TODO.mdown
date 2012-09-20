@@ -9,6 +9,9 @@ Layout
 * `\nonknutmode` toevoegen
 * URL's in BibTeX
   (zie ook mail van Stan)
+* \start/stopchapter ipv \report gebruiken (?)
+* \emph en \alert als \definehighlight
+* Overstappen op MKIV (?)
 
 Handleiding
 -----------
@@ -59,3 +62,6 @@ Handleiding
 * Alle hulpbestande verwijderen (nodig bij hetschrijven van .bib) (goede manier vinden)
 * geen spaties in labels en voor BibTeX keys!
 * \nonknuthmode verwerken
+* Problemen met extensies en afbeeldingen toevoegen
+  - alleen kleine letters
+  - geen jpeg maar jpg
