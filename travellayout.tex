@@ -126,14 +126,18 @@
 %D
 %D Het \type{hanging}-typescript zorgt voor een typografisch extratje. Die zorgt ervoor dat komma's, punten en afbreekstreepjes iets in de rechter marge worden geplaatst. Het gevolg is dat de kantlijn minder rafelig oogt.
 
-\usetypescript[serif][hanging][normal]
+%\usetypescript[serif][hanging][normal]
 
-\definetypeface[UtopiaHelvetica][rm][serif][fourier]
-\definetypeface[UtopiaHelvetica][ss][sans][helvetica][default][rscale=0.87]
-\definetypeface[UtopiaHelvetica][tt][mono][modern]
-\definetypeface[UtopiaHelvetica][mm][math][fourier]
+%\definetypeface[UtopiaHelvetica][rm][serif][fourier]
+%\definetypeface[UtopiaHelvetica][ss][sans][helvetica][default][rscale=0.87]
+%\definetypeface[UtopiaHelvetica][tt][mono][modern]
+%\definetypeface[UtopiaHelvetica][mm][math][fourier]
 
-\setupbodyfont[UtopiaHelvetica,11pt]
+%\setupbodyfont[UtopiaHelvetica,11pt]
+
+\usemodule[simplefonts]
+\setmainfont[Utopia Std]
+\setsansfont[Helvetica Neue]
 
 \setupbodyfontenvironment[default]
   [em=\it]
@@ -170,12 +174,12 @@
   [left={\symbol[leftquote]},
    right={\symbol[rightquote]}]
 
-\setupfootnotes
+\setupnote[footnote]
   [way=bychapter,
    rulethickness=1pt,
    numbercommand=] % We willen geen superscript
-\setupfootnotedefinition
-  [location=left,
+\setupnotation[footnote]
+  [alternative=left,
    distance=0.5em]
 
 \setupinmargin
@@ -583,8 +587,10 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D
 %D In \CONTEXT wordt benadrukte tekst gezet met de \tex{em}-declaratie. Om de \LATEX\ gebruiker te hulp te schieten, en omdat het er (naar mijn mening) netter uit ziet, definieeren we de oude vertrouwde \tex{emph} hier. Om meerdere alinea's te benadrukken definieeren we ook de omgeving \tex{start/stopemphasize}
 
-\define[1]\emph
-  {{\em #1}}
+\definehighlight[emph]
+  [style=\em]
+\def\emph#1
+  {{#1}}
 \definestartstop[emphasize]
   [style=\em]
 
