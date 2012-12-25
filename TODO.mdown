@@ -1,20 +1,27 @@
-Te Doen
-=======
+# Te Doen #
 
-Layout
-------
+## Layout ##
+
+### Mark II ###
 
 * Todo's als register
 * Op rechter pagina beginnen na `\part`
-* `\nonknutmode` toevoegen
 * URL's in BibTeX
   (zie ook mail van Stan)
-* `\start/stopchapter` ipv `\report` gebruiken (?)
-* `\emph` en `\alert` als `\definehighlight`
-* Overstappen op MKIV (?)
 
-Handleiding
------------
+### Backpoorts van Mark IV ###
+
+* `\url[..]` onderscheiden van `\url{..}` en tweede definieeren met behulp van asciimode
+* `\nonknutmode` toevoegen
+  * `\makecharacterother`
+  * Gebruiken om `^`, `_`, `&` en `|` other te maken
+
+### Overstap naar Mark IV ###
+
+* `\emph` en `\alert` als `\definehighlight`
+* `\start/stopchapter` ipv `\report` gebruiken (?)
+
+## Handleiding ##
 
 ### Puntjes Menno ###
 
