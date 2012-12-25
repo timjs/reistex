@@ -12,7 +12,8 @@
 ### Backpoorts van Mark IV ###
 
 * `\url[..]` onderscheiden van `\url{..}` en tweede definieeren met behulp van asciimode
-* `\nonknutmode` toevoegen
+* catcodes
+  * `\nonknutmode` toevoegen oid
   * `\makecharacterother`
   * Gebruiken om `^`, `_`, `&` en `|` other te maken
 
