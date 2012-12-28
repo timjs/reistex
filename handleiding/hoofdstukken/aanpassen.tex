@@ -1,0 +1,34 @@
+\startcomponent code
+\product        handleiding
+\environment    handleidinglayout
+
+\def\startmoduledocumentation[#1]{}
+\let\stopmoduledocumentation\relax
+\let\startdocumentation\relax
+\let\stopdocumentation\relax
+
+\define[1]\macros
+  {\margintitle{\processcommalist[#1]\domacro}}
+\define[1]\domacro
+  {@\\doboundtext{#1@{\marginwidth}{\periods}}\crlf}
+
+\definetyping[definition]
+  [before={\setupparagraphnumbering[state=start]},
+   after={\setupparagraphnumbering[state=stop]}]
+
+\setupparagraphnumbering
+  [distance=0pt,
+   style=\tfx\it]
+
+% Het ligt er aan in welke map we dit component compileren of we twee
+% of een hoger moeten zitten...
+\installprogram{texmfstart --ifchanged=../../travellayout.tex
+                ctxtools --documentation ../../travellayout.tex}
+\installprogram{texmfstart --ifchanged=../travellayout.tex
+                ctxtools --documentation ../travellayout.tex}
+
+\processfile{travellayout.ted}
+
+\stopcomponent
+
+% vim: ft=context

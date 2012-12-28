@@ -8,31 +8,31 @@
   {\getmarking[part]}
 
 \startemphasize
-In dit hoofdstuk geven we enkele tips voor het opmaken van een verslag, reader of ander document. We behandelen uitgebreid het plaatsen van figuren. Iets waar \LATEX\ nogal eens moeite mee heeft, maar de makers van \CONTEXT\ extra aandacht aan besteed hebben. Daarnaast behandelen we nog enkele commando's die speciaal voor het zetten van verslagen en readers zijn toegevoegd aan \type{travellayout.tex}.
+In dit hoofdstuk geven we enkele tips voor het opmaken van een verslag, reader of ander document. We behandelen uitgebreid het plaatsen van figuren. Iets waar \LATEX\ nogal eens moeite mee heeft, maar de makers van \CONTEXT\ extra aandacht aan besteed hebben. Daarnaast behandelen we nog enkele commando's die speciaal voor het zetten van verslagen en readers zijn toegevoegd aan @travellayout.tex@.
 \stopemphasize
 
 \placecontent
 
 \section{De omgeving}
 
-De stijl van alle stukjes, het verslag, de reader en ook dit document staat gedefinieerd in \type{travellayout.tex}. Vandaar dat we deze telkens boven aan het bronbestand aanroepen met
+De stijl van alle stukjes, het verslag, de reader en ook dit document staat gedefinieerd in @travellayout.tex@. Vandaar dat we deze telkens boven aan het bronbestand aanroepen met
 \starttyping
 \environment travellayout.tex
 \stoptyping
 In \CONTEXT-jargon noemen we dit de \emph{omgeving} waarin we het document zetten. Dit zorgt ervoor dat we structuur en opmaak gescheiden kunnen houden.
 
-Met stijl bedoelen we de paginamarges, opmaak van de kopjes en inhoudsopgave, maar ook de voetnoten, bijschriften van figuren en tabellen, de paginanummering enzovoorts. In \type{travellayout.tex} is voldoende uitleg te vinden over de gebruikte commando's. Dit commentaar kun je natuurlijk in het bestand zelf lezen. Maar \CONTEXT\ kan het geheel ook in \PDF-vorm voor je uitdraaien. Dit doe je door de omgeving te compileren met de optie \type{--module}.
+Met stijl bedoelen we de paginamarges, opmaak van de kopjes en inhoudsopgave, maar ook de voetnoten, bijschriften van figuren en tabellen, de paginanummering enzovoorts. In @travellayout.tex@ is voldoende uitleg te vinden over de gebruikte commando's. Dit commentaar kun je natuurlijk in het bestand zelf lezen. Maar \CONTEXT\ kan het geheel ook in \PDF-vorm voor je uitdraaien. Dit doe je door de omgeving te compileren met de optie @--module@.
 \starttyping
 texexec --module travellayout
 \stoptyping
 
 \section{Toegevoegde commando's}
 
-In de componenten en producten gebruiken we eigenlijk alleen maar standaard \CONTEXT\ commando's. Dat betekend dat we de stukjes ook gewoon kunnen compileren zonder de omgeving in elk bronbestand aan te roepen of door domweg het bestand \type{travellayout.tex} weg te laten uit de mapstructuur.
+In de componenten en producten gebruiken we eigenlijk alleen maar standaard \CONTEXT\ commando's. Dat betekend dat we de stukjes ook gewoon kunnen compileren zonder de omgeving in elk bronbestand aan te roepen of door domweg het bestand @travellayout.tex@ weg te laten uit de mapstructuur.
 
-Hier zijn twee belangrijke uitzonderingen op. Dit zijn de commando's \tex{emph} en \tex{report}. De eerste is gedefinieerd voor het gemak. Het is een standaard commando in \LATEX\ en leest veel fijner dan de \CONTEXT-declaratie \type{{\em }}. De tweede is een wrapper om \tex{chapter}. Het zorgt ervoor dat we ook een auteur en een datum kunnen toekennen aan ieder hoofdstuk.
+Hier zijn twee belangrijke uitzonderingen op. Dit zijn de commando's @\emph@ en @\report@. De eerste is gedefinieerd voor het gemak. Het is een standaard commando in \LATEX\ en leest veel fijner dan de \CONTEXT-declaratie @{\em @}. De tweede is een wrapper om @\chapter@. Het zorgt ervoor dat we ook een auteur en een datum kunnen toekennen aan ieder hoofdstuk.
 
-\subsection{\tex{emph} en \tex{start/stopemphasize}}
+\subsection{@\emph@ en @\start/stopemphasize@}
 
 \startframedtext
 \startsidebysidetext
@@ -53,7 +53,7 @@ Voor alinea's:
 \stopargumenttable
 \stopframedtext
 
-\tex{emph} zorgt er voor dat we tekst op een gestructureerde manier kunnen benadrukken, zonder direct een \emph{stijl} toe te kennen, zoals vet, klein kapitaal of cursief\seedocumentation{31.7}{5.6}. Daarbij is het commando slim genoeg om bijvoorbeeld benadrukte tekst binnen verschillende stijlen goed weer te geven zoals te zien in het volgende voorbeeld.
+@\emph@ zorgt er voor dat we tekst op een gestructureerde manier kunnen benadrukken, zonder direct een \emph{stijl} toe te kennen, zoals vet, klein kapitaal of cursief\seedocumentation{31.7}{5.6}. Daarbij is het commando slim genoeg om bijvoorbeeld benadrukte tekst binnen verschillende stijlen goed weer te geven zoals te zien in het volgende voorbeeld.
 
 \startbuffer
 De afkorting \emph{emph} staat voor \emph{emphasis}.
@@ -68,9 +68,9 @@ De afkorting \emph{emph} staat voor \emph{emphasis}.
 \getbuffer
 \stoplines
 
-Om meerdere alinea's te benadrukken kun je ze tussen \tex{startemphasize} en \tex{stopemphasize} zetten.
+Om meerdere alinea's te benadrukken kun je ze tussen @\startemphasize@ en @\stopemphasize@ zetten.
 
-\subsection[sec:report]{\tex{report}}
+\subsection[sec:report]{@\report@}
 
 \startframedtext
 \starttyping
@@ -84,14 +84,14 @@ Om meerdere alinea's te benadrukken kun je ze tussen \tex{startemphasize} en \te
 \stopargumenttable
 \stopframedtext
 
-Zoals gezegd is de enige toegevoegde waarde van \tex{report} dat we de datum en de auteur aan een hoofdstuk kunnen meegeven. De volgende twee regels zijn dan ook geheel equivalent.
+Zoals gezegd is de enige toegevoegde waarde van @\report@ dat we de datum en de auteur aan een hoofdstuk kunnen meegeven. De volgende twee regels zijn dan ook geheel equivalent.
 
 \starttyping
 \report{Een hoodstuk zonder extra informatie}{}{}
 \chapter{Een hoodstuk zonder extra informatie}
 \stoptyping
 
-\subsection{\tex{personalia}}
+\subsection{@\personalia@}
 
 \startframedtext
 \startsidebysidetext
@@ -120,7 +120,7 @@ Uitgebreide vorm:
 \stopargumenttable
 \stopframedtext
 
-Voor de reader en het draaiboek is het handig om op een overzichtelijke manier de persoonlijke gegevens van alle reisdeelnemers te zetten. Hiervoor hebben we het commando \tex{personalia} toegevoegd.
+Voor de reader en het draaiboek is het handig om op een overzichtelijke manier de persoonlijke gegevens van alle reisdeelnemers te zetten. Hiervoor hebben we het commando @\personalia@ toegevoegd.
 
 Met dit commando kunnen we drie kolommen zetten met daarin bijvoorbeeld een pasfoto, het adres en het telefoonnummer van de deelnemer. Dit is een voorbeeld van zogenaamde \emph{paragrafen} ({\en \emph{paragraphs}}) in \CONTEXT\seedocumentation{12}{4.11}. We kunnen ze dan ook op twee manieren gebruiken: de compacte vorm en de uitgebreide vorm. De uitvoer is exact hetzelfde.
 
@@ -147,17 +147,17 @@ Met dit commando kunnen we drie kolommen zetten met daarin bijvoorbeeld een pasf
 \stopbuffer
 \typebuffer
 
-De \tex{start/stoplines} zorgen er voor dat de regeleinden behouden blijven. Het tweede argument van \tex{externalfigure} is een voorgedefinieerde grootte. Zo hoef je er niet over na te denken hoe groot de afbeelding moet zijn en het scheelt tikwerk. Het resultaat is als volgt.
+De @\start/stoplines@ zorgen er voor dat de regeleinden behouden blijven. Het tweede argument van @\externalfigure@ is een voorgedefinieerde grootte. Zo hoef je er niet over na te denken hoe groot de afbeelding moet zijn en het scheelt tikwerk. Het resultaat is als volgt.
 
 \getbuffer
 
 \section{Plaatsen van figuren}
 
-Voor het plaatsen van figuren gebruiken we het standaard \CONTEXT-commando \tex{placefigure}. Het staat uitgebreid beschreven in de \from[excursion] en de \from[manual], maar omdat het zo een belangrijk onderdeel is van een verslag, leggen we het hier nogmaals uit. Een ander handig \CONTEXT-commando is \tex{start/stopcombination}. Hiermee kunnen we figuren naast elkaar of onder elkaar zetten.
+Voor het plaatsen van figuren gebruiken we het standaard \CONTEXT-commando @\placefigure@. Het staat uitgebreid beschreven in de \from[excursion] en de \from[manual], maar omdat het zo een belangrijk onderdeel is van een verslag, leggen we het hier nogmaals uit. Een ander handig \CONTEXT-commando is @\start/stopcombination@. Hiermee kunnen we figuren naast elkaar of onder elkaar zetten.
 
-\subsection{\tex{placefigure}}
+\subsection{@\placefigure@}
 
-Het plaatsen van figuren in een technisch document is altijd lastig. De makers van \CONTEXT\ hebben hier extra aandacht aan besteed zodat \CONTEXT\ om kan gaan met grote hoeveelheden figuren. Met \tex{placefigure} kun je zowel figuren tussen de tekst plaatsen als naast de tekst of op aparte pagina's\seedocumentation{10}{12.2}. Het commando \tex{placemarginfigure} hebben we toegevoegd om figuren in de marge te plaatsen of om ze uit de marge te laten steken.
+Het plaatsen van figuren in een technisch document is altijd lastig. De makers van \CONTEXT\ hebben hier extra aandacht aan besteed zodat \CONTEXT\ om kan gaan met grote hoeveelheden figuren. Met @\placefigure@ kun je zowel figuren tussen de tekst plaatsen als naast de tekst of op aparte pagina's\seedocumentation{10}{12.2}. Het commando @\placemarginfigure@ hebben we toegevoegd om figuren in de marge te plaatsen of om ze uit de marge te laten steken.
 
 \startframedtext
 \starttyping
@@ -168,11 +168,11 @@ Het plaatsen van figuren in een technisch document is altijd lastig. De makers v
 \NC  1   \NC   ..,..    \NC   plaatsingsopties \emph{(optioneel)}                         \NR
 \NC  2   \NC   ref,...  \NC   label(s) om naar te verwijzen \emph{(optioneel)}            \NR
 \NC  3   \NC   tekst    \NC   bijschrift, laat dit leeg als je geen bijschrift wilt       \NR
-\NC  4   \NC   tekst    \NC   inhoud, meestal wil je hier \tex{externalfigure} gebruiken\footnote{Maar je kunt natuurlijk ook een tabel plaatsen en die samen nummeren met de figuren. Mocht je dat om een of andere onverklaarbare reden willen\periods}  \NR
+\NC  4   \NC   tekst    \NC   inhoud, meestal wil je hier @\externalfigure@ gebruiken\footnote{Maar je kunt natuurlijk ook een tabel plaatsen en die samen nummeren met de figuren. Mocht je dat om een of andere onverklaarbare reden willen\periods}  \NR
 \stopargumenttable
 \stopframedtext
 
-\tex{placemarginfigure} is niet zozeer een nieuw commando. Het is een kloon die we \CONTEXT\ hebben laten maken van de originele \tex{placefigure}. Hierbij hebben we een opmaak voorgedefinieerd, namelijk dat het figuur in de marge komt te staan. Het gebruik van dit commando is verder geheel analoog aan het origineel.
+@\placemarginfigure@ is niet zozeer een nieuw commando. Het is een kloon die we \CONTEXT\ hebben laten maken van de originele @\placefigure@. Hierbij hebben we een opmaak voorgedefinieerd, namelijk dat het figuur in de marge komt te staan. Het gebruik van dit commando is verder geheel analoog aan het origineel.
 
 Een standaard figuur is een zogenaamde \emph{float}. Dat betekend dat, wanneer \CONTEXT\ geen plek kan vinden voor het figuur op de huidige pagina, hij op zoek gaat naar ruimte iets verderop in het document. Door een plaatsingsoptie mee te geven kunnen we dit uitstel proces beïnvloeden. De meest gebruikte opties zijn te vinden in \in{tabel}[tab:plaatsing]. Dit geldt trouwens ook voor andere floats, zoals tabellen.
 
@@ -192,8 +192,8 @@ Een standaard figuur is een zogenaamde \emph{float}. Dat betekend dat, wanneer \
 \HL
 \stoptabulate
 
-De laatste vier opties uit \in{tabel}[tab:plaatsing] creëren een \emph{zijfiguur}. Dat wil zeggen dat de tekst langs het figuur doorloopt in plaats van boven en onder. Bij de opties \type{left} en \type{right} loop de tekst respectievelijk rechts en links langs het figuur. Het is echter beter om \type{inner} en \type{outer} te gebruiken. Op oneven pagina's hebben ze hetzelfde effect als \type{left} en \type{right}, maar op even pagina's is de definitie precies anders om.
-%Maar wanneer er meerdere afbeeldingen op dezelfde pagina staan, is het mooi om een van de twee tegen de binnenmarge te zetten. Dit doen we met de plaatsingsoptie \type{inner}. We kunnen ook gebruikmaken van \type{left} en \type{right} wanneer we de figuur echt altijd tegen de linker respectievelijk rechter marge willen zetten, ongeacht op wat voor pagina we zitten.
+De laatste vier opties uit \in{tabel}[tab:plaatsing] creëren een \emph{zijfiguur}. Dat wil zeggen dat de tekst langs het figuur doorloopt in plaats van boven en onder. Bij de opties @left@ en @right@ loop de tekst respectievelijk rechts en links langs het figuur. Het is echter beter om @inner@ en @outer@ te gebruiken. Op oneven pagina's hebben ze hetzelfde effect als @left@ en @right@, maar op even pagina's is de definitie precies anders om.
+%Maar wanneer er meerdere afbeeldingen op dezelfde pagina staan, is het mooi om een van de twee tegen de binnenmarge te zetten. Dit doen we met de plaatsingsoptie @inner@. We kunnen ook gebruikmaken van @left@ en @right@ wanneer we de figuur echt altijd tegen de linker respectievelijk rechter marge willen zetten, ongeacht op wat voor pagina we zitten.
 
 \startbuffer
 \placefigure[inner]
@@ -202,7 +202,7 @@ De laatste vier opties uit \in{tabel}[tab:plaatsing] creëren een \emph{zijfiguu
 \stopbuffer
 \getbuffer
 
-We laten nu een paar voorbeelden zien van figuren. Waar mogelijk laten we de optionele haakjes van \tex{placefigure} weg. Let op dat wanneer je geen plaatsing wilt opgeven, maar wel een label je het eerste paar rechte haakjes \emph{wel} meegeeft! De aarde is gezet met:
+We laten nu een paar voorbeelden zien van figuren. Waar mogelijk laten we de optionele haakjes van @\placefigure@ weg. Let op dat wanneer je geen plaatsing wilt opgeven, maar wel een label je het eerste paar rechte haakjes \emph{wel} meegeeft! De aarde is gezet met:
 
 \typebuffer
 
@@ -217,12 +217,12 @@ Een zijfiguur hoort bij de paragraaf die \emph{onder} hem staat. Wanneer het fig
 \startitemize[n]
 \head Maak het figuur groter of kleiner
 
-In plaats van \type{0.6\textwidth} is \type{0.5\textwidth} misschien voldoende en past het nog wel op de pagina. Wil je dit niet, dan kun je misschien een figuur dat daarboven staat groter maken, zodat de pagina meer opvult.
+In plaats van @0.6\textwidth@ is @0.5\textwidth@ misschien voldoende en past het nog wel op de pagina. Wil je dit niet, dan kun je misschien een figuur dat daarboven staat groter maken, zodat de pagina meer opvult.
 
 \getbuffer
 \head Zet het figuur in de marge
 
-Vooral handig bij kleine figuren. Let er op dat je de breedte van het figuur dan gelijk maakt aan de breedte van de marge. Hier is \tex{marginwidth} erg handig voor.
+Vooral handig bij kleine figuren. Let er op dat je de breedte van het figuur dan gelijk maakt aan de breedte van de marge. Hier is @\marginwidth@ erg handig voor.
 
 \typebuffer
 
@@ -238,7 +238,7 @@ Ofwel, gebruik geen plaatsingsoptie. Deze figuren worden vastgehouden. Pas wanne
 
 \head Zet het figuur op een aparte pagina
 
-Als een afbeelding erg groot is, dan kan het handig zijn hier een aparte pagina voor te reserveren. Alles wat je hoeft te doen is de plaatsingsoptie \type{page} mee te geven aan \tex{placefigure}.\footnote{Kan ook bij \tex{placemarginfigure}, maar is een beetje vreemd vind je niet?}
+Als een afbeelding erg groot is, dan kan het handig zijn hier een aparte pagina voor te reserveren. Alles wat je hoeft te doen is de plaatsingsoptie @page@ mee te geven aan @\placefigure@.\footnote{Kan ook bij @\placemarginfigure@, maar is een beetje vreemd vind je niet?}
 \stopitemize
 
 \startbuffer
@@ -252,7 +252,7 @@ Plaatjes zetten blijft altijd een beetje prutsen. Het is een goed idee om, bij h
 
 \typebuffer
 
-\subsection{\tex{start/stopcombination}}
+\subsection{@\start/stopcombination@}
 
 \startframedtext
 \starttyping
@@ -263,7 +263,7 @@ Plaatjes zetten blijft altijd een beetje prutsen. Het is een goed idee om, bij h
 \stoptyping
 \startargumenttable
 \NC  1  \NC  n*m    \NC  een matrix van $n$ kolommen en $m$ rijen                       \NR
-\NC  2  \NC  tekst  \NC  inhoud van eerste matrixelement, meestal \tex{externalfigure}  \NR
+\NC  2  \NC  tekst  \NC  inhoud van eerste matrixelement, meestal @\externalfigure@  \NR
 \NC  3  \NC  tekst  \NC  bijschrift van eerste matrixelement, mag leeg zijn             \NR
 \NC  .  \NC         \NC  nog $n \cdot m - 1$ haakjesparen met inhoud en bijschrijft     \NR
 \stopargumenttable
@@ -296,7 +296,7 @@ Soms wil je meerdere (kleine) figuren naast elkaar of onder elkaar zetten. Ook h
 \stopbuffer
 \getbuffer
 
-Het argument tussen blokhaakjes geeft het aantal kolommen en rijen aan van je \emph{matrix}. Tussen de \tex{start/stopcombination} geef je voor elk element uit de matrix in een haakjespaar het figuur dat je wilt plaatsen en het bijschrift van dat figuur. Dat is alles. Alle soorten matrices zijn mogelijk. Combinaties kun je, net als gewone figuren, zowel in de tekst zetten, naast de tekst, op aparte pagina's in de marge (zie bijvoorbeeld \in{figuur}[fig:margecombi]), et cetera. De mogelijkheden zijn eindeloos!
+Het argument tussen blokhaakjes geeft het aantal kolommen en rijen aan van je \emph{matrix}. Tussen de @\start/stopcombination@ geef je voor elk element uit de matrix in een haakjespaar het figuur dat je wilt plaatsen en het bijschrift van dat figuur. Dat is alles. Alle soorten matrices zijn mogelijk. Combinaties kun je, net als gewone figuren, zowel in de tekst zetten, naast de tekst, op aparte pagina's in de marge (zie bijvoorbeeld \in{figuur}[fig:margecombi]), et cetera. De mogelijkheden zijn eindeloos!
 
 \typebuffer
 
@@ -304,9 +304,9 @@ Het argument tussen blokhaakjes geeft het aantal kolommen en rijen aan van je \e
 
 \todo{handmatig pagina invoegen}
 
-\todo{\tex{blank}}
+\todo{@\blank@}
 
-\todo{fontopmaak \tex{bf} \tex{it} etc}
+\todo{fontopmaak @\bf@ @\it@ etc}
 
 \stopcomponent
 
