@@ -1,19 +1,3 @@
-%M \useurl[wiki]
-%M   [http://wiki.contextgarden.net][Main_Page]
-%M   [\CONTEXT\ wiki]
-%M \useurl[commands]
-%M   [http://wiki.contextgarden.net][Category:Reference/en]
-%M   [Command Reference]
-%M \useurl[excursion]
-%M   [http://www.pragma-ade.com][general/manuals/ms-cb-en.pdf]
-%M   [\CONTEXT\ an Excursion]
-%M \useurl[units]
-%M   [http://www.ntg.nl][maps/21/16.pdf]
-%M   [Eenheid in Eenheden]
-%M \useurl[bib]
-%M   [http://dl.contextgarden.net][modules/bibmod-doc-2009.11.04.zip]
-%M   [Bibliographies Module Documentation]
-%M
 %C \module
 %C   [file=travellayout,
 %C    version=7 okt 2011,
@@ -38,8 +22,26 @@
 
 \startenvironment travellayout
 
+%D \section{Encodering}
+
 \enableregime[utf8]
-%\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
+%\usemodule[font-chi] % Voor Chinese tekens, alleen voor de Chinareis!
+
+%D \section{Catcodes}
+%D
+%D We maken gebruik van een iets modernere \emph{catcode} instellingen.
+%D Onderstaande is al standaard in Mark IV (de nieuwste versie van \CONTEXT).
+%D Simpel gezegd houdt het in dat de tekens \type{^}, \type{_}, \type{&}
+%D en \type{|} geen speciale betekenis meer hebben in de lopende tekst.
+%D \type{^} en \type{_} kunnen natuurlijk nog steeds gebruikt worden in
+%D wiskunde modus!
+
+%\startextendcatcodetable \ctxcatcodes
+%    \catcode\underscoreasciicode\othercatcode
+%    \catcode\circumflexasciicode\othercatcode
+%    \catcode\ampersandasciicode \othercatcode
+%    \catcode\barasciicode       \othercatcode
+%\stopextendcatcodetable
 
 %D \section{Documentatie}
 %D
@@ -186,7 +188,7 @@
 
 %D \section{Paginalayout}
 %D
-%D We zetten de tekst op een pagina met A4-formaat. Voor de reader en het draaiboek willen we natuurlijk A5-formaat hebben. Hier is een speciale mode voor, zie \in{hoofdstuk}[chap:var] \quote{Versies en variaties}.
+%D We zetten de tekst op een pagina met A4-formaat. Voor de reader en het draaiboek willen we natuurlijk A5-formaat hebben. Hier is een speciale mode voor, zie \in{hoofdstuk}[chp:variaties] \quote{Versies en variaties}.
 %D
 %D De marges berekenen we op eenvoudige wijze. Voor het snijwit (\type{cutspace}) nemen we $\frac18$ van de paginabreedte net als voor het kopwit (\type{topspace}). Vervolgens nemen we voor het rugwit (\type{backspace}) en het bodemwit (\type{bottomspace}) $\frac15$ van de paginabreedte. We vinden dan $\type{cutspace} : \type{backspace} = \type{topspace} : \type{bottomspace} = \frac18 : \frac15 \approx 1 : \varphi$ de \emph{Gulden Snede}. De overgebleven ruimte is voor het tekstblok, en laat dat tekstblok nu ook een verhouding van $\type{textwidth} : \type{textheight} = 1 : \varphi$ hebben!\footnote{Reken zelf maar na als je het niet geloofd\periods}
 %D
@@ -355,7 +357,7 @@
 \stopsectionblockenvironment
 
 %C -----------------------------------------------------------------------------
-%D \chapter[chap:var]{Versies en variaties}
+%D \chapter[chp:variaties]{Versies en variaties}
 %D
 %D Modes zijn een handige functie van \CONTEXT\ die er voor zorgen dat dezelfde bronbestanden op verschillende manieren kunnen worden uitgevoerd. Geef de mode op op de commandoregel met de optie \type{--mode=..,..}, waarbij de \type{..,..} een lijst van modes is gescheiden door komma's. Een andere manier om modes op te geven, is ze aan het begin van \type{tex}-bestand op te geven met deze regel (dus inclusief de \type{%}!):
 %D
@@ -603,6 +605,13 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D De url is een keer te gebruiken met \online{http://www.adres.nl/van/een/url}.
 %D \stoptyping
 
+%\let\normalurl\url
+%\define[1]\simpleurl
+%  {\useurl[dummy][#1]
+%   \normalurl[dummy]}
+%\redefine\url
+%  {\doifnextoptionalelse{\normalurl}{\simpleurl}}
+
 \define[1]\online
   {\useurl[online][#1]
    \url[online]}
@@ -649,13 +658,12 @@ setbounds currentpicture to boundingbox OverlayBox;
   [database=\jobname]
 
 \setuppublications
-  %[alternative=num]
   [alternative=ams]
 
 \setuppublicationlayout[electronic]
   {\insertauthors{}{,\space}{}%
    \inserttitle{\bgroup\em}{\egroup,\space}{}%
-   \inserturl{}{}{}.}
+   \inserturl{}{}{}.}%FIXME: Afbreking?
 
 %D \section{Eenheden}
 
@@ -737,4 +745,4 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \stopenvironment
 
-% vim: syn=context spell spl=nl
+% vim: ft=context spell spl=nl cole=1 nofen

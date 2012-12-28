@@ -9,7 +9,7 @@
 % ------------------------------------------------------------------------------
 
 \starttexdefinition seedocumentation #1#2
-  \inmargin{\from[excursion] §#1\\
+  \inmargin{\from[excursion] §#1\crlf
             \from[manual] §#2}
 \stoptexdefinition
 
@@ -20,22 +20,19 @@
    width=fit,
    headstyle=\tt]
 
+% Niet \makecharacteractive gebruiken, dan vergeet ie 'm weer,
+% nu passen we \ctxcatcodes impliciet aan:
 %\installactivecharacter @ %@
-%\def@#1@{\type{#1}}
-
+% Slim, maar werkt alleen in klein voorbeeld:
+%\defineactivecharacter @
+%  {\type@}
+% Pakt 'm tot de laatste @:
+%\def@#1@
+%  {\rescan{\type{#1}}}
+% Werkt niet met \type:
 %\defineactivecharacter @ %
 %  {\bgroup\tt
 %   \defineactivecharacter @ {\egroup}}
-
-%\newif\ifinsidetypemode
-%\defineactivecharacter @ %
-%  {\ifinsidetypemode
-%     \egroup
-%     \insidetypemodefalse
-%   \else
-%     \insidetypemodetrue
-%     \bgroup\tt
-%   \fi}
 
 % ------------------------------------------------------------------------------
 % Instellingen
@@ -96,6 +93,9 @@
 \useurl[wiki]
   [http://wiki.contextgarden.net][Main_Page]
   [Wiki]
+\useurl[commands]
+  [http://wiki.contextgarden.net][Category:Reference/en]
+  [Command Reference]
 \useurl[mathalign]
   [http://dl.contextgarden.net/myway][mathalign.pdf]
   [Using \tex{startalign} and friends]
@@ -105,7 +105,7 @@
 \useurl[eenheden]
   [http://www.ntg.nl/maps/21][16.pdf]
   [Eenheid in Eenheden]
-\useurl[bibman]
+\useurl[bib]
   [http://modules.contextgarden.net][bibman]
   [Bibliography documentation]
 \useurl[detexify]
@@ -137,3 +137,5 @@
 \getbuffer[example:abbreviations]
 
 \stopenvironment
+
+% vim: ft=context spell spl=nl cole=1

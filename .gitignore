@@ -3,6 +3,7 @@
 *.log
 *.swp
 *.tmp
+*.md5
 
 # MetaPost
 *mpgraph*
