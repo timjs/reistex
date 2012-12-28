@@ -38,9 +38,18 @@
 
 \startenvironment travellayout
 
-\enableregime[utf8]
+%D \section{Catcodes}
+%D
+%D We maken gebruik van een iets modernere \emph{catcode} instellingen.
+%D Onderstaande is al standaard in Mark IV (de nieuwste versie van \CONTEXT).
+%D Simpel gezegd houdt het in dat de tekens \type{^}, \type{_}, \type{&}
+%D en \type{|} geen speciale betekenis meer hebben in de lopende tekst.
+%D \type{^} en \type{_} kunnen natuurlijk nog steeds gebruikt worden in
+%D wiskunde modus!
 
-%\usemodule[font-chi]%FIXME: Voor Chinese tekens, alleen voor de Chinareis!
+\startextendcatcodetable \ctxcatcodes
+    \catcode\barasciicode       \othercatcode
+\stopextendcatcodetable
 
 %D \section{Documentatie}
 %D
