@@ -623,17 +623,12 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D De url is een keer te gebruiken met \online{http://www.adres.nl/van/een/url}.
 %D \stoptyping
 
-%\let\normalurl\url
-%\define[1]\simpleurl
-%  {\useurl[dummy][#1]
-%   \normalurl[dummy]}
-%\redefine\url
-%  {\doifnextoptionalelse{\normalurl}{\simpleurl}}
-
-\define[1]\online
-  {\useurl[online][#1]
-   \url[online]}
-   %\goto{\url[online]}[url(#1)]}
+\let\normalurl\url
+\define[1]\simpleurl
+  {\useurl[dummy][#1]
+   \normalurl[dummy]}
+\redefine\url
+  {\doifnextoptionalelse{\normalurl}{\simpleurl}}
 
 \define[1]\vec
   {\,{\bf #1}}%FIXME: Met \, ?
@@ -678,10 +673,22 @@ setbounds currentpicture to boundingbox OverlayBox;
 \setuppublications
   [alternative=ams]
 
+%D Een hack om de URL's in bibliografieën netjes te houden. \tex{redefine} i.s.m.
+%D \tex{gobbleoneargument} werkt niet, dus we moeten wel de argumenten scannen.
+%D Lijkt alsof we dit niet nodig hebben, omdat de oude \tex{gotoURL} bij niet
+%D interactieve documenten intern netjes gebruik maakt van \tex{hyphenatedurl},
+%D maar er gaat toch iets mis als we \tex{url} hierboven herdefiniëren.
+%D FIXME: neemt niet de opmaak over van \tex{setupurl}...
+
+\define[2]\gotoURL
+  {\simpleurl{#2}}
+
+%D
+
 \setuppublicationlayout[electronic]
   {\insertauthors{}{,\space}{}%
    \inserttitle{\bgroup\em}{\egroup,\space}{}%
-   \inserturl{}{}{}.}%FIXME: Afbreking?
+   \inserturl{}{}{}.}
 
 %D \section{Eenheden}
 
