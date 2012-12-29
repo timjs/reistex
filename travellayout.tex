@@ -36,12 +36,30 @@
 %D \type{^} en \type{_} kunnen natuurlijk nog steeds gebruikt worden in
 %D wiskunde modus!
 
+% Maakt alleen ^ en _ other:
+%\nonknuthmode
+
+% Zo doen we ook & en |:
+%\define[1]\makecharacterother
+%  {\catcode`#1\other}
+%\makecharacterother _
+%\makecharacterother ^
+%\makecharacterother &
+%\makecharacterother |
+% Maar beiden gaan falicant mis na \getbuffer en wss ook andere commando's
+
+% En deze pakt ie al helemaal niet goed:
 %\startextendcatcodetable \ctxcatcodes
 %    \catcode\underscoreasciicode\othercatcode
 %    \catcode\circumflexasciicode\othercatcode
 %    \catcode\ampersandasciicode \othercatcode
 %    \catcode\barasciicode       \othercatcode
 %\stopextendcatcodetable
+
+% Is dit nodig?
+%\let\\\letterbackslash
+%\let\{\letteropenbrace
+%\let\}\letterclosebrace
 
 %D \section{Documentatie}
 %D
