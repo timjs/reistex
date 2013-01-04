@@ -518,55 +518,21 @@ Met \BIBTEX\ kun je een database bijhouden van al je bronnen, aan elke bron een 
 
 Een \BIBTEX-database is platte tekst in een bestand eindigend op \type{.bib}. De database bestaat uit bronnen (\emph{\en entries} genaamd) van een bepaald type met daarin alle gegevens van de bron in velden (\emph{\en fields}). \emph{Introduction to Electrodynamics} van Griffiths geef je bijvoorbeeld zo op.
 
-\starttyping
-@book{Griffiths:2008,
-  author    = {David J. Griffiths},
-  title     = {Introduction to Electrodynamics},
-  publisher = {Benjamin Cummings},
-  address   = {San Francisco},
-  edition   = {3},
-  year      = {2008},
-}
-\stoptyping
+\typefile{literatuur/griffiths.bib}
 
 Dit is een bron van het type \type{book}, wat we opgeven achter het apenstaartje. \type{Griffiths:2008} is het label waarmee we naar deze bron kunnen verwijzen. De overige regels bestaan uit velden met hun waarde tussen accolades. Let op de komma's aan het eind van elk veld!\footnote{De komma achter het laatste veld is niet verplicht, maar aangezien je ze anders toch vergeet\periods}
 
 Heb je specifieke pagina's of hoofdstukken uit een boek gebruikt, dan kun je het type \type{inbook} gebruiken.
 
-\starttyping
-@inbook{Kuhn:2004,
-  author    = {Kuhn, K.F. and Koupelis, T.},
-  title     = {In quest of the universe},
-  publisher = {Jones and Bartlett},
-  adress    = {Sudbury, Massachusetts},
-  year      = {2004},
-  chapter   = {4},
-}
-\stoptyping
+\typefile{literatuur/kuhn.bib}
 
 Hier zie je dat, wanneer een boek meerdere auteurs heeft, je die opgeeft in \emph{hetzelfde} veld gescheiden door \type{and}. Verder maakt het niet uit of je de volledige namen van de auteurs kent of niet. Ook kun je eerst de achternaam opgeven en daarna de initialen of voornamen, zolang er maar een komma tussen staat.
 
 Natuurlijk wil je niet alleen naar boeken kunnen verwijzen. Er zijn nog veel meer types. Een voorbeeldje van een artikel en een webpagina.
 
-\starttyping
-@article{Schrodinger:1926,
-  author  = {Erwin Schr\"odinger},
-  title   = {An Undulatory Theory of the Mechanics
-             of Atoms and Molecules},
-  journal = {Physical Review},
-  year    = {1926},
-  volume  = {28},
-  number  = {6},
-  pages   = {1049--1070},
-  month   = {dec},
-}
+\typefile{literatuur/schrodinger.bib}
 
-@electronic{Wikipedia:Electronmass,
-  author = {Wikipedia},
-  title  = {Electron rest mass},
-  url    = {http://en.wikipedia.org/wiki/Electron_rest_mass},
-}
-\stoptyping
+\typefile{literatuur/wikipedia.bib}
 
 Sommige velden zijn verplicht bij bepaalde types, maar niet bij andere. Een overzicht van alle types en hun verplichte en optionele velden kun je vinden in \in{appendix}[app:bibtex].
 
@@ -576,12 +542,16 @@ Om te verwijzen naar een bron uit je \BIBTEX\ database gebruik je \tex{cite}. In
 
 \BIBTEX\ nummert al je bronnen en zet ze, zoals gebruikelijk binnen de natuurkunde, tussen blokhaken. Het enige dat jij nog moet doen is \tex{placepublications} aan het einde van je stukje te zetten!
 
-\subsubject{Bronnen}
-
 \nocite[Schrodinger:1926]
 \nocite[Kuhn:2004]
 \nocite[Wikipedia:Electronmass]
+
+\startbuffer
+\subsubject{Bronnen}
 \placepublications
+\stopbuffer
+\typebuffer
+\getbuffer
 
 %Het is de bedoeling dat je je bronnen netjes opgeeft. Dit zul je met je bachelor- en masterstage ook moeten doen, dus kun je er nu net zo goed meteen mee oefenen.
 
