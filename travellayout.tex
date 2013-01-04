@@ -60,6 +60,8 @@
 
 % Is dit nodig?
 %\let\\\letterbackslash
+%\let\~\lettertilde
+% Deze twee niet denk ik...
 %\let\{\letteropenbrace
 %\let\}\letterclosebrace
 
@@ -145,7 +147,7 @@
 %D
 %D We gebruiken het lettertype \emph{Utopia}, ontworpen door Robert Slimbach in 1989. Sinds 2006 wordt Utopia gratis verspreid met \TEX, dus hij zou bij elke moderne \TEX-distributie te vinden moeten zijn. De belangrijkste eis is natuurlijk dat we ook wiskunde kunnen zetten. Hiervoor laden we de wiskundige symbolen van de \emph{Fourier} letter. Tot slot gebruiken we standaard \emph{Helvetica} als schreefloze aanvulling voor kopjes en andere stilistische onderdelen. Helvetica heeft standaard een iets grotere x-hoogte dan dan Utopia, dus we moeten die iets bijschalen.
 %D
-%D Het \type{hanging}-typescript zorgt voor een typografisch extratje. Die zorgt ervoor dat komma's, punten en afbreekstreepjes iets in de rechter marge worden geplaatst. Het gevolg is dat de kantlijn minder rafelig oogt.
+%D Het \type{hanging}-typescript zorgt voor een typografisch extraatje. Die zorgt ervoor dat komma's, punten en afbreekstreepjes iets in de rechter marge worden geplaatst. Het gevolg is dat de kantlijn minder rafelig oogt.
 
 \usetypescript[serif][hanging][normal]
 
@@ -676,33 +678,30 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 %D \section{Publicaties}
 %D
-%D \macros{startbibliography,inbib}
+%D Om een lijst van publicaties te zetten maken we gebruik van een \BIBTEX-bibliografie. Deze wordt eerst door \BIBTEX\ verwerkt waarna \CONTEXT\ de gegevens kan zetten met behulp van \tex{placepublications}. We kunnen dan per hoofdstuk (of \type{report}) een lijst plaatsen van de in dat hoofdstuk geciteerde publicaties. Deze oplossing is erg gestructureerd en we weten zeker dat alle referenties op de zelfde manier zijn opgemaakt.
 %D
-%D Om de bibliografie te zetten kunnen we gebruik maken van een apparte \BIBTEX-biliografie. Deze leest \CONTEXT\ in en met behulp van de macro \tex{placepublications} kun je per hoofdstuk (of \type{report}) een lijst plaatsen van de (in dat hoofdstuk) geciteerde werken. Deze oplossing is het best gestructureerd en je weet zeker dat alle referenties op de zelfde manier zijn opgemaakt.
+%D Allereerst vertellen we \BIBTEX\ dat de database met publicaties standaard dezelfde naam heeft als het huidige stukje (weergegeven door \tex{jobname}). Zo hoeft niet elke deelnemer bovenaan zijn of haar stukje een database te specificeren. We willen ook dat \BIBTEX\ de publicaties sorteert op auteursnaam zodat we dit kunnen gebruiken bij het plaatsen van de lijst.
+%D Refereren naar publicaties doen we met nummers tussen teksthaken. De opmaak van de data gebeurt volgens standaard conventies.
 %D
-%D Mocht je dit een beetje te veel van het goede vinden, bieden we de mogelijkheid van een handmatige bibliografie, zoiets als de \type{thebibliography}-omgeving in \LATEX. Citeer in dit geval de publicaties \emph{niet} met de \tex{cite}-macro, maar met \tex{inbib}. Deze oplossing is iets minder flexibel, maar heeft als voordeel dat je geen apparte bibliografie aan hoeft te maken.
+%D Door de publicatielijst links uit te lijnen, lossen we al onze problemen op met \URL's die verkeerd worden afgebroken en in de marge lopen.
+%D De \type{num}-stijl voegt standaard een extra ruimte in van 6~pt tussen de onderdelen.\footnote{Zie de toevoeging van \tex{vadjust} in de definitie van \tex{setuppublicationlayout} in \type{bibl-num.tex}.} Hier moeten we voor compenseren.
 
 \setupbibtex
-  [database=\jobname]
+  [database=\jobname,
+   sort=author]
 
 \setuppublications
-  [alternative=ams]
+  [alternative=num,
+   sorttype=bbl]
+\setuppublicationlist
+  [align=flushleft,
+   after={\kern -6pt}]
 
-%D Een hack om de URL's in bibliografieën netjes te houden. \tex{redefine} i.s.m.
-%D \tex{gobbleoneargument} werkt niet, dus we moeten wel de argumenten scannen.
-%D Lijkt alsof we dit niet nodig hebben, omdat de oude \tex{gotoURL} bij niet
-%D interactieve documenten intern netjes gebruik maakt van \tex{hyphenatedurl},
-%D maar er gaat toch iets mis als we \tex{url} hierboven herdefiniëren.
-%D FIXME: neemt niet de opmaak over van \tex{setupurl}...
-
-\define[2]\gotoURL
-  {\simpleurl{#2}}
-
-%D
+%D \BIBTEX\ verwerkt netjes publicaties van het type \type{electronic} maar standaard kan \CONTEXT\ daar niets mee, die zullen we zelf moeten definiëren. Dat doen we door simpelweg de auteur, de titel en de \URL\ in te voegen met hier en daar een punt of een spatie.
 
 \setuppublicationlayout[electronic]
-  {\insertauthors{}{,\space}{}%
-   \inserttitle{\bgroup\em}{\egroup,\space}{}%
+  {\insertauthors{}{.\space}{}%
+   \inserttitle{\bgroup\em}{\egroup.\space}{}%
    \inserturl{}{}{}.}
 
 %D \section{Eenheden}
