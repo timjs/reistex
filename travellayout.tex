@@ -160,9 +160,11 @@
   \usetypescript[lucida][ec]
   \setupbodyfont[lucida]
   \setupcapitals
+    [sc=yes,  
      title=no]% Ondersteund Lucida niet
   \define\word{\lowercase}
   \setupsynonyms[abbreviation]
+    [textstyle={\cap\word}]
 \stopmode
 \doifmode{8} {\setupbodyfont[8pt]}
 \doifmode{85}{\setupbodyfont[8.5pt]}
@@ -175,7 +177,7 @@
 
 %D \section{Broodtekst}
 %D
-%D Het korps is ingesteld. Nu het uiterlijk van de tekst nog. Zoals hierboven vermeld vullen we de tekst uit met daarbij hangende komma's en afbreekstreepjes. Een strikte tolerantie geeft aan dat we gaten bij het uitlijnen zoveel mogelijk willen vermijde, maar dat eventueel een extra rek mag worden toegevoegd. Dit is vooral van belang bij het zetten van figuren naast de lopende tekst (zijfiguren dus). Tot slot kiezen we voor witruimte tussen alinea's in plaats van inspringen.
+%D Het korps is ingesteld. Nu het uiterlijk van de tekst nog. Zoals hierboven vermeld vullen we de tekst uit met daarbij hangende komma's en afbreekstreepjes. Een strikte tolerantie geeft aan dat we gaten bij het uitlijnen zoveel mogelijk willen vermijden, maar dat eventueel een extra rek mag worden toegevoegd. Dit is vooral van belang bij het zetten van figuren naast de lopende tekst (zijfiguren dus). Tot slot kiezen we voor witruimte tussen alinea's in plaats van inspringen.
 %D
 %D Opsommingen willen we op elkaar. De kopjes die we in een opsomming kunnen zetten, geven we eenzelfde stijl als andere stilistische elementen in de tekst. Het instellen van \tex{quotation} heeft als doel dat de aanhalingstekens automatisch gekozen worden, naar gelang de diepte.
 
@@ -441,7 +443,7 @@
 \stopmode
 
 \startmode[reader,scenario,booklet] % Actief bij een van de drie
-  \setupbodyfont[10pt]
+  %\setupbodyfont[10pt]
   \setuplayout
     [width=middle,
      backspace=18mm,
@@ -478,6 +480,8 @@
   \showframe
   \showbodyfont
   \showfontstrip
+  \setbox\scratchbox\hbox{\dorecurse{26}{\character\recurselevel}}
+  alphabeth width \the\wd\scratchbox
   \version[temporary]
   \page[right]
 \stopmode
@@ -584,7 +588,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 %C -----------------------------------------------------------------------------
 %D \chapter{Aanpassingen en aanvullingen}
 %D
-%D We hebben ook nog enkele extra macro's nodig, die ons leven makelijker maken bij het zetten van een reisverslag of reader. Dit zijn macro's die voorgedefinieerd zijn door \CONTEXT-modules, macro's specifiek voor dit type document maar ook macro's voor compatabiliteit met \LATEX.
+%D We hebben ook nog enkele extra macro's nodig, die ons leven makelijker maken bij het zetten van een reisverslag of reader. Dit zijn macro's die voorgedefinieerd zijn door \CONTEXT-modules, macro's specifiek voor dit type document maar ook macro's voor compatibiliteit met \LATEX.
 
 %D \section{Koppen van stukjes}
 %D
@@ -618,7 +622,7 @@ setbounds currentpicture to boundingbox OverlayBox;
   [style=\em]
 
 \define[1]\alert
-  {{\bf #1}}
+  {{\ss\bf #1}}
 
 %D \macros{online}
 %D
@@ -641,8 +645,9 @@ setbounds currentpicture to boundingbox OverlayBox;
 %  {\goto{#1}[url(mailto:#1)]}
 
 \define[1]\vec
-  {\,{\bf #1}}%FIXME: Met \, ?
-\define\d
+  {{\bf #1}}
+
+\define\total
   {{\rm d}}
 
 %D \subsection{Personalia}
@@ -703,13 +708,13 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D \section{Eenheden}
 
 \define[1]\unit
-  {\mathematics{\rm\,#1}}
+  {\math{\rm\,#1}}
 
 \define[2]\quantity
   {\digits{#1}\unit{#2}}
 
 \define\degree
-  {{\math{^{\circ}}}} % Ja, echt met zoveel haakjes!!!
+  {{\math{^{\circ}}}}% Ja, echt met zoveel haakjes!!!
 
 %D \section{Chemical}
 
@@ -719,11 +724,11 @@ setbounds currentpicture to boundingbox OverlayBox;
   [size=medium]
    %offset=high]
 
-%D \section{Afkortingen en \cap{url}'s}
+%D \section{Afkortingen en \URL's}
 %D
 %D \macros{SMCR,MC,RU,IMAPP,IMM,HFML,DI,WINST,SNUF,NNV,FOM,NIKHEF,EPS,AM,PM,BC,AD,VC}
 %D
-%D Hier definieëren we enkele veelgebruikte afkortingen en \cap{url}'s. Let er op dat de \cap{url}'s kunnen veranderen! Ook laden we een zeer nuttige module, waarmee we op een systematische manier eenheden kunnen zetten.
+%D Hier definieëren we enkele veelgebruikte afkortingen en \URL's. Let er op dat de \URL's kunnen veranderen! Ook laden we een zeer nuttige module, waarmee we op een systematische manier eenheden kunnen zetten.
 
 \abbreviation{SMCR}  {Stichting Marie Curie Reizen}
 \abbreviation{MC}    {Studievereniging Marie Curie}
@@ -778,7 +783,7 @@ setbounds currentpicture to boundingbox OverlayBox;
   \writetolist[todo]{}{#1}
 \stoptexdefinition
 
-%D Dit is het laatste wat we nog wilden definieeren in de omgeving en hiermee zijn we ook aan het eind gekomen.
+%D Dit is het laatste wat we nog wilden definiëren in de omgeving en hiermee zijn we ook aan het eind gekomen.
 
 \stopenvironment
 
