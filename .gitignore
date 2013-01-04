@@ -4,6 +4,7 @@
 *.swp
 *.tmp
 *.md5
+*.vim
 
 # MetaPost
 *mpgraph*
