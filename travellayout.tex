@@ -625,12 +625,13 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D De url is een keer te gebruiken met \online{http://www.adres.nl/van/een/url}.
 %D \stoptyping
 
-\let\normalurl\url
-\define[1]\simpleurl
+\define[1]\online
   {\useurl[dummy][#1]
-   \normalurl[dummy]}
-\redefine\url
-  {\doifnextoptionalelse{\normalurl}{\simpleurl}}
+   \goto{\url[dummy]}[url(#1)]}
+\define[1]\mailto
+  {\useurl[dummy][mailto:#1][][#1]
+   \from[dummy]}
+%  {\goto{#1}[url(mailto:#1)]}
 
 \define[1]\vec
   {\,{\bf #1}}%FIXME: Met \, ?
