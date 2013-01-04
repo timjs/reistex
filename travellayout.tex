@@ -156,6 +156,20 @@
 
 \setupbodyfont[UtopiaHelvetica,11pt]
 
+\startmode[lucida]
+  \usetypescript[lucida][ec]
+  \setupbodyfont[lucida]
+  \setupcapitals
+     title=no]% Ondersteund Lucida niet
+  \define\word{\lowercase}
+  \setupsynonyms[abbreviation]
+\stopmode
+\doifmode{8} {\setupbodyfont[8pt]}
+\doifmode{85}{\setupbodyfont[8.5pt]}
+\doifmode{9} {\setupbodyfont[9pt]}
+\doifmode{95}{\setupbodyfont[9.5pt]}
+\doifmode{10}{\setupbodyfont[10pt]}
+
 \setupbodyfontenvironment[default]
   [em=\it]
 
