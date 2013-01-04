@@ -223,17 +223,15 @@
 \setuppapersize[A4][A4]
 
 \setuplayout
-  [width=middle,               % Laten we \CONTEXT zelf uitrekenen
+  [width=middle,               % Laten we ConTeXt zelf uitrekenen
    backspace=26mm,
    cutspace=42mm,
    height=middle,
    topspace=26mm,
-   bottomspace=42mm,
+   bottomspace=26mm,
    margin=26mm,
-   header=\lineheight,
-   headerdistance=\lineheight,
-   footerdistance=\lineheight,
-   footer=\lineheight]
+   header=0mm,
+   footer=16mm]
 
 \setuppagenumbering
   [alternative=doublesided,
@@ -241,8 +239,8 @@
    way=bytext,
    partnumber=no]
 
-\setupheader
-  [state=none]
+%\setupheader
+  %[state=none]
 \setupfooter
   [style=\ss\bfx]
 
@@ -436,13 +434,10 @@
      cutspace=29mm,
      height=middle,
      topspace=18mm,
-     bottomspace=29mm,
+     bottomspace=18mm,
      margin=18mm,
-     leftmargin=0mm,
-     header=\lineheight,
-     headerdistance=\lineheight,
-     footerdistance=\lineheight,
-     footer=\lineheight]
+     header=0mm,
+     footer=11mm]
 \stopmode
 
 \startmode[electronic]
@@ -515,9 +510,7 @@
 
 %D Nu gaan we een golfje tekenen. Een extra stukje decoratie dat we gaan gebruiken om nieuwe hoofdstukken aan te geven. Dit doen we met in de tekentaal \METAPOST. Eerst moeten we \CONTEXT\ vertellen dat zij \METAPOST\ niet tijdens de \TEX-run kan uitvoeren. Hiervoor is \tex{write18} nodig, dat op de universiteit standaard uit staat. In plaats daarvan wordt \METAPOST\ uitgevoerd tussen de \TEX-runs.
 
-\startmode[*mkii]
 \runMPgraphicsfalse
-\stopmode
 
 %D Nu definieeren we enkele grootheden die we in de \METAPOST\ figuren gaan gebruiken. De eerste is de breedte van het snijwit, dit wordt de breedte van ons golfje. Vervolgens geven we het aantal periodes op van het golfje en berekenen we de breedte van het golfje.
 %D
