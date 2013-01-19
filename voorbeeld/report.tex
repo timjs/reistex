@@ -1,5 +1,5 @@
 \startproduct report
-\environment travellayout
+\environment  travellayout
 
 \setupbibtex
   [database={physics/before,physics/ioffe_afternoon}]
@@ -7,49 +7,50 @@
 \mainlanguage[en]
 
 \startfrontmatter
-\component prologue
-\component preface
-\completecontent[criterium=all]
+  \completecontent[criterium=all]
+
+  \component prologue
+  \component preface
 \stopfrontmatter
 
 \startbodymatter
-\component physics/before
-\component culture/before
+  \component physics/before
+  \component culture/before
 
-\part[part:stpet]{Saint Petersburg}
-\externalfigure[sintpet][width=\textwidth]
+  \part[part:stpet]{Saint Petersburg}
+  \page[yes]
+  \externalfigure[sintpet][height=\textheight]%[width=\textwidth]
 
-\component physics/ioffe_afternoon
-\component culture/nighttrain
+  \component physics/ioffe_afternoon
+  \component culture/nighttrain
 
-% Onderstaande is alleen om de inhoudsopgave op te vullen. --TS
-\writetolist[chapter]{}{Pulkovo Observatory}
-\writetolist[chapter]{}{Saint Petersburg (Part one)}
-\writetolist[chapter]{}{The Hermitage}
-\writetolist[chapter]{}{The Netherlands Institute in Saint Petersburg}
-\writetolist[chapter]{}{Saint Petersburg (Part two)}
+  % Onderstaande is alleen om de inhoudsopgave op te vullen. --TS
+  \writetolist[chapter]{}{Pulkovo Observatory}
+  \writetolist[chapter]{}{Saint Petersburg (Part one)}
+  \writetolist[chapter]{}{The Hermitage}
+  \writetolist[chapter]{}{The Netherlands Institute in Saint Petersburg}
+  \writetolist[chapter]{}{Saint Petersburg (Part two)}
 
-\writetolist[part]{}{Moscow}
-\writetolist[chapter]{}{Moscow State University}
-\writetolist[chapter]{}{Moscow (Part one)}
-\writetolist[chapter]{}{Landau Institute for Theoretical Physics}
-\writetolist[chapter]{}{Institute of Solid State Physics}
-\writetolist[chapter]{}{Kurchatov Institute}
-\writetolist[chapter]{}{\cap{IKI} Space Research Institute}
-\writetolist[chapter]{}{Moscow (Part two)}
-\writetolist[chapter]{}{Lebedev Physical Institute}
+  \writetolist[part]   {}{Moscow}
+  \writetolist[chapter]{}{Moscow State University}
+  \writetolist[chapter]{}{Moscow (Part one)}
+  \writetolist[chapter]{}{Landau Institute for Theoretical Physics}
+  \writetolist[chapter]{}{Institute of Solid State Physics}
+  \writetolist[chapter]{}{Kurchatov Institute}
+  \writetolist[chapter]{}{\cap{iki} Space Research Institute}
+  \writetolist[chapter]{}{Moscow (Part two)}
+  \writetolist[chapter]{}{Lebedev Physical Institute}
 
-\writetolist[part]{}{Novosibirsk}
-\writetolist[chapter]{}{Kutateladze Institute of Thermophysics}
-\writetolist[chapter]{}{Institute of Semiconductor Physics}
-\writetolist[chapter]{}{Novosibirsk (Part one)}
-\writetolist[chapter]{}{Budker Institute of Nuclear Physics}
-\writetolist[chapter]{}{Novosibirsk (Part two)}
+  \writetolist[part]   {}{Novosibirsk}
+  \writetolist[chapter]{}{Kutateladze Institute of Thermophysics}
+  \writetolist[chapter]{}{Institute of Semiconductor Physics}
+  \writetolist[chapter]{}{Novosibirsk (Part one)}
+  \writetolist[chapter]{}{Budker Institute of Nuclear Physics}
+  \writetolist[chapter]{}{Novosibirsk (Part two)}
 \stopbodymatter
 
 \startbackmatter
-\component colophon
+  \component colophon
 \stopbackmatter
 
 \stopproduct
-
