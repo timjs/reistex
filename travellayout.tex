@@ -22,6 +22,8 @@
 
 \startenvironment travellayout
 
+\writestatus{environment}{Dit is Travellayout versie 2013}
+
 %D \section{Encodering}
 %D
 %D TODO: Extra uitleg.
@@ -148,16 +150,19 @@
 %D We gebruiken het lettertype \emph{Utopia}, ontworpen door Robert Slimbach in 1989. Sinds 2006 wordt Utopia gratis verspreid met \TEX, dus hij zou bij elke moderne \TEX-distributie te vinden moeten zijn. De belangrijkste eis is natuurlijk dat we ook wiskunde kunnen zetten. Hiervoor laden we de wiskundige symbolen van de \emph{Fourier} letter. Tot slot gebruiken we standaard \emph{Helvetica} als schreefloze aanvulling voor kopjes en andere stilistische onderdelen. Helvetica heeft standaard een iets grotere x-hoogte dan dan Utopia, dus we moeten die iets bijschalen.
 %D
 %D Het \type{hanging}-typescript zorgt voor een typografisch extraatje. Die zorgt ervoor dat komma's, punten en afbreekstreepjes iets in de rechter marge worden geplaatst. Het gevolg is dat de kantlijn minder rafelig oogt.
+%D
+%D \online{http://www.tug.org/store/lucida/designnotes.html}
+%D \online{http://mysite.verizon.net/william_franklin_adams/lucida.txt}
 
 \usetypescript[serif][hanging][normal]
 
-\definetypeface[UtopiaHelvetica][rm][serif][fourier]
-\definetypeface[UtopiaHelvetica][ss][sans][helvetica][default][rscale=0.87]
-\definetypeface[UtopiaHelvetica][tt][mono][modern]
-\definetypeface[UtopiaHelvetica][mm][math][fourier]
-
-\setupbodyfont[UtopiaHelvetica,11pt]
-
+\startmode[utopia]
+  \definetypeface[UtopiaHelvetica][rm][serif][fourier]
+  \definetypeface[UtopiaHelvetica][ss][sans][helvetica][default][rscale=0.87]
+  \definetypeface[UtopiaHelvetica][tt][mono][modern]
+  \definetypeface[UtopiaHelvetica][mm][math][fourier]
+  \setupbodyfont[UtopiaHelvetica]
+\stopmode
 \startmode[lucida]
   \usetypescript[lucida][ec]
   \setupbodyfont[lucida]
@@ -168,11 +173,14 @@
   \setupsynonyms[abbreviation]
     [textstyle={\cap\word}]
 \stopmode
+
 \doifmode{8} {\setupbodyfont[8pt]}
 \doifmode{85}{\setupbodyfont[8.5pt]}
 \doifmode{9} {\setupbodyfont[9pt]}
 \doifmode{95}{\setupbodyfont[9.5pt]}
 \doifmode{10}{\setupbodyfont[10pt]}
+\doifmode{11}{\setupbodyfont[11pt]}
+\doifmode{12}{\setupbodyfont[12pt]}
 
 \setupbodyfontenvironment[default]
   [em=\it]
@@ -242,14 +250,27 @@
 
 \setuplayout
   [width=middle,               % Laten we ConTeXt zelf uitrekenen
-   backspace=26mm,
-   cutspace=42mm,
+   backspace=6pc,
+   cutspace=10pc,
+   margin=6pc,
    height=middle,
-   topspace=26mm,
-   bottomspace=26mm,
-   margin=26mm,
-   header=0mm,
-   footer=16mm]
+   header=0pc,
+   topspace=6pc,
+   footer=4pc,
+   bottomspace=6pc]
+
+\startmode[fifth]
+  \setuplayout
+    [width=middle,               % Laten we ConTeXt zelf uitrekenen
+     backspace=4pc,
+     cutspace=6pc,
+     margin=4pc,
+     height=middle,
+     header=0pc,
+     topspace=4pc,
+     footer=2pc,
+     bottomspace=4pc]
+\stopmode
 
 \setuppagenumbering
   [alternative=doublesided,
@@ -298,7 +319,7 @@
   [style=\ss\bf,
    aligntitle=float]         % Zodat float's naast koppen kunnen staan.
 \setuphead[subsubsection]
-  [style=\it,
+  [style=\ss,
    aligntitle=float]
 
 %D \section{Lijsten}
@@ -448,14 +469,26 @@
   %\setupbodyfont[10pt]
   \setuplayout
     [width=middle,
-     backspace=18mm,
-     cutspace=29mm,
+     backspace=4pc,
+     cutspace=6pc,% eventueel 6pc
+     margin=4pc,
      height=middle,
-     topspace=18mm,
-     bottomspace=18mm,
-     margin=18mm,
+     topspace=4pc,
      header=0mm,
-     footer=11mm]
+     footer=2pc,% en dan deze 2pc
+     bottomspace=4pc]
+  \startmode[fifth]
+    \setuplayout
+      [width=middle,
+       backspace=11mm,
+       cutspace=19mm,
+       margin=11mm,
+       height=middle,
+       topspace=11mm,
+       header=0mm,
+       footer=8mm,
+       bottomspace=11mm]
+  \stopmode
 \stopmode
 
 \startmode[electronic]
@@ -479,12 +512,18 @@
 
 \startmode[makeup]
   \showsetups
-  \showframe
+  %\showframe
   \showbodyfont
   \showfontstrip
+
   \setbox\scratchbox\hbox{\dorecurse{26}{\character\recurselevel}}
-  alphabeth width \the\wd\scratchbox
-  \version[temporary]
+  \starttabulate[|l|l|]
+  \NC alphabeth width \NC \the\wd\scratchbox \NR
+  \NC lineheight      \NC \the\lineheight    \NR
+  \stoptabulate
+
+  %\version[temporary]
+
   \page[right]
 \stopmode
 
