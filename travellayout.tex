@@ -192,7 +192,7 @@
 \setupblank[medium]
 
 \setupurl
-  [style=\it]
+  [style=\tt]
 
 \setupitemize[each]
   [packed,autointro]
@@ -642,9 +642,8 @@ setbounds currentpicture to boundingbox OverlayBox;
   {\useurl[dummy][#1]
    \goto{\url[dummy]}[url(#1)]}
 \define[1]\mailto
-  {\useurl[dummy][mailto:#1][][#1]
-   \from[dummy]}
-%  {\goto{#1}[url(mailto:#1)]}
+  {\useurl[dummy][#1]
+   \goto{\url[dummy]}[url(mailto:#1)]}
 
 \define[1]\vec
   {{\bf #1}}
@@ -702,7 +701,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 \setuppublicationlayout[electronic]
   {\insertauthors{}{.\space}{}%
    \inserttitle{\bgroup\em}{\egroup.\space}{}%
-   \inserturl{}{}{}.}
+   \inserturl{\bgroup\tt}{\egroup.}{}}
 
 %D \section{Eenheden}
 
