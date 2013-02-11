@@ -156,31 +156,8 @@
 
 \usetypescript[serif][hanging][normal]
 
-\startmode[utopia]
-  \definetypeface[UtopiaHelvetica][rm][serif][fourier]
-  \definetypeface[UtopiaHelvetica][ss][sans][helvetica][default][rscale=0.87]
-  \definetypeface[UtopiaHelvetica][tt][mono][modern]
-  \definetypeface[UtopiaHelvetica][mm][math][fourier]
-  \setupbodyfont[UtopiaHelvetica]
-\stopmode
-\startmode[lucida]
-  \usetypescript[lucida][ec]
-  \setupbodyfont[lucida]
-  \setupcapitals
-    [sc=yes,  
-     title=no]% Ondersteund Lucida niet
-  \define\word{\lowercase}
-  \setupsynonyms[abbreviation]
-    [textstyle={\cap\word}]
-\stopmode
-
-\doifmode{8} {\setupbodyfont[8pt]}
-\doifmode{85}{\setupbodyfont[8.5pt]}
-\doifmode{9} {\setupbodyfont[9pt]}
-\doifmode{95}{\setupbodyfont[9.5pt]}
-\doifmode{10}{\setupbodyfont[10pt]}
-\doifmode{11}{\setupbodyfont[11pt]}
-\doifmode{12}{\setupbodyfont[12pt]}
+\usetypescript[lucida][ec]
+\setupbodyfont[lucida,10pt]
 
 \setupbodyfontenvironment[default]
   [em=\it]
@@ -232,6 +209,13 @@
   [width=broad,
    rulethickness=1pt]
 
+\setupcapitals
+  [sc=yes,  
+   title=no]% Ondersteund Lucida niet
+
+\setupsynonyms[abbreviation]
+  [textstyle={\cap\lowercase}]
+
 %D \section{Paginalayout}
 %D
 %D We zetten de tekst op een pagina met A4-formaat. Voor de reader en het draaiboek willen we natuurlijk A5-formaat hebben. Hier is een speciale mode voor, zie \in{hoofdstuk}[chp:variaties] \quote{Versies en variaties}.
@@ -258,19 +242,6 @@
    topspace=6pc,
    footer=4pc,
    bottomspace=6pc]
-
-\startmode[fifth]
-  \setuplayout
-    [width=middle,               % Laten we ConTeXt zelf uitrekenen
-     backspace=4pc,
-     cutspace=6pc,
-     margin=4pc,
-     height=middle,
-     header=0pc,
-     topspace=4pc,
-     footer=2pc,
-     bottomspace=4pc]
-\stopmode
 
 \setuppagenumbering
   [alternative=doublesided,
@@ -387,6 +358,22 @@
 \setupreferencing
   [partnumber=no]
 
+\defineexternalfigure[passphoto][width=5em]
+
+\defineexternalfigure[tiny]  [width=10pc]
+\defineexternalfigure[small] [width=13pc]
+\defineexternalfigure[medium][width=16pc]
+\defineexternalfigure[large] [width=21pc]
+\defineexternalfigure[huge]  [width=26pc]
+
+\defineexternalfigure[broad] [width=\textwidth]
+\defineexternalfigure[narrow][width=10pc]%=\cutspace
+\defineexternalfigure[long]  [height=\textwidth]
+\defineexternalfigure[short] [height=10pc]%=\bottomspace
+
+\defineexternalfigure[margin][width=\marginwidth]%=6pc/4pc
+\defineexternalfigure[page]  [height=\textheight,width=\textwidth]%=55pc/40pc
+
 %D \section{Sectieblokken}
 %D
 %D Sectieblokken geven een metastructuur aan. De eerste pagina's van een boek worden vaak genummerd met Romeinse cijvers. Dat doen we hier ook. Bij het eerste stukje beginnen we netjes overnieuw, met paginanummer 1. Verder plaatsen we een extra witruimte in de inhoudsopgave als we van het ene sectieblok naar het andere gaan. Dit zorgt voor extra overzicht tussen de inleidingen en de uitleidingen.
@@ -428,21 +415,11 @@
 
 \startmode[correction]
   \setupinterlinespace[big]
-  %\setupspellchecking% Jammergenoeg alleen in MKVI
-    %[state=on]
   \version[concept]
 \stopmode
 
 \startmode[draft]
   \version[temporary]
-  \enablemode[quick]
-\stopmode
-
-\startmode[quick]
-  \setupexternalfigures
-    [option=empty]
-  %TODO: geen BibTeX?
-  %TODO: geen MetaPost?
 \stopmode
 
 %D \section{Papierformaat en impositie}
@@ -466,29 +443,24 @@
 \stopmode
 
 \startmode[reader,scenario,booklet] % Actief bij een van de drie
-  %\setupbodyfont[10pt]
+  \setupbodyfont[8pt]
   \setuplayout
     [width=middle,
      backspace=4pc,
-     cutspace=6pc,% eventueel 6pc
+     cutspace=6pc,% eigenlijk 7pc, maar zit niet in maat
      margin=4pc,
      height=middle,
      topspace=4pc,
-     header=0mm,
-     footer=2pc,% en dan deze 2pc
+     header=0pc,
+     footer=2pc,% en dan deze 3pc
      bottomspace=4pc]
-  \startmode[fifth]
-    \setuplayout
-      [width=middle,
-       backspace=11mm,
-       cutspace=19mm,
-       margin=11mm,
-       height=middle,
-       topspace=11mm,
-       header=0mm,
-       footer=8mm,
-       bottomspace=11mm]
-  \stopmode
+  \defineexternalfigure[tiny]  [width= 8pc]
+  \defineexternalfigure[small] [width=10pc]
+  \defineexternalfigure[medium][width=13pc]
+  \defineexternalfigure[large] [width=16pc]
+  \defineexternalfigure[huge]  [width=21pc]
+  \defineexternalfigure[narrow][width= 8pc]
+  \defineexternalfigure[short] [height=8pc]
 \stopmode
 
 \startmode[electronic]
@@ -521,8 +493,6 @@
   \NC alphabeth width \NC \the\wd\scratchbox \NR
   \NC lineheight      \NC \the\lineheight    \NR
   \stoptabulate
-
-  %\version[temporary]
 
   \page[right]
 \stopmode
@@ -710,9 +680,8 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D \section{Figuren}
 %D
 %D We definieëren twee standaardformaten voor figuren. \type{passphoto} is goed te gebruiken bij \tex{personalia}, aangezien die even breedt is als de eerste kolom. \type{broad} is een handigheidje voor figuren die de tekstbreedte en de marge innemen.
-
-\defineexternalfigure[passphoto][width=5em]
-\defineexternalfigure[broad][width=\dimexpr(\outermargintotal+\textwidth)]
+%D
+%D De meeste instellingen gaan over de breedte van het plaatje, dus over de hoeveelheid letters die ze opslokken als je ze naast de tekst zet.
 
 %D \section{Publicaties}
 %D
