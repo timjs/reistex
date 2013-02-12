@@ -489,11 +489,9 @@
   \showbodyfont
   \showfontstrip
 
-  \setbox\scratchbox\hbox{\dorecurse{26}{\character\recurselevel}}
-  \starttabulate[|l|l|]
-  \NC alphabeth width \NC \the\wd\scratchbox \NR
-  \NC lineheight      \NC \the\lineheight    \NR
-  \stoptabulate
+  \define\alphabet{\dorecurse{26}{\character\recurselevel}}
+  \setbox\scratchbox\hbox{\alphabet}
+  \alphabet: \the\wd\scratchbox
 
   \page[right]
 \stopmode
