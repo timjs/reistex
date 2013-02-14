@@ -22,7 +22,7 @@
 
 \startenvironment travellayout
 
-\writestatus{environment}{Dit is Travellayout versie 2013}
+\writestatus{environment}{Dit is Travellayout versie 2013.02.14}
 
 %D \section{Encodering}
 %D
@@ -588,10 +588,6 @@ setbounds currentpicture to boundingbox OverlayBox;
      width=broad,
      background=travellayout::\doifoddpageelse{rightwave}{leftwave}]
     {\ss\bfx \getvariable{chapter}{date} \hfill \getvariable{chapter}{author}}
-  \setvariables[chapter]
-    [title=,
-     date=,
-     author=]
 \stoptexdefinition
 
 %C -----------------------------------------------------------------------------
@@ -603,19 +599,35 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D
 %D \macros{report}
 %D
-%D De \tex{report}-macro gebruik je om een nieuw hoofdstuk met een eigen auteur en datum aan te duiden. Effectief maakt het een nieuw hoofdstuk aan met daarbij de naam van de auteur en de opgegeven datum. Het label is een optioneel argument.
+%D De \tex{startchapter}-macro gebruik je om een nieuw hoofdstuk met een eigen auteur en datum aan te duiden. Effectief maakt het een nieuw hoofdstuk aan met daarbij de naam van de auteur en de opgegeven datum. Het label is een optioneel argument.
 %D
 %D Zie meer informatie in de handleiding.
 
-\starttexdefinition complexreport [#1]#2#3#4
-  \setvariables[chapter] % Hier slaan we de opgegeven variabelen op.
-    [title={#2},
-     date={#3},
-     author={#4}]
-  \chapter[#1]{#2}       % En we maken een nieuw hoofdstuk aan
+\starttexdefinition startchapter
+  \dodoubleargument\dostartchapter
 \stoptexdefinition
 
-\definecomplexorsimpleempty\report
+\starttexdefinition dostartchapter [#1][#2]
+  \setvariables[chapter][#1]% Hier zetten we de variabelen...
+  \setvariables[chapter][#2]% ...allebei in dezelfde namespace.
+  \doifnot {\getvariable{chapter}{publications}} {no}
+    {\processfile{\jobname.bbl}}% Hack om globaal utf8 regime te gebruiken.
+  % \expanded nodig om het geheel in de inhoudsopgave te krijgen.
+  \expanded{\chapter[\getvariable{chapter}{label}]{\getvariable{chapter}{title}}}
+\stoptexdefinition
+
+\starttexdefinition stopchapter
+  \doifnot {\getvariable{chapter}{publications}} {no}
+    {\section{\headtext{pubs}}
+     \kern 6pt% Hack om publicaties geen ruimte te laten opslokken.
+     \placepublications}
+  \setvariables[chapter]
+    [title=,
+     label=,
+     date=,
+     author=,
+     publications=]
+\stoptexdefinition
 
 %D \section{In de tekst}
 %D
@@ -692,15 +704,14 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D De \type{num}-stijl voegt standaard een extra ruimte in van 6~pt tussen de onderdelen.\footnote{Zie de toevoeging van \tex{vadjust} in de definitie van \tex{setuppublicationlayout} in \type{bibl-num.tex}.} Hier moeten we voor compenseren.
 
 \setupbibtex
-  [database=\jobname,
-   sort=author]
+  [database=\jobname]
+  %bibtex=bibtexu]% Lijkt sommige .bib's niet te slikken...
 
 \setuppublications
-  [alternative=num,
-   sorttype=bbl]
+  [alternative=num]
 \setuppublicationlist
-  [align=flushleft,
-   after={\kern -6pt}]
+  [align=flushleft,% Zodat URL's netjes afgebroken worden
+   after={\kern -6pt}]% Hack om afstand tussen items te reduceren.
 
 %D \BIBTEX\ verwerkt netjes publicaties van het type \type{electronic} maar standaard kan \CONTEXT\ daar niets mee, die zullen we zelf moeten definiëren. Dat doen we door simpelweg de auteur, de titel en de \URL\ in te voegen met hier en daar een punt of een spatie.
 

@@ -1,6 +1,11 @@
 \startcomponent ioffe_afternoon
 \environment    travellayout
 
+\startchapter[title={Ioffe Physical Technical Institute\\ (the afternoon)},
+              label=fys:ioffe_aft]
+             [date={\date[d=13,m=10,y=2009]},
+              author={Maarten van de Griend \& Martijn Jongen}]
+
 \abbreviation{FIZTEKH}{Ioffe Physical Technical Institute}
 \abbreviation{PTHS}   {Physical Technical High School}
 \abbreviation{JET}    {Joint European Torus}
@@ -9,9 +14,6 @@
 \abbreviation{START}  {Small Tight Aspect Ratio Tokamak}
 \abbreviation{MAST}   {Mega Amp Spherical Tokamak}
 \logo        [GLOBUSM]{\cap{globus-m}}
-
-\report[fys:ioffe_aft]{Ioffe Physical Technical Institute\\ (the afternoon)}
-       {\date[d=13,m=10,y=2009]} {Maarten van de Griend \& Martijn Jongen}
 
 \section{History of the Ioffe institute}
 
@@ -140,8 +142,6 @@ As described above, the aspect ratio of \GLOBUSM\ is much smaller than that of \
 
 The reason that the power for the \GLOBUSM\ is denoted as \quantity{0}{MW} is that no nuclear fusion takes place here. The device is merely for plasma properties studies. That is also the reason for its small scale. As explaned above, the aspect ratio is also low. From all the stats can be seen, that \ITER\ will become larger and more impressive.
 
-\section{References}
-
 % Onderstaande omdat deze publicaties niet geciteerd zijn, maar wel in de lijst moeten --TS
 \nocite[globus]
 \nocite[ioffe]
@@ -155,6 +155,6 @@ The reason that the power for the \GLOBUSM\ is denoted as \quantity{0}{MW} is th
 \nocite[pths]
 \nocite[nbi]
 
-\placepublications
+\stopchapter
 
 \stopcomponent
