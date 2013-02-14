@@ -376,6 +376,12 @@
 %D
 %D Sectieblokken geven een metastructuur aan. De eerste pagina's van een boek worden vaak genummerd met Romeinse cijvers. Dat doen we hier ook. Bij het eerste stukje beginnen we netjes overnieuw, met paginanummer 1. Verder plaatsen we een extra witruimte in de inhoudsopgave als we van het ene sectieblok naar het andere gaan. Dit zorgt voor extra overzicht tussen de inleidingen en de uitleidingen.
 
+%FIXME: invloed op paginanummering???
+%\setupsectionblock[frontpart][page=no]
+%\setupsectionblock[bodypart] [page=no]
+%\setupsectionblock[appendix] [page=no]
+\setupsectionblock[backpart] [page=no]% Lost onze uitdaging van een extra lege pagina op!
+
 \startsectionblockenvironment[frontpart]
   \setuppagenumbering
     [conversion=romannumerals]
