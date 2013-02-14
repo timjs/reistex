@@ -141,9 +141,7 @@
    leftquotation=\upperleftdoublesixquote,
    rightquotation=\upperrightdoubleninequote]
 
-\setdigitmode 3 %FIXME
-
-\setdigitmode 4
+\setdigitmode 4 % thinmuskips & period, gebruik altijd "," in getallen!
 
 %D \section{Korps}
 %D
@@ -427,6 +425,7 @@
 \startmode[reader,scenario]
   \setuppapersize[A5][A5]
   \mainlanguage[nl]
+  \setdigitmode 3 % thinmuskips & comma
 \stopmode
 
 \startmode[scenario]
