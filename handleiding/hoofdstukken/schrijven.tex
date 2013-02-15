@@ -15,9 +15,9 @@ In dit hoofdstuk geven we een overzicht van de meest gebruikte commando's van \C
 \setupheadnumber[section][-1]
 \section[sec:commandos]{Commando's}
 
-\TEX\ is een opmaaktaal speciaal voor het zetten van documenten. We schrijven een tekst in een \type{.tex}-bestand, ook wel de \emph{bron} genoemd. Dit is gewoon platte tekst, die je kunt bewerken in je lievelingstekstbewerker. Vervolgens laten we dit door \TEX\ omzetten naar een \PDF, het \emph{compileren}.
+\TEX\ is een opmaaktaal speciaal voor het zetten van documenten. We schrijven een tekst in een \type{.tex}-bestand, ook wel de \emph{bron} genoemd. Dit is gewoon platte tekst, die je kunt bewerken in je lievelingstekstbewerker.\footnote{Vim natuurlijk!} Vervolgens laten we dit door \TEX\ omzetten naar een \PDF, het \emph{compileren}.
 
-Omdat \TEX\ gebruik maakt van platte tekst als bron, kunnen we niet meteen zien hoe het resultaat er uit ziet. \TEX\ werkt met het zogenaamde \cap{wygiwym} ({\en What You Get Is What You Mean}).\footnote{In tegenstelling tot \cap{wygiwys} ({\en What You Get Is What You See}) wat de basis is aan alle tekstverwerkers.} De manier om aan \TEX\ te vertellen wat voor opmaak we willen toekennen aan een stuk tekst of een woord is door \emph{commando's} te gebruiken\seedocumentation{1}{1.3 \& 1.5}.
+Omdat \TEX\ gebruik maakt van platte tekst als bron, kunnen we niet meteen zien hoe het resultaat er uit ziet. \TEX\ werkt met het zogenaamde \cap{wysiwyw} ({\en What You See Is What You Want}).\footnote{In tegenstelling tot \cap{wysiwyg} ({\en What You See Is What You Get}) wat de basis is aan alle tekstverwerkers.} De manier om aan \TEX\ te vertellen wat voor opmaak we willen toekennen aan een stuk tekst of een woord is door \emph{commando's} te gebruiken\seedocumentation{1}{1.3 \& 1.5}.
 
 Commando's in \TEX\ worden voorafgegaan met een \type{\}. De tekst waar het commando op werkt zetten we tussen \type{{ }}. We kunnen bijvoorbeeld een nieuw hoofdstuk aanmaken over Marie Curie met \type{\chapter{Marie Curie}}. Dit ene commando kan meerdere acties tot gevolg hebben. Bijvoorbeeld:
 
@@ -40,7 +40,7 @@ Laten we beginnen met een minimaal reisverslagstukje. Open je favoriete tekstbew
 
 \starttyping
 \startcomponent mijnstukje
-\environment travellayout
+\environment    travellayout
 
 Dit is mijn eerste stukje.
 
@@ -50,20 +50,24 @@ Dit is mijn eerste stukje.
 Met \tex{startcomponent} geven we aan dat we een nieuw stukje beginnen. Het stukje heeft de naam die er achter staat\seedocumentation{1}{2.2 \& 2.3}. De volgende regel laadt de opmaak, die gedefinieerd staat in het bestand \type{travellayout.tex}. We sluiten het stukje af met \tex{stopcomponent}. Elke \tex{start} moet afgesloten worden met een \tex{stop}. Tussen \tex{startcomponent} en \tex{stopcomponent} tikken we de inhoud van het stukje. In dit geval is dit alleen de tekst \quote{Dit is mijn eerste stukje.}.
 
 \startframedtext
-Let op dat je je stukje opslaat in \emph{Unicode} codering (ook wel \UTF-8 genoemd). De manier om dit te doen verschilt per tekstbewerker. Soms kun je dit aangeven in een menu(-item) met de naam \emph{Codering}, soms kun je dit aangeven in het venster \emph{Opslaan als\dots} als extra optie.
+Let op dat je je stukje opslaat in \UTF-8 codering (een onderdeel van de \emph{Unicode} standaard). De manier om dit te doen verschilt per tekstbewerker. Soms kun je dit aangeven in een menu(-item) met de naam \emph{Codering} of \emph{\en Encoding}, soms kun je dit aangeven in het venster \emph{Opslaan als\dots} als extra optie.
 \stopframedtext
 
 \subsection{Kopjes}
 
-Laten we nu een mooi kopje maken met de titel van je stukje, de datum van het bezoek en je naam. Dit doen we met \tex{report}.
+Een nieuw hoofdstuk maak je in \CONTEXT\ met het commando \tex{chapter}. Maar wij willen graag dat jouw naam en het datum van het bezoek bij het hoofdstuk komen te staan. Hiervoor gebruiken we een \tex{start/stopchapter}-paar waar we deze extra informatie aan meegeven.
 
 \starttyping
-\report{Titel}{\date[d=1,m=1,y=2011]}{Naam}
+\startchapter[title=Titel van je stukje]
+             [author=Jouw Naam,
+              date={\date[d=1,m=1,y=2011]}]
+...
+\stopchapter
 \stoptyping
 
-Zoals je ziet bevat het eerste argument de titel van je stukje. In het tweede argument gebruiken we \tex{date}, waar we door middel van een lijst dag, maand en jaar opgeven. Het derde argument bevat je naam.
+Zoals je ziet geven we \quote{standaard informatie} en \quote{extra informatie} op in twee verschillende lijsten, omgeven met \type{[ ]}. Voor de datum gebruiken we het commando \tex{date}, waar we door middel van nog een lijst dag, maand en jaar opgeven. Let goed op de haakjes en plekken waar je komma's moet zetten. Tussen de \tex{startchapter} en \tex{stopchapter} komt de tekst van jou hoofdstuk te staan.
 
-De rest van je stukje kun je indelen met subkopjes. Deze heten in \CONTEXT\ \tex{section}, \tex{subsection}, \tex{subsubsection} enzovoorts\seedocumentation{5}{8.2}. Als argument geef je  de titel van het kopje.
+De rest van je stukje kun je indelen met subkopjes. Deze heten in \CONTEXT\ \tex{section}, \tex{subsection}, \tex{subsubsection} enzovoorts\seedocumentation{5}{8.2}. Als argument geef je de titel van het kopje.
 
 \startbuffer
 Om een nieuwe alinea te beginnen, laat je een of meer witregels open.
@@ -86,27 +90,27 @@ Forceer \TEX\ \emph{nooit} om binnen een alinea regels af te breken. Dit levert 
 
 \subsection{Escapes}
 
-De tekens \%, \#, \$, \&, \{ en \} moeten worden voorafgegaan door een \backslash\ omdat deze een speciale betekenis hebben in \TEX. Om de \backslash\ zelf te zetten gebruik je \tex{backslash}\seedocumentation{3}{1.6}.
+De tekens \%, \#, \$, \&, \{ en \} moeten worden voorafgegaan door een \letterbackslash\ omdat deze een speciale betekenis hebben in \TEX. Om de \letterbackslash\ zelf te zetten gebruik je \tex{letterbackslash}\seedocumentation{3}{1.6}.
 
-Ook \sim\ is een speciaal teken dat je niet zomaar kunt gebruiken. Met een \sim\ kun je namelijk een spatie afdwingen waartussen geen regeleinde kan komen. Erg handig in mevr.~M.~Curie bijvoorbeeld! \sim\ zelf zet je met \tex{sim}.\footnote{Om de spatie na \sim\ te behouden tik je \tex{sim\} net als bij synoniemen (zie \in{sectie}[sec:synoniemen]).}
+Ook \~ is een speciaal teken dat je niet zomaar kunt gebruiken. Met een \~ kun je namelijk een spatie afdwingen waartussen geen regeleinde kan komen. Erg handig in mevr.~M.~Curie bijvoorbeeld! Een \~ zelf zet je met \tex{~}.
 
 \subsection{Accenten}
 
-Als je \TEX\ nog niet gewend bent, hoef je nergens bang voor te zijn. Je kunt accenten op letters gewoon zo intikken als je gewend bent in Word of een andere tekstverwerker: é, ü, ì, â enzovoorts. Dit kun je ook doen met Griekse letters (αλφαβητος), het €-teken en andere vreemde letters als ß, œ, Æ enzovoorts. Voor de \LATEX-nerds misschien een kleine schok, maar je hoeft dus geen accenten te zetten met backslashes.\footnote{Als je dat wilt, kan het wel.}
+Als je \TEX\ nog niet gewend bent, hoef je nergens bang voor te zijn. Je kunt accenten op letters gewoon zo intikken als je gewend bent in Word of een andere tekstverwerker: é, ü, ì, â enzovoorts. Dit kun je ook doen met Griekse letters (αλφαβητος), het €-teken en andere vreemde letters als ß, œ, Æ enzovoorts. Voor de \LATEX-nerds misschien een kleine schok, maar je hoeft dus geen accenten te zetten met backslashes.
 
 \section{Tekst}
 
 \subsection{Typografisch}
 
-Het belangrijkste dat je kunt doen om een stuk tekst op te laten vallen\seedocumentation{31.7}{5.6}\ is die \emph{accentueren}. Dit kan met \tex{emph}. Daarnaast kun je afkortingen, die meestal in hoofdletters worden gezet, minder SCHREEUWERIG maken met \tex{cap}. Dat ziet er dan \cap{rustiger} uit\seedocumentation{31.6}{5.7}.\footnote{Voor meer over afkortingen, zie \in{sectie}[sec:afkortingen]} Afbreekstreepjes zijn gewone -, gedachtestreepjes worden gemaakt met twee streepjes --. Dit langere streepje is ook erg handig tussen getallen: 1997--2002. Soms wil je een zin afsluiten met drie puntjes\dots\ Dat kan met \tex{periods}. Een \URL\ kun je zetten met \tex{url}.\footnote{In \tex{url} kun je een \sim\ zetten door \type{\~} in te tikken.}
+Het belangrijkste dat je kunt doen om een stuk tekst op te laten vallen\seedocumentation{31.7}{5.6}\ is die \emph{accentueren}. Dit kan met \tex{emph}. Daarnaast kun je afkortingen, die meestal in hoofdletters worden gezet, minder SCHREEUWERIG maken met \tex{cap}. Dat ziet er dan \cap{rustiger} uit\seedocumentation{31.6}{5.7}.\footnote{Voor meer over afkortingen, zie \in{sectie}[sec:afkortingen]} Afbreekstreepjes zijn gewone -, gedachtestreepjes worden gemaakt met twee streepjes --. Dit langere streepje is ook erg handig tussen getallen: 1997--2002. Soms wil je een zin afsluiten met drie puntjes\dots\ Dat kan met \tex{dots}. Een \URL\ kun je zetten met \tex{online}.
 
 Voor de rest is het \emph{niet} de bedoeling dat je zelf opmaakt toevoegt!\footnote{Op welke manier dan ook.} Maak alleen gebruik van de commando's die je in dit document kunt vinden zodat de cie een mooi en consistent verslag kan maken. Wil je iets speciaals zetten en je weet niet hoe, stuur even een mailtje.
 
-\subsection{Sub- en superscript}
+%\subsection{Sub- en superscript}
 
-Soms wil je chemische formules zetten zoals H\low{2}O.\seedocumentation{37.6}{4.9}\ Dan heb subscript of superscript nodig. Hiervoor zijn de commando's \tex{low} en \tex{high} beschikbaar. Wanneer je iets tegelijk laag en hoog wilt zetten, zoals \lohi{11}{23}Na, kun je \tex{lohi} gebruiken.
+%Soms wil je chemische formules zetten zoals H\low{2}O.\seedocumentation{37.6}{4.9}\ Dan heb subscript of superscript nodig. Hiervoor zijn de commando's \tex{low} en \tex{high} beschikbaar. Wanneer je iets tegelijk laag en hoog wilt zetten, zoals \lohi{11}{23}Na, kun je \tex{lohi} gebruiken.
 
-Voor sub- en superscript in formules zie \in{sectie}[sec:formules].
+%Voor sub- en superscript in formules zie \in{sectie}[sec:formules].
 
 \subsection{Aanhalingen}
 
@@ -122,7 +126,7 @@ Fysici zijn dol op voetnoten. In je fysica-stukje wil je er misschien niet te ve
 
 \subsubject{Voorbeeld}
 
-In onderstaand voorbeeld kun je zien hoe alle bovenstaande commando's werken en het resultaat daarvan. Let er op dat \tex{emph} weet dat de omvattende tekst cursief is en het benadrukte woord roman zet.
+In onderstaand voorbeeld kun je zien hoe alle bovenstaande commando's werken en het resultaat daarvan. Let er op dat \tex{emph} weet dat de omvattende tekst cursief is en het benadrukte woord roman zet. Merk ook op dat \TEX\ de regel afbreekt na de -- en niet tussen het getal 212 en \cap{v.Chr.}. Dat komt door het gebruik van \~.
 
 \startbuffer
 \startquote
@@ -203,7 +207,7 @@ Tabellen en figuren zijn zogenaamde \emph{blokken}\seedocumentation{10}{12.2}. \
 \startbuffer
 \placefigure[][fig:marielogo]
   {Logo van \infull{MC}}
-  {\externalfigure[marielogo][width=0.7\textwidth]}
+  {\externalfigure[marielogo][large]}
 \stopbuffer
 \typebuffer
 
@@ -211,9 +215,9 @@ Tabellen en figuren zijn zogenaamde \emph{blokken}\seedocumentation{10}{12.2}. \
 
 Om een figuur te plaatsen gebruiken we \tex{placefigure}. Dit commando heeft maar liefst vier argumenten. Twee tussen blokhaakjes (die optioneel zijn) en twee tussen accolades.
 
-Met het eerste argument tussen blokhaakjes hoef je niets mee te doen, die kun je dus leeg laten. Het tweede argument bevat een label. Met dit label kun je later naar je figuur verwijzen. Je weet immers niet welk nummer het figuur heeft en op welke pagina die komt te staan. \CONTEXT\ zoekt dit dan automatisch voor je uit. Verzin duidelijke labels! Andere mensen vinden \quote{plaatje} of \quote{instituut} misschien ook wel een goed label en dan raakt \TEX\ in de war. Als je geen verwijzingen wilt maken, dan kun je beide rechte haakjes van \tex{placefigure} leeg laten. Meer informatie over verwijzingen vind je in \in{sectie}[sec:verwijzingen].
+Met het eerste argument tussen blokhaakjes hoef je niets te doen, die kun je dus leeg laten. Het tweede argument bevat een label. Met dit label kun je later naar je figuur verwijzen. Je weet immers niet welk nummer het figuur heeft en op welke pagina die komt te staan. \CONTEXT\ zoekt dit dan automatisch voor je uit. Verzin wel duidelijke labels! Andere mensen vinden \quote{plaatje} of \quote{instituut} misschien ook wel een goed label en dan raakt \TEX\ in de war. Als je geen verwijzingen wilt maken, dan kun je beide rechte haakjes van \tex{placefigure} leeg laten. Meer informatie over verwijzingen vind je in \in{sectie}[sec:verwijzingen].
 
-Het derde en vierde argument bevatten het bijschrift en het figuur zelf. Een figuur laden we in met \tex{externalfigure}\seedocumentation{10}{13.2 \& 13.3}. Als eerste geven we de bestandsnaam van het figuur op. Hier is dat \type{marielogo}. Hierbij hoef je \emph{geen extensie} op te geven, \CONTEXT\ zoekt zelf uit wat voor type figuur het is. Daarnaast melden we hoe groot het figuur moet zijn. In plaats van een vaste breedte of hoogte zoals \quantity{4}{cm} of \quantity{50}{pt} doen we dit meestal relatief aan de breedte van het tekstvak (\tex{textwidth}) of de hoogte van het tekstvak (\tex{textheight}). Wanneer we alleen de breedte opgeven wordt de hoogte automatisch aangepast, het figuur behoud dus zijn verhouding.
+Het derde en vierde argument bevatten het bijschrift en het figuur zelf. Een figuur laden we in met \tex{externalfigure}\seedocumentation{10}{13.2 \& 13.3}. Als eerste geven we de bestandsnaam van het figuur op. Hier is dat \type{marielogo}. Hierbij hoef je \emph{geen extensie} op te geven, \CONTEXT\ zoekt zelf uit wat voor type figuur het is. Daarnaast melden we hoe groot het figuur moet zijn. Je kunt kiezen uit \type{large}, \type{medium} en \type{small}. Soms heb je plaatjes die je over de hele tekstbreedte wilt zetten, gebruik dan \type{broad}. Voor plaatjes die smal zijn gebruik je (je raadt het al) \type{narrow}. Er zijn nog meer van dit soort groottes gedefinieerd, dus schrik niet als de cie iets anders kiest. Het is uiteindelijk hun taak om het verslag netjes op te maken.
 
 Je kunt figuren inladen van de volgende formaten:\footnote{Voor de \LATEX-adepten, je hoeft ze dus niet te converteren naar \EPS!}
 
@@ -254,7 +258,7 @@ Tussen \tex{starttabulate} en \tex{stoptabulate} geef je de inhoud van de tabel.
 
 \getbuffer
 
-Zoals je ziet gaat het plaatsen van een tabel hetzelfde als bij een figuur. Ook hier kunnen we een label en een bijschrift meegeven, maar in plaats van \tex{placefigure} gebruiken we nu \tex{placetable}, en we geven nu natuurlijk een tabel als laatste argument in plaats van een extern figuur.
+Zoals je ziet gaat het plaatsen van een tabel hetzelfde als bij een figuur. Ook hier kunnen we een label en een bijschrift meegeven, maar in plaats van \tex{placefigure} gebruiken we nu \tex{placetable}, en we geven nu natuurlijk een tabel als laatste argument in plaats van een extern figuur.\footnote{Er staan impliciete haakjes om \tex{start/stoptabulate}.}
 
 %\startbuffer
 %\placetable[][tab:standaardmodel]
@@ -277,7 +281,7 @@ Zoals je ziet gaat het plaatsen van een tabel hetzelfde als bij een figuur. Ook 
 
 \section[sec:formules]{Formules}
 
-Een van de belangrijkste redenen om \TEX\ te gebruik is om formules te zetten. Hierin blinkt \TEX\ echt uit ten opzichte van zo'n beetje elke tekstverwerker en desktop publishing pakket. \TEX\ kent twee \emph{modi} om formules te zetten\seedocumentation{7}{--}. De eerste is de \emph{\en normal mode}, gebruikt voor in de tekst. Het enig wat je hoeft te doen is je formule of grootheid te plaatsen tussen dollartekens. Dus \mat{E=mc^2} wordt $E=mc^2$. Nog meer dan bij gewone tekst maken spaties (of geen spaties) in wiskundemodus niet uit. \TEX\ weet zelf dat je iets meer ruimte tussen de $=$ en de $m$ wilt hebben dan tussen de $m$ en de $c$.
+Een van de belangrijkste redenen om \TEX\ te gebruik is om formules mooi te zetten. Hierin blinkt \TEX\ echt uit ten opzichte van zo'n beetje elke tekstverwerker en desktop publishing pakket. \TEX\ kent twee \emph{modi} om formules te zetten\seedocumentation{7}{--}. De eerste is de \emph{\en normal mode}, gebruikt voor in de tekst. Het enig wat je hoeft te doen is je formule of grootheid te plaatsen tussen dollartekens. Dus \mat{E=mc^2} wordt $E=mc^2$. Nog meer dan bij gewone tekst maken spaties (of geen spaties) in wiskundemodus niet uit. \TEX\ weet zelf dat je iets meer ruimte tussen de $=$ en de $m$ wilt hebben dan tussen de $m$ en de $c$.
 
 De tweede modus om formules in te zetten is in \emph{\en display mode}. Deze modus gebruiken we om formules op een eigen regel te plaatsen. Hiervoor zetten we de formule tussen \tex{startformula} en \tex{stopformula}.
 
@@ -316,18 +320,18 @@ Soms wil je een een paar formules netjes onder elkaar zetten. Dit doen we op dez
 
 \getbuffer
 
-Er zijn heel veel symbolen die je direct kunt gebruiken door een \backslash\ voor hun naam te zetten. Bijvoorbeeld alle Griekse letters zoals je ook kunt zien in bovenstaande formules. Ben je op zoek naar dat ene symbool, en je weet niet hoe die in \TEX-taal heet? In \in{appendix}[app:symbols] vind je een overzicht.
+Er zijn heel veel symbolen die je direct kunt gebruiken door een \letterbackslash\ voor hun naam te zetten. Bijvoorbeeld alle Griekse letters zoals je ook kunt zien in bovenstaande formules. Ben je op zoek naar dat ene symbool, en je weet niet hoe die in \TEX-taal heet? In \in{appendix}[app:symbolen] vind je een overzicht.
 
 Heb je behoefte aan uitgebreide uitlijningsmogelijkheden of wil je je formules op een aparte manier nummeren, lees dan \from[mathalign].
 
 \subsection{Uitgebreide formules}
 
-Enkele voorbeelden van \quote{ingewikkeldere} wiskunde. Let op \tex{d} om een \emph{rechte d} te zetten en \tex{vec} voor vectoren.%Je kunt meerdere formules groeperen tussen \tex{startformulas} en \tex{stopformulas}. \CONTEXT\ kiest dan een mooie uitlijning voor je.
+Enkele voorbeelden van \quote{ingewikkeldere} wiskunde. Let op \tex{total} om een \emph{rechte d} te zetten en \tex{vec} voor vectoren.%Je kunt meerdere formules groeperen tussen \tex{startformulas} en \tex{stopformulas}. \CONTEXT\ kiest dan een mooie uitlijning voor je.
 
 \startbuffer
 \startformula
-f(x) = \left| \int_0^1 (x^2 - 3x)    \,\d x \right|
-     + \left| \int_1^2 (x^2 -5x + 6) \,\d x \right|
+f(x) = \left| \int_0^1 (x^2 - 3x)    \,\total x \right|
+     + \left| \int_1^2 (x^2 -5x + 6) \,\total x \right|
 \stopformula
 \stopbuffer
 \typebuffer
@@ -362,11 +366,11 @@ f(x) = \startcases
 \startbuffer
 \startformula
 \startalign[m=2,distance=6em]
-\NC \nabla\cdot\vec{E}  \NC= \frac{\rho}{\epsilon_0}
-\NC \nabla\cdot\vec{B}  \NC= 0                                    \NR
-\NC \nabla\times\vec{E} \NC= -\frac{\partial \vec{B}}{\partial t}
-\NC \nabla\times\vec{B} \NC= \mu_0 \vec{J} + \mu_0\epsilon_0
-                             \frac{\partial \vec{E}}{\partial t}  \NR
+\NC \nabla\cdot\vec{E} \NC= \frac{\rho}{\epsilon_0}
+\NC \nabla\cdot\vec{B} \NC= 0                                   \NR
+\NC \nabla\times\vec{E}\NC= -\frac{\partial \vec{B}}{\partial t}
+\NC \nabla\times\vec{B}\NC= \mu_0 \vec{J} + \mu_0\epsilon_0
+                             \frac{\partial \vec{E}}{\partial t}\NR
 \stopalign
 \stopformula
 \stopbuffer
@@ -405,7 +409,7 @@ Oeps, dit is eigenlijk een evenwichtsreactie. Nog een kleine aanpassing.
 \typebuffer
 \getbuffer
 
-Zo, nu zijn de scheikundigen wel tevreden! \tex{chemical} kun je ook in de lopende tekst gebruiken en ook om een enkel molecuul of ion te zetten. \type{\chemical{C_2O_4^{2-}}} geeft netjes \chemical{C_2O_4^{2-}}. Met dit commando kun je zelfs hele chemische structuren tekenen! Het gaat iets te ver dat hier ook allemaal uit te leggen, meer informatie kun je vinden in \unknown.
+Zo, nu zijn de scheikundigen wel tevreden! \tex{chemical} kun je ook in de lopende tekst gebruiken en ook om een enkel molecuul of ion te zetten. \type{\chemical{C_2O_4^{2-}}} geeft netjes \chemical{C_2O_4^{2-}}. Met dit commando kun je zelfs hele chemische structuren tekenen! Het gaat iets te ver dat hier ook allemaal uit te leggen, meer informatie kun je vinden in \from[chemical].
 
 \subsection[sec:eenheden]{Eenheden}
 
@@ -482,7 +486,7 @@ Na deze definities zijn twee nieuwe commando's beschikbaar, namelijk \tex{MC} en
 \stopbuffer
 \getbuffer
 
-De eerste keer dat we de afkorting gebruiken staat er netjes een spatie, maar de tweede keer niet. Dit komt omdat de afkorting de spatie opslokt.\footnote{Helaas, daar kan ik ook niet veel aan doen.} We moeten hem afdwingen met een extra \backslash. Bovenstaande is gezet met:
+De eerste keer dat we de afkorting gebruiken staat er netjes een spatie, maar de tweede keer niet. Dit komt omdat de afkorting de spatie opslokt.\footnote{Helaas, daar kan ik ook niet veel aan doen.} We moeten hem afdwingen met een extra \letterbackslash. Bovenstaande is gezet met:
 \typebuffer
 
 In \type{travellayout.tex} hebben we een paar extra afkortingen voorgedefinieerd. Je kunt de volgende afkortingen allemaal gebruiken:
@@ -535,19 +539,23 @@ Sommige velden zijn verplicht bij bepaalde types, maar niet bij andere. Een over
 
 Vaak hoef je al deze gegevens zelf niet in te tikken. Sites als Google Books en Picarta kunnen bibliografie-informatie exporteren naar \BIBTEX-formaat. Even kopiëren en plakken in je eigen database en klaar!
 
-Om te verwijzen naar een bron uit je \BIBTEX\ database gebruik je \tex{cite}. In zijn simpelste form geef je \tex{cite} het label van je bron tussen blokhaken, bijvoorbeeld \type{\cite[Griffiths:2008]}. Dit geeft \cite[Griffiths:2008]. Meer info over bibliografieën kun je vinden op \from[bib].
+Om te verwijzen naar een bron uit je \BIBTEX\ database gebruik je \tex{cite}. In zijn simpelste form geef je \tex{cite} het label van je bron tussen blokhaken, bijvoorbeeld \type{\cite[Griffiths:2008]}. Dit geeft \cite[Griffiths:2008]. Meer info over bibliografieën kun je vinden in \from[bib].
 
-\BIBTEX\ nummert al je bronnen en zet ze, zoals gebruikelijk binnen de natuurkunde, tussen blokhaken. Het enige dat jij nog moet doen is \tex{placepublications} aan het einde van je stukje te zetten!
+\BIBTEX\ nummert al je bronnen en zet ze, zoals gebruikelijk binnen de natuurkunde, tussen blokhaken.
+\type{travellayout.tex} zorgt er zelf voor dat aan het einde van je hoofdstuk een bronnenlijst verschijn!
+%Het enige dat jij nog moet doen is \tex{placepublications} aan het einde van je stukje te zetten!
 
 \nocite[Schrodinger:1926]
 \nocite[Kuhn:2004]
 \nocite[Wikipedia:Electronmass]
 
 \startbuffer
+\processfile{handleiding.bbl}% Ja dit is een HACK...
 \subsubject{Bronnen}
+\kern+6pt% ...en dit ook!
 \placepublications
 \stopbuffer
-\typebuffer
+%\typebuffer
 \getbuffer
 
 %Het is de bedoeling dat je je bronnen netjes opgeeft. Dit zul je met je bachelor- en masterstage ook moeten doen, dus kun je er nu net zo goed meteen mee oefenen.
