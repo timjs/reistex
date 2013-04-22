@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Verwijder alle hulpbestanden die iets met TeX te maken hebben.
+#
+# Tim Steenvoorden, MMXIIV
+
+# TeX:
+rm -vf *.log
+rm -vf *.tmp
+# ConTeXt MkII:
+rm -vf *.tui
+rm -vf *.tuo
+rm -vf *.top
+rm -vf *.toc
+# ConTeXt MkIV:
+rm -vf *.tuc
+# Filter
+rm -vf *-temp-*
+# LaTeX:
+rm -vf *.aux
+# LaTeXmk:
+rm -vf *.fls
+rm -vf *.fdb*
+# MetaPost:
+rm -vf *mpgraph*
+# PGF:
+rm -vf *.pgf
+# BibTeX:
+rm -vf *.blg
+rm -vf *.bbl
+rm -vf *.bcf
+rm -vf *.run.xml
+# Beamer:
+rm -vf *.nav
+rm -vf *.out
+rm -vf *.snm
+# SyncTeX:
+rm -vf *.synctex.*
+# Documentation:
+rm -vf *.ted
+rm -vf *.md5
+

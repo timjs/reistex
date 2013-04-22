@@ -24,3 +24,7 @@
 
 # Compiled
 *.pdf
+
+# Haskell
+*.o
+*.hi

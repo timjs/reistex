@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Update de ConTeXt versie in deze map naar de laatste versie
+#
+# Tim Steenvoorden, MMXIIV
+
+cd /vol/impuls/context
+
+rsync -tv rsync://contextgarden.net/minimals/setup/first-setup.sh .
+chmod a-x first-setup.sh
+bash first-setup.sh #--context=current
+
+cd -

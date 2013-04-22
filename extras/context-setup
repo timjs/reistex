@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Stelt je zoekpad zo in dat je gebruik kunt maken
+# van de ConTeXt versie in deze map.
+#
+# Tim Steenvoorden, MMXIIV
+
+source /vol/impuls/context/tex/setuptex
+export PATH="/vol/impuls/context/:$PATH"
