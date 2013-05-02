@@ -18,7 +18,23 @@ import Output
 type Stack a = [a]
 type Error   = String
 type Line    = Int
-type Symbol  = String
+
+data Symbol  = Brace
+             | Bracket
+             | Paren
+             | Math
+             | Stop Name
+             | End  Name
+             deriving (Eq, Ord)
+type Name    = String
+
+instance Show Symbol where
+  show Brace    = "}"
+  show Bracket  = "]"
+  show Paren    = ")"
+  show Math     = "$"
+  show (Stop n) = "\\stop" ++ n
+  show (End n)  = "\\end{" ++ n ++ "}"
 
 {-| O(n) Bereken hoe vaak @x@ in de lijst voorkomt. -}
 count :: (Eq a) => a -> [a] -> Int
@@ -35,28 +51,28 @@ count x (y:ys)
  -}
 isOpening :: String -> Maybe (Symbol, String)
 isOpening s
-  | Just r <- stripPrefix "{" s      = Just ("}", r)
-  | Just r <- stripPrefix "[" s      = Just ("]", r)
-  | Just r <- stripPrefix "(" s      = Just (")", r)
+  | Just r <- stripPrefix "{" s      = Just (Brace, r)
+  | Just r <- stripPrefix "[" s      = Just (Bracket, r)
+  | Just r <- stripPrefix "(" s      = Just (Paren, r)
   | Just r <- stripPrefix "\\start" s
-  , (n,r)  <- span isLetter r        = Just ("\\stop" ++ n, r)
+  , (n,r)  <- span isLetter r        = Just (Stop n, r)
   | Just r <- stripPrefix "\\begin{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just ("\\end{" ++ n ++ "}", r)
+  , Just r <- stripPrefix "}" r      = Just (End n, r)
   | otherwise                        = Nothing
 
 {-| Analoog aan @isOpening@, maar dan voor sluithaakjes en stop-commando's.
  -}
 isClosing :: String -> Maybe (Symbol, String)
 isClosing s
-  | Just r <- stripPrefix "}" s      = Just ("}", r)
-  | Just r <- stripPrefix "]" s      = Just ("]", r)
-  | Just r <- stripPrefix ")" s      = Just (")", r)
+  | Just r <- stripPrefix "}" s      = Just (Brace, r)
+  | Just r <- stripPrefix "]" s      = Just (Bracket, r)
+  | Just r <- stripPrefix ")" s      = Just (Paren, r)
   | Just r <- stripPrefix "\\stop" s
-  , (n,r)  <- span isLetter r        = Just ("\\stop" ++ n, r)
+  , (n,r)  <- span isLetter r        = Just (Stop n, r)
   | Just r <- stripPrefix "\\end{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just ("\\end{" ++ n ++ "}", r)
+  , Just r <- stripPrefix "}" r      = Just (End n, r)
   | otherwise                        = Nothing
 
 {-| Controleer of de string begint met een nieuwe regel.
@@ -101,19 +117,19 @@ isMath s = stripPrefix "$" s
  -}
 balanced :: Line -> Stack (Line,Symbol) -> String -> (Bool,Error) --Writer Error Bool
 balanced _ []         ""      = (True, "")
-balanced l ((k,o):_)  ""      = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
+balanced l ((k,o):_)  ""      = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
 balanced l os s
   | Just r     <- isNewLine s = balanced (l+1) os r
   | Just r     <- isComment s = balanced l os r
   | Just r     <- isMath    s = case os of
-    []                       -> balanced l ((l,"$"):os) r
-    (k,o) : os  | o == "$"   -> balanced l os r
-                | otherwise  -> balanced l ((l,"$"):(k,o):os) r
+    []                       -> balanced l ((l,Math):os) r
+    (k,o) : os  | o == Math  -> balanced l os r
+                | otherwise  -> balanced l ((l,Math):(k,o):os) r
   | Just (o,r) <- isOpening s = balanced l ((l,o):os) r
   | Just (c,r) <- isClosing s = case os of
-    []                       -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ c ++ "', closed withoud opening")
+    []                       -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', closed withoud opening")
     (k,o) : os  | c == o     -> balanced l os r
-                | otherwise  -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ c ++ "', expected '" ++ o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
+                | otherwise  -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
   | otherwise                 = balanced l os $ tail s
 
 {-| Controleer of de string gebalanceerd.
