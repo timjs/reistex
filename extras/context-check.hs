@@ -74,6 +74,13 @@ isComment s
   | Just r <- stripPrefix "%" s      = Just $ dropWhile (/= '\n') r
   | otherwise                        = Nothing
 
+{-| Controleer of de string begint met een dollar teken,
+ -  in dat geval zitten we in wiskundemodus.
+ -  Strip deze en geef de rest van de string terug.
+ -}
+isMath :: String -> Maybe String
+isMath s = stripPrefix "$" s
+
 {-| Recursief algoritme om te controleren of de string gebalanceerd is
  -  wat betreft haakjes en start/stop-paren.
  -
@@ -98,10 +105,14 @@ balanced l ((k,o):_)  ""      = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpe
 balanced l os s
   | Just r     <- isNewLine s = balanced (l+1) os r
   | Just r     <- isComment s = balanced l os r
+  | Just r     <- isMath    s = case os of
+    []                       -> balanced l ((l,"$"):os) r
+    (k,o) : os  | o == "$"   -> balanced l os r
+                | otherwise  -> balanced l ((l,"$"):(k,o):os) r
   | Just (o,r) <- isOpening s = balanced l ((l,o):os) r
   | Just (c,r) <- isClosing s = case os of
     []                       -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ c ++ "', closed withoud opening")
-    (k,o):os    | c == o     -> balanced l os r
+    (k,o) : os  | c == o     -> balanced l os r
                 | otherwise  -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ c ++ "', expected '" ++ o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
   | otherwise                 = balanced l os $ tail s
 
