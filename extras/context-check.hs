@@ -12,11 +12,13 @@ import Output
 
 {- Allereerst definieeren we een paar type-synoniemen.
  - We gebruiken een eenvoudige lijst als stapel (Stack),
- - een foutmelding is een string en een regelnummer is een geheel getal.
+ - een foutmelding is een string en een regelnummer is een geheel getal,
+ - stapelsymbolen zijn ook strings.
  -}
 type Stack a = [a]
 type Error   = String
 type Line    = Int
+type Symbol  = String
 
 {-| O(n) Bereken hoe vaak @x@ in de lijst voorkomt. -}
 count :: (Eq a) => a -> [a] -> Int
@@ -31,24 +33,30 @@ count x (y:ys)
  -  met daarin het sluithaakje of stop-commando en de rest van de string.
  -  Als we niets vinden, geven we `niets' terug!
  -}
-isOpening :: String -> Maybe (String, String)
+isOpening :: String -> Maybe (Symbol, String)
 isOpening s
   | Just r <- stripPrefix "{" s      = Just ("}", r)
   | Just r <- stripPrefix "[" s      = Just ("]", r)
   | Just r <- stripPrefix "(" s      = Just (")", r)
   | Just r <- stripPrefix "\\start" s
   , (n,r)  <- span isLetter r        = Just ("\\stop" ++ n, r)
+  | Just r <- stripPrefix "\\begin{" s
+  , (n,r)  <- span isLetter r
+  , Just r <- stripPrefix "}" r      = Just ("\\end{" ++ n ++ "}", r)
   | otherwise                        = Nothing
 
 {-| Analoog aan @isOpening@, maar dan voor sluithaakjes en stop-commando's.
  -}
-isClosing :: String -> Maybe (String, String)
+isClosing :: String -> Maybe (Symbol, String)
 isClosing s
   | Just r <- stripPrefix "}" s      = Just ("}", r)
   | Just r <- stripPrefix "]" s      = Just ("]", r)
   | Just r <- stripPrefix ")" s      = Just (")", r)
   | Just r <- stripPrefix "\\stop" s
   , (n,r)  <- span isLetter r        = Just ("\\stop" ++ n, r)
+  | Just r <- stripPrefix "\\end{" s
+  , (n,r)  <- span isLetter r
+  , Just r <- stripPrefix "}" r      = Just ("\\end{" ++ n ++ "}", r)
   | otherwise                        = Nothing
 
 {-| Controleer of de string begint met een nieuwe regel.
@@ -84,7 +92,7 @@ isComment s
  -  Het type van deze functie vraagt eigenlijk om een Writer Monad,
  -  maar omdat dit maar een script is, gaan we het ons niet te ingewikkeld maken...
  -}
-balanced :: Line -> Stack (Line,String) -> String -> (Bool,Error) --Writer Error Bool
+balanced :: Line -> Stack (Line,Symbol) -> String -> (Bool,Error) --Writer Error Bool
 balanced _ []         ""      = (True, "")
 balanced l ((k,o):_)  ""      = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
 balanced l os s
@@ -133,3 +141,4 @@ main = do
     n -> putInf $ "Oh help, found " ++ show n ++ " errors!"
   exitSuccess
 
+-- vim: nowrap
