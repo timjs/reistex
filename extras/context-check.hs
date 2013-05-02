@@ -99,6 +99,12 @@ isComment s
   | Just r <- stripPrefix "%" s      = Just $ dropWhile (/= '\n') r
   | otherwise                        = Nothing
 
+isEscaped :: String -> Maybe String
+isEscaped s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
+  [ "\\%"
+  , "\\$"
+  ]
+
 isDelimiter :: String -> Maybe String
 isDelimiter s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
   [ "."
@@ -166,6 +172,7 @@ balanced _ []        False  ""    = (True, "")
 balanced l ((k,o):_) _      ""    = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
 balanced l os m s
   | Just r       <- isNewLine s   = balanced (l+1) os m r
+  | Just r       <- isEscaped s   = balanced l os m r
   | Just r       <- isComment s   = balanced l os m r
   | Just (o,m,r) <- isOpening m s = balanced l ((l,o):os) m r
   | Just (c,m,r) <- isClosing m s = case os of
