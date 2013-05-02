@@ -13,13 +13,17 @@ import Output
 
 {- Allereerst definieeren we een paar type-synoniemen.
  - We gebruiken een eenvoudige lijst als stapel (Stack),
- - een foutmelding is een string en een regelnummer is een geheel getal,
- - stapelsymbolen zijn ook strings.
+ - een foutmelding is een string en een regelnummer is een geheel getal.
  -}
 type Stack a = [a]
 type Error   = String
 type Line    = Int
 
+{-| Een symbool is een abstract data type. Deze kunnen we goedkoper op de
+ -  stapel zetten dan strings. Een kleine optimalisatie dus.
+ -  We leiden een instatie voor @Eq@ en @Ord@ af en maken er zelf eentje
+ -  voor @Show@ aan.
+ -}
 data Symbol  = Brace
              | Bracket
              | Paren
@@ -47,10 +51,16 @@ count x (y:ys)
   | otherwise  = count x ys
 -- count x = length . filter (== x) -- maar is O(n+m)
 
-{-| Controleer of de string begint met een openingshaakje of een start-commando.
+{-| Controleer of de string begint met een openingshaakje,
+ -  een start- of begin-commando of met wiskunde.
  -  Als dat zo is, strippen we het deze tekst van de sting en geven we `gewoon' een paar terug
  -  met daarin het sluithaakje of stop-commando en de rest van de string.
  -  Als we niets vinden, geven we `niets' terug!
+ -  
+ -  Het dollar teken is een vreemde eend in de bijt. We kunnen namelijk niet
+ -  controleren of dit de opennings of sluitings dollar is. We houden in een extra
+ -  argument @m@ bij of we in wiskundemodus zitten of niet. Dit helpt ons bij
+ -  het onderscheid.
  -}
 isOpening :: Bool -> String -> Maybe (Symbol, Bool, String)
 isOpening m s
@@ -84,27 +94,11 @@ isClosing m s
   , Just r <- stripPrefix "}" r      = Just (End n, m, r)
   | otherwise                        = Nothing
 
-{-| Controleer of de string begint met een nieuwe regel.
- -  Strip deze en geef de rest van de string terug.
+{-| Controleer of de string begint met een reeks van tekens dat
+ -  we als haakje kunnen gebruiken voor \left of \right.
+ -  (Doen we op een creatieve manier waarbij we optimaal gebruik
+ -   maken van de luiheid van Haskell!)
  -}
-isNewLine :: String -> Maybe String
-isNewLine s = stripPrefix "\n" s
-
-{-| Controleer of de string begint met een procent teken.
- -  In dat geval gooien we alle tekens weg tot het einde van de regel,
- -  en geven de rest van de string terug.
- -}
-isComment :: String -> Maybe String
-isComment s
-  | Just r <- stripPrefix "%" s      = Just $ dropWhile (/= '\n') r
-  | otherwise                        = Nothing
-
-isEscaped :: String -> Maybe String
-isEscaped s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
-  [ "\\%"
-  , "\\$"
-  ]
-
 isDelimiter :: String -> Maybe String
 isDelimiter s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
   [ "."
@@ -149,6 +143,32 @@ isDelimiter s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
   , "\\lmoustache"
   , "\\rmoustache" ]
 
+{-| Controleer of de string begint met een nieuwe regel.
+ -  Strip deze en geef de rest van de string terug.
+ -}
+isNewLine :: String -> Maybe String
+isNewLine s = stripPrefix "\n" s
+
+{-| Controleer of de string begint met een procent teken.
+ -  In dat geval gooien we alle tekens weg tot het einde van de regel,
+ -  en geven de rest van de string terug.
+ -}
+isComment :: String -> Maybe String
+isComment s
+  | Just r <- stripPrefix "%" s      = Just $ dropWhile (/= '\n') r
+  | otherwise                        = Nothing
+
+{-| Controleer of de string begint met een geescaped procent of dollar teken.
+ -  We willen immers niet dat we over de backslash heen lezen,
+ -  en vervolgens de procent of het dollar teken aanzien voor 
+ -  commentaar danwel wiskunde...
+ -}
+isEscaped :: String -> Maybe String
+isEscaped s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
+  [ "\\%"
+  , "\\$"
+  ]
+
 {-| Recursief algoritme om te controleren of de string gebalanceerd is
  -  wat betreft haakjes en start/stop-paren.
  -
@@ -157,6 +177,7 @@ isDelimiter s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
  -  * Een lege string met een niet lege stapel gaat helemaal mis.
  -  * In andere gevallen:
  -    * We houden het regelnummer bij en hoogen het op als we een regeleinde tegenkomen.
+ -    * We controleren of we met een \% of \$ te maken hebben, dat gooien we weg zodat we verderop niet in de problemen komen.
  -    * Commentaar gooien we weg.
  -    * Wanneer we een openingshaakje tegenkomen zetten we het huidige regelnummer en
  -      het sluithaakje op de stapel.
@@ -182,7 +203,7 @@ balanced l os m s
   | otherwise                     = balanced l os m $ tail s
 
 {-| Controleer of de string gebalanceerd.
- -  We beginnen bij regel 1 met een lege stapel.
+ -  We beginnen bij regel 1 met een lege stapel en niet in wiskundemodus.
  -}
 check :: String -> (Bool,Error)
 check = balanced 1 [] False
