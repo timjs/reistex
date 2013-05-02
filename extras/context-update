@@ -8,6 +8,6 @@ cd /vol/impuls/context
 
 rsync -tv rsync://contextgarden.net/minimals/setup/first-setup.sh .
 chmod a-x first-setup.sh
-bash first-setup.sh #--context=current
+bash first-setup.sh --context=current
 
 cd -
