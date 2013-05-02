@@ -2,6 +2,7 @@ module Main where
 
 import Data.List
 import Data.Char
+import Data.Maybe
 
 import Control.Monad
 
@@ -23,6 +24,7 @@ data Symbol  = Brace
              | Bracket
              | Paren
              | Math
+             | Delim
              | Stop Name
              | End  Name
              deriving (Eq, Ord)
@@ -33,6 +35,7 @@ instance Show Symbol where
   show Bracket  = "]"
   show Paren    = ")"
   show Math     = "$"
+  show Delim    = "\\right"
   show (Stop n) = "\\stop" ++ n
   show (End n)  = "\\end{" ++ n ++ "}"
 
@@ -49,30 +52,36 @@ count x (y:ys)
  -  met daarin het sluithaakje of stop-commando en de rest van de string.
  -  Als we niets vinden, geven we `niets' terug!
  -}
-isOpening :: String -> Maybe (Symbol, String)
-isOpening s
-  | Just r <- stripPrefix "{" s      = Just (Brace, r)
-  | Just r <- stripPrefix "[" s      = Just (Bracket, r)
-  | Just r <- stripPrefix "(" s      = Just (Paren, r)
+isOpening :: Bool -> String -> Maybe (Symbol, Bool, String)
+isOpening m s
+  | Just r <- stripPrefix "$" s      = if m then Nothing else Just (Math, True, r)
+  | Just r <- stripPrefix "{" s      = Just (Brace, m, r)
+  | Just r <- stripPrefix "[" s      = Just (Bracket, m, r)
+  | Just r <- stripPrefix "(" s      = Just (Paren, m, r)
+  | Just r <- stripPrefix "\\left" s
+  , Just r <- isDelimiter r          = Just (Delim, m, r)
   | Just r <- stripPrefix "\\start" s
-  , (n,r)  <- span isLetter r        = Just (Stop n, r)
+  , (n,r)  <- span isLetter r        = Just (Stop n, m, r)
   | Just r <- stripPrefix "\\begin{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just (End n, r)
+  , Just r <- stripPrefix "}" r      = Just (End n, m, r)
   | otherwise                        = Nothing
 
 {-| Analoog aan @isOpening@, maar dan voor sluithaakjes en stop-commando's.
  -}
-isClosing :: String -> Maybe (Symbol, String)
-isClosing s
-  | Just r <- stripPrefix "}" s      = Just (Brace, r)
-  | Just r <- stripPrefix "]" s      = Just (Bracket, r)
-  | Just r <- stripPrefix ")" s      = Just (Paren, r)
+isClosing :: Bool -> String -> Maybe (Symbol, Bool, String)
+isClosing m s
+  | Just r <- stripPrefix "$" s      = if m then Just (Math, False, r) else Nothing
+  | Just r <- stripPrefix "}" s      = Just (Brace, m, r)
+  | Just r <- stripPrefix "]" s      = Just (Bracket, m, r)
+  | Just r <- stripPrefix ")" s      = Just (Paren, m, r)
+  | Just r <- stripPrefix "\\right" s
+  , Just r <- isDelimiter r          = Just (Delim, m, r)
   | Just r <- stripPrefix "\\stop" s
-  , (n,r)  <- span isLetter r        = Just (Stop n, r)
+  , (n,r)  <- span isLetter r        = Just (Stop n, m, r)
   | Just r <- stripPrefix "\\end{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just (End n, r)
+  , Just r <- stripPrefix "}" r      = Just (End n, m, r)
   | otherwise                        = Nothing
 
 {-| Controleer of de string begint met een nieuwe regel.
@@ -90,12 +99,49 @@ isComment s
   | Just r <- stripPrefix "%" s      = Just $ dropWhile (/= '\n') r
   | otherwise                        = Nothing
 
-{-| Controleer of de string begint met een dollar teken,
- -  in dat geval zitten we in wiskundemodus.
- -  Strip deze en geef de rest van de string terug.
- -}
-isMath :: String -> Maybe String
-isMath s = stripPrefix "$" s
+isDelimiter :: String -> Maybe String
+isDelimiter s = listToMaybe $ mapMaybe (flip stripPrefix $ s)
+  [ "."
+  , "("
+  , ")"
+  , "\\{"
+  , "\\}"
+  , "["
+  , "]"
+  , "<"
+  , ">"
+  , "|"
+  , "\\|"
+  , "/"
+  , "\\lgroup"
+  , "\\rgroup"
+  , "\\lbrace"
+  , "\\rbrace"
+  , "\\langle"
+  , "\\rangle"
+  , "\\vert"
+  , "\\lvert"
+  , "\\rvert"
+  , "\\Vert"
+  , "\\lVert"
+  , "\\rVert"
+  , "\\backslash"
+  , "\\lfloor"
+  , "\\rfloor"
+  , "\\lceil"
+  , "\\rceil"
+  , "\\uparrow"
+  , "\\Uparrow"
+  , "\\downarrow"
+  , "\\Downarrow"
+  , "\\updownarrow"
+  , "\\Updownarrow"
+  , "\\llcorner"
+  , "\\lrcorner"
+  , "\\ulcorner"
+  , "\\urconrner"
+  , "\\lmoustache"
+  , "\\rmoustache" ]
 
 {-| Recursief algoritme om te controleren of de string gebalanceerd is
  -  wat betreft haakjes en start/stop-paren.
@@ -115,28 +161,24 @@ isMath s = stripPrefix "$" s
  -  Het type van deze functie vraagt eigenlijk om een Writer Monad,
  -  maar omdat dit maar een script is, gaan we het ons niet te ingewikkeld maken...
  -}
-balanced :: Line -> Stack (Line,Symbol) -> String -> (Bool,Error) --Writer Error Bool
-balanced _ []         ""      = (True, "")
-balanced l ((k,o):_)  ""      = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
-balanced l os s
-  | Just r     <- isNewLine s = balanced (l+1) os r
-  | Just r     <- isComment s = balanced l os r
-  | Just r     <- isMath    s = case os of
-    []                       -> balanced l ((l,Math):os) r
-    (k,o) : os  | o == Math  -> balanced l os r
-                | otherwise  -> balanced l ((l,Math):(k,o):os) r
-  | Just (o,r) <- isOpening s = balanced l ((l,o):os) r
-  | Just (c,r) <- isClosing s = case os of
-    []                       -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', closed withoud opening")
-    (k,o) : os  | c == o     -> balanced l os r
-                | otherwise  -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
-  | otherwise                 = balanced l os $ tail s
+balanced :: Line -> Stack (Line,Symbol) -> Bool -> String -> (Bool,Error) --Writer Error Bool
+balanced _ []        False  ""    = (True, "")
+balanced l ((k,o):_) _      ""    = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
+balanced l os m s
+  | Just r       <- isNewLine s   = balanced (l+1) os m r
+  | Just r       <- isComment s   = balanced l os m r
+  | Just (o,m,r) <- isOpening m s = balanced l ((l,o):os) m r
+  | Just (c,m,r) <- isClosing m s = case os of
+    []                           -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', closed withoud opening")
+    (k,o) : os  | c == o         -> balanced l os m r
+                | otherwise      -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
+  | otherwise                     = balanced l os m $ tail s
 
 {-| Controleer of de string gebalanceerd.
  -  We beginnen bij regel 1 met een lege stapel.
  -}
 check :: String -> (Bool,Error)
-check = balanced 1 []
+check = balanced 1 [] False
 
 {-| Lees de tekst in uit een bestand, controleer of deze gebalanceerd is
  -  en geef het resultaat door.
