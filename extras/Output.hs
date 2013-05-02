@@ -19,11 +19,17 @@ magenta s = magentaCode ++ s ++ resetCode
 cyan s    = cyanCode    ++ s ++ resetCode
 white s   = whiteCode   ++ s ++ resetCode
 
-
 putAct, putInf, putErr, putWrn, putInd :: String -> IO ()
 putAct s = putStrLn $ green  ">> " ++ s ++ "..."
 putInf s = putStrLn $ white  ":: " ++ s
 putErr s = putStrLn $ red    "!! " ++ s
 putWrn s = putStrLn $ yellow "** " ++ s
 putInd s = putStrLn $        "   " ++ s
+
+(<>) :: (Show a, Show b) => a -> b -> String
+{-# INLINE (<>) #-}
+{-# SPECIALIZE (<>) :: (Show a) => a -> String -> String #-}
+{-# SPECIALIZE (<>) :: (Show b) => String -> b -> String #-}
+{-# SPECIALIZE (<>) :: String -> String -> String #-}
+a <> b = show a ++ show b
 
