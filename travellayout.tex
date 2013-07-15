@@ -105,7 +105,7 @@
 %D Tim Steenvoorden
 %D
 %D \subsubject{januarie 2011}
-%D  
+%D
 %D Versie 0.9
 %D
 %D \startitemize
@@ -208,7 +208,7 @@
    rulethickness=1pt]
 
 \setupcapitals
-  [sc=yes,  
+  [sc=yes,
    title=no]% Ondersteund Lucida niet
 
 \setupsynonyms[abbreviation]
@@ -477,7 +477,7 @@
      style=,
      color=darkgray,
      contrastcolor=darkgray]
-  \placebookmarks[part,chapter,section,subsection][chapter]     
+  \placebookmarks[part,chapter,section,subsection][chapter]
   \appendtoks
     \let\lbrace\empty
     \let\rbrace\empty
@@ -543,7 +543,8 @@
 
 %D Nu gaan we een golfje tekenen. Een extra stukje decoratie dat we gaan gebruiken om nieuwe hoofdstukken aan te geven. Dit doen we met in de tekentaal \METAPOST. Eerst moeten we \CONTEXT\ vertellen dat zij \METAPOST\ niet tijdens de \TEX-run kan uitvoeren. Hiervoor is \tex{write18} nodig, dat op de universiteit standaard uit staat. In plaats daarvan wordt \METAPOST\ uitgevoerd tussen de \TEX-runs.
 
-\runMPgraphicsfalse
+% NIET MEER NODIG!
+% \runMPgraphicsfalse
 
 %D Nu definieeren we enkele grootheden die we in de \METAPOST\ figuren gaan gebruiken. De eerste is de breedte van het snijwit, dit wordt de breedte van ons golfje. Vervolgens geven we het aantal periodes op van het golfje en berekenen we de breedte van het golfje.
 %D
@@ -551,12 +552,12 @@
 
 \startMPinclusions
 numeric CutSpace, wavePeriods, waveWidth;
-path waveline; 
+path waveline;
 CutSpace    := \the\cutspace;
-wavePeriods := 3 + 1/4; 
-waveWidth   := wavePeriods * 2*pi; 
+wavePeriods := 3 + 1/4;
+waveWidth   := wavePeriods * 2*pi;
 waveline    := (origin for x=0 step 0.1 until waveWidth:
-                 .. (x,x*sin(x)) 
+                 .. (x,x*sin(x))
                 endfor) scaled (1/waveWidth);
 \stopMPinclusions
 
@@ -565,18 +566,18 @@ waveline    := (origin for x=0 step 0.1 until waveWidth:
 %D De figuren zijn \emph{unique}. Dat wil zeggen dat ze opnieuw berekend worden voor verschillende waarden van OverlayWidth en OverlayHeight. Maar wanneer er al een figuur geproduceerd is met een bepaalde OverlayWidth en OverlayHeight, dan wordt deze hergebruikt.
 
 \startuniqueMPgraphic{travellayout::rightwave}
-pickup pencircle scaled 1pt; 
+pickup pencircle scaled 1pt;
 draw origin -- (OverlayWidth,0);
 draw waveline xscaled CutSpace yscaled LineHeight shifted (OverlayWidth,0);
 setbounds currentpicture to boundingbox OverlayBox;
-\stopuniqueMPgraphic 
+\stopuniqueMPgraphic
 
 \startuniqueMPgraphic{travellayout::leftwave}
-pickup pencircle scaled 1pt; 
+pickup pencircle scaled 1pt;
 draw waveline xscaled (-1*CutSpace) yscaled LineHeight;
 draw origin -- (OverlayWidth,0);
 setbounds currentpicture to boundingbox OverlayBox;
-\stopuniqueMPgraphic 
+\stopuniqueMPgraphic
 
 %D Om de figuren achter de tekst te plaatsen, maken we zogenaamde \emph{overlays} aan. Die kunnen we vervolgens gebruiken als achtergrond van een \tex{framed}.
 
