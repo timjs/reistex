@@ -14,7 +14,7 @@ rm -vf *.top
 rm -vf *.toc
 # ConTeXt MkIV:
 rm -vf *.tuc
-# Filter
+# Filter:
 rm -vf *-temp-*
 # LaTeX:
 rm -vf *.aux
@@ -34,9 +34,9 @@ rm -vf *.run.xml
 rm -vf *.nav
 rm -vf *.out
 rm -vf *.snm
+rm -vf *.vrb
 # SyncTeX:
 rm -vf *.synctex.*
 # Documentation:
 rm -vf *.ted
 rm -vf *.md5
-
