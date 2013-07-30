@@ -32,4 +32,3 @@ putInd s = putStrLn $        "   " ++ s
 {-# SPECIALIZE (<>) :: (Show b) => String -> b -> String #-}
 {-# SPECIALIZE (<>) :: String -> String -> String #-}
 a <> b = show a ++ show b
-
