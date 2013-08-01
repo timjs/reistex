@@ -1,0 +1,676 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "prologue.tex",
+			"settings":
+			{
+				"buffer_size": 2362,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "preface.tex",
+			"settings":
+			{
+				"buffer_size": 3315,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "report.tex",
+			"settings":
+			{
+				"buffer_size": 1700,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "physics/before.tex",
+			"settings":
+			{
+				"buffer_size": 14593,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "culture/before.tex",
+			"settings":
+			{
+				"buffer_size": 11082,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "physics/ioffe_afternoon.tex",
+			"settings":
+			{
+				"buffer_size": 16944,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "culture/nighttrain.tex",
+			"settings":
+			{
+				"buffer_size": 11045,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "reader.tex",
+			"settings":
+			{
+				"buffer_size": 34,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "colophon.tex",
+			"settings":
+			{
+				"buffer_size": 2446,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/User/ConTeXt.sublime-build",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"conte",
+				"Set Syntax: ConTeXt"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"ruby",
+				"Set Syntax: Ruby"
+			],
+			[
+				"spell",
+				"SublimeHaskell: Reinspect all"
+			],
+			[
+				"lint",
+				"SublimeHaskell: Lint"
+			],
+			[
+				"check",
+				"SublimeHaskell: Check"
+			],
+			[
+				"packins",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"packdisc",
+				"Package Control: Discover Packages"
+			],
+			[
+				"packup",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"pacins",
+				"Package Control: Install Package"
+			],
+			[
+				"pacrem",
+				"Package Control: Remove Package"
+			],
+			[
+				"packrem",
+				"Package Control: Remove Package"
+			],
+			[
+				"haskelnex",
+				"SublimeHaskell: Go to next error"
+			],
+			[
+				"packin",
+				"Package Control: Install Package"
+			],
+			[
+				"packre",
+				"Package Control: Remove Package"
+			],
+			[
+				"rub",
+				"Set Syntax: Ruby"
+			],
+			[
+				"contex",
+				"Set Syntax: ConTeXt"
+			],
+			[
+				"lua",
+				"Set Syntax: Lua"
+			],
+			[
+				"tex",
+				"Set Syntax: TeX"
+			],
+			[
+				"sstex",
+				"Set Syntax: TeX"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 588.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Tim/Projecten/ReisTeX/extras/context-update.rb",
+		"/Users/Tim/Projecten/ReisTeX/extras/context-update",
+		"/Users/Tim/Projecten/ReisTeX/extras/tex-purge-deep",
+		"/Users/Tim/Projecten/ReisTeX/handleiding/hoofdstukken/schrijven.tex",
+		"/Applications/ConTeXt/first-setup.sh",
+		"/Applications/ConTeXt/tex/texmf-context/scripts/context/lua/mtx-context.lua",
+		"/Users/Tim/Projecten/ReisTeX/extras/tex-purge",
+		"/Users/Tim/Projecten/ReisTeX/extras/context-setup",
+		"/Users/Tim/Projecten/ReisTeX/extras/context-check",
+		"/Users/Tim/Projecten/ReisTeX/handleiding/hoofdstukken/opmaken.tex",
+		"/Users/Tim/Projecten/ReisTeX/handleiding/hoofdstukken/aanpassen.tex",
+		"/Users/Tim/Projecten/ReisTeX/extras/text.rb",
+		"/Users/Tim/Projecten/ReisTeX/extras/Output.hs",
+		"/Users/Tim/Projecten/ReisTeX/extras/context-check.hs",
+		"/Users/Tim/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/Tim/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/Tim/Projecten/ReisTeX/extras/context-check.hs.raw",
+		"/Users/Tim/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/xecontext.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/pdfcontext.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/fsub.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-check.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-update.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-source.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/tex-purge-deep.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/tex-purge.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-beta.fish",
+		"/Users/Tim/Documents/Tests/table-comparisson.tex",
+		"/Users/Tim/Documents/Tests/table-markdown.html",
+		"/Users/Tim/Documents/Tests/table-markdown.tex",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/tabl-ntb.mkiv",
+		"/Users/Tim/Dropbox/Voorkeuren/sublime/ConTeXt.sublime-build",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/m-database.lua",
+		"/Users/Tim/Dropbox/Voorkeuren/sublime-old/ConTeXt/ConTeXt.sublime-build",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/m-database.mkiv",
+		"/Users/Tim/Documents/Tests/table-database.tex",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/m-markdown.lua",
+		"/Users/Tim/Documents/Tests/table-hooks.tex",
+		"/Users/Tim/Documents/Tests/table-latex.tex",
+		"/Users/Tim/Documents/Tests/table-natural.tex",
+		"/Users/Tim/Documents/Tests/table-simple.tex",
+		"/Users/Tim/Documents/Tests/table-tabbed.tex",
+		"/Users/Tim/Documents/Tests/table-tabulate.tex",
+		"/Users/Tim/Documents/Tests/tables.tex",
+		"/Users/Tim/Documents/Tests/tables-comparisson.tex",
+		"/Users/Tim/Documents/Tests/obeylines.tex",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/tabl-xtb.mkvi",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/tabl-tsp.mkiv",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/tabl-tbl.mkiv",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/tabl-nte.mkiv",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/tabl-tab.mkiv",
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/tabl-pln.mkiv",
+		"/Users/Tim/Documents/Tests/simpletables.log",
+		"/Users/Tim/Dropbox/Voorkeuren/sublime/Package Control.sublime-settings",
+		"/Users/Tim/.Trash/Package Control.sublime-settings"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"special_runfiles",
+			"mkiitoo",
+			"pattern",
+			"\\$",
+			"$",
+			"*.",
+			"rm -vf",
+			"haske",
+			"show",
+			"report_databas",
+			"logs",
+			"simpletable",
+			"stopsimpletable",
+			"startsimpletable",
+			"setupsimpletable",
+			"logs.report",
+			"userdata",
+			"context",
+			"context.(\\w+)\\(\\)",
+			"simpletabledata",
+			"section",
+			"simpletablesection_to_naturaltable",
+			"section",
+			"[",
+			"body",
+			"Pipe",
+			"pipetable",
+			"head",
+			"AR",
+			"NR",
+			"table",
+			"framecolor",
+			"frame",
+			"setupTABLE",
+			"strip",
+			"]%",
+			"head",
+			"tabl_ntb_th",
+			"bTH",
+			"setupxtable",
+			"head",
+			"setupxtable",
+			"tabl_ntb_setup",
+			"tb",
+			"tables"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"context(\"\\\\\\\\\\1\")"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "prologue.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2362,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "preface.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3315,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "report.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1700,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 94.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "physics/before.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "culture/before.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11082,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "physics/ioffe_afternoon.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16944,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "culture/nighttrain.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11045,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "reader.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 34,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "colophon.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2446,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 36.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 114.0
+	},
+	"output.haskell_error_checker":
+	{
+		"height": 114.0
+	},
+	"output.haskell_sublime_load":
+	{
+		"height": 114.0
+	},
+	"project": "voorbeeld.sublime-project",
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
