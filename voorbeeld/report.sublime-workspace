@@ -8,22 +8,6 @@
 	"buffers":
 	[
 		{
-			"file": "prologue.tex",
-			"settings":
-			{
-				"buffer_size": 2362,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "preface.tex",
-			"settings":
-			{
-				"buffer_size": 3315,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "report.tex",
 			"settings":
 			{
@@ -32,10 +16,26 @@
 			}
 		},
 		{
+			"file": "prologue.tex",
+			"settings":
+			{
+				"buffer_size": 2379,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "preface.tex",
+			"settings":
+			{
+				"buffer_size": 3318,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "physics/before.tex",
 			"settings":
 			{
-				"buffer_size": 14593,
+				"buffer_size": 14578,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,7 +51,7 @@
 			"file": "physics/ioffe_afternoon.tex",
 			"settings":
 			{
-				"buffer_size": 16944,
+				"buffer_size": 16736,
 				"line_ending": "Unix"
 			}
 		},
@@ -59,15 +59,7 @@
 			"file": "culture/nighttrain.tex",
 			"settings":
 			{
-				"buffer_size": 11045,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "reader.tex",
-			"settings":
-			{
-				"buffer_size": 34,
+				"buffer_size": 11042,
 				"line_ending": "Unix"
 			}
 		},
@@ -83,9 +75,13 @@
 	"build_system": "Packages/User/ConTeXt.sublime-build",
 	"command_palette":
 	{
-		"height": 375.0,
+		"height": 49.0,
 		"selected_items":
 		[
+			[
+				"context",
+				"Set Syntax: ConTeXt"
+			],
 			[
 				"conte",
 				"Set Syntax: ConTeXt"
@@ -195,6 +191,8 @@
 	},
 	"file_history":
 	[
+		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/strc-flt.mkvi",
+		"/Users/Tim/Projecten/ReisTeX-mkiv/voorbeeld/reader.tex",
 		"/Users/Tim/Projecten/ReisTeX/extras/context-update.rb",
 		"/Users/Tim/Projecten/ReisTeX/extras/context-update",
 		"/Users/Tim/Projecten/ReisTeX/extras/tex-purge-deep",
@@ -257,9 +255,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 95.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -267,6 +266,18 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"GLOBUSM",
+			"infull",
+			"\\[inner\\]",
+			"\\[outer\\]",
+			"inouter",
+			"inmar",
+			"outer",
+			"left",
+			"placefigure",
+			"\\\\quantity\\{([^}]+)\\}\\{([^}]+)\\}",
+			"\\\\quantity\\{(.+)\\}\\{(.+)\\}",
+			"nocite",
 			"special_runfiles",
 			"mkiitoo",
 			"pattern",
@@ -319,6 +330,9 @@
 		"regex": true,
 		"replace_history":
 		[
+			"[left]",
+			"[right]",
+			"\\\\unit{\\1 \\2}",
 			"",
 			"context(\"\\\\\\\\\\1\")"
 		],
@@ -331,65 +345,11 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "prologue.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2362,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "preface.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3315,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "report.tex",
 					"semi_transient": false,
 					"settings":
@@ -401,16 +361,74 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								478,
+								478
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 94.0,
+						"translation.y": 223.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "prologue.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2379,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1342,
+								1349
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "preface.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3318,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								64,
+								64
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -421,25 +439,25 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14593,
+						"buffer_size": 14578,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								10089,
+								10089
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2907.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -457,18 +475,18 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								4836,
+								4836
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1200.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -479,20 +497,20 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16944,
+						"buffer_size": 16736,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								690,
+								690
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
@@ -508,7 +526,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11045,
+						"buffer_size": 11042,
 						"regions":
 						{
 						},
@@ -521,45 +539,18 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3453.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 7,
-					"file": "reader.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 34,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
 					"file": "colophon.tex",
 					"semi_transient": false,
 					"settings":
@@ -571,13 +562,14 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								2303,
+								2303
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -631,7 +623,7 @@
 	{
 		"height": 114.0
 	},
-	"project": "voorbeeld.sublime-project",
+	"project": "report.sublime-project",
 	"replace":
 	{
 		"height": 66.0
