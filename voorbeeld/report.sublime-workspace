@@ -19,7 +19,7 @@
 			"file": "prologue.tex",
 			"settings":
 			{
-				"buffer_size": 2379,
+				"buffer_size": 2378,
 				"line_ending": "Unix"
 			}
 		},
@@ -35,7 +35,7 @@
 			"file": "physics/before.tex",
 			"settings":
 			{
-				"buffer_size": 14578,
+				"buffer_size": 14601,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,7 +51,7 @@
 			"file": "physics/ioffe_afternoon.tex",
 			"settings":
 			{
-				"buffer_size": 16776,
+				"buffer_size": 16800,
 				"line_ending": "Unix"
 			}
 		},
@@ -191,6 +191,7 @@
 	},
 	"file_history":
 	[
+		"/Users/Tim/Projects/ReisTeX-mkiv/travellayout.tex",
 		"/Applications/ConTeXt/tex/texmf-context/tex/context/base/strc-flt.mkvi",
 		"/Users/Tim/Projecten/ReisTeX-mkiv/voorbeeld/reader.tex",
 		"/Users/Tim/Projecten/ReisTeX/extras/context-update.rb",
@@ -345,7 +346,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 5,
 			"sheets":
 			[
 				{
@@ -372,7 +373,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 226.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -383,15 +384,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2379,
+						"buffer_size": 2378,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1342,
-								1349
+								1347,
+								1347
 							]
 						],
 						"settings":
@@ -400,7 +401,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 209.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -439,15 +440,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14578,
+						"buffer_size": 14601,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10087,
-								10087
+								14569,
+								14569
 							]
 						],
 						"settings":
@@ -457,7 +458,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2907.0,
+						"translation.y": 4170.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -475,8 +476,8 @@
 						"selection":
 						[
 							[
-								36,
-								36
+								35,
+								35
 							]
 						],
 						"settings":
@@ -497,15 +498,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16776,
+						"buffer_size": 16800,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15629,
-								15629
+								755,
+								755
 							]
 						],
 						"settings":
@@ -515,7 +516,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4043.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
