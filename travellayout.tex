@@ -1,12 +1,3 @@
-%C \module
-%C   [file=travellayout,
-%C    version=2013.07.15,
-%C    title=Travel Layout,
-%C    subtitle=Omgeving voor reisverslagen en readers,
-%C    author=Tim Steenvoorden,
-%C    date=\currentdate,
-%C    copyright=\infull{SMCR}]
-
 %C -----------------------------------------------------------------------------
 %D \chapter{Introductie}
 %D
@@ -19,110 +10,10 @@
 %D op de commandoregel uit te voeren. Dan krijg je een mooie PDF, die je nu waarschijnlijk leest. Verder zijn er nog regels die beginnen met \type{%M} en \type{%C}. De eerste wordt gebruikt voor macro's binnen de documentatie en de tweede wordt geheel genegeerd.
 %D
 %D Laten we beginnen!
-
 \startenvironment travellayout
 
-\writestatus{environment}{Dit is Travellayout versie 2013.07.15}
-
-%D \section{Encodering}
-%D
-%D TODO: Extra uitleg.
-
-\enableregime[utf8]
-%\usemodule[font-chi] % Voor Chinese tekens, alleen voor de Chinareis!
-
-%D \section{Catcodes}
-%D
-%D We maken gebruik van een iets modernere \emph{catcode} instellingen.
-%D Onderstaande is al standaard in Mark IV (de nieuwste versie van \CONTEXT).
-%D Simpel gezegd houdt het in dat de tekens \type{^}, \type{_}, \type{&}
-%D en \type{|} geen speciale betekenis meer hebben in de lopende tekst.
-%D \type{^} en \type{_} kunnen natuurlijk nog steeds gebruikt worden in
-%D wiskunde modus!
-
-% Maakt alleen ^ en _ other:
-%\nonknuthmode
-
-% Zo doen we ook & en |:
-%\define[1]\makecharacterother
-%  {\catcode`#1\other}
-%\makecharacterother _
-%\makecharacterother ^
-%\makecharacterother &
-%\makecharacterother |
-% Maar beiden gaan falicant mis na \getbuffer en wss ook andere commando's
-
-% En deze pakt ie al helemaal niet goed:
-%\startextendcatcodetable \ctxcatcodes
-%    \catcode\underscoreasciicode\othercatcode
-%    \catcode\circumflexasciicode\othercatcode
-%    \catcode\ampersandasciicode \othercatcode
-%    \catcode\barasciicode       \othercatcode
-%\stopextendcatcodetable
-
-% Is dit nodig?
-\let\\\letterbackslash
-\let\~\lettertilde
-% Deze twee niet denk ik...
-%\let\{\letteropenbrace
-%\let\}\letterclosebrace
-
-%D \section{Documentatie}
-%D
-%D Zie de handleiding.
-%D
-%D \section{Aanpassingen}
-%D
-%D \subsubsubject{juli – augustus 2010}
-%D
-%D Initiële versie.
-%D
-%D \startitemize
-%D \item Opmaak zoals bij het oude reisverslag
-%D \item Macro voor hoofdstukken met auteur en datum
-%D \item \LATEX-compatibele macro's
-%D \item Zijfiguren
-%D \item Vele afkortingen en \cap{url}'s
-%D \item Modes voor boekjes en correctieversies
-%D \stopitemize
-%D
-%D Tim Steenvoorden
-%D
-%D \subsubject{oktober – november 2010}
-%D
-%D Versies 0.5 en 0.7
-%D
-%D \startitemize
-%D \item Paginamarges
-%D \item Microtyping
-%D \item Onderlijnde koppen
-%D \item Inhoudsopgave
-%D \item Bibliografieën en referenties
-%D \item Lijnen van tabellen en tabulaties
-%D \item Opmaak koppen
-%D \stopitemize
-%D
-%D Tim Steenvoorden
-%D
-%D \subsubject{januarie 2011}
-%D
-%D Versie 0.9
-%D
-%D \startitemize
-%D \item Citaten
-%D \item Sjabloondocument voor reisdeelnemers
-%D \stopitemize
-%D
-%D Tim Steenvoorden
-%D
-%D \section{Te doen}
-%D
-%D \startitemize
-%D \item Draaiboek
-%D \item Documentatie uitbreiden
-%D \item Samenvatting schrijven
-%D \item \tex{E} toevoegen?
-%D \stopitemize
+\writestatus{environment}{Dit is Travellayout voor ConTeXt MkIV}
+\writestatus{environment}{versie 2013.08.01 door Tim Steenvoorden}
 
 %C -----------------------------------------------------------------------------
 %D \chapter{Ontwerp en opmaak}
@@ -141,8 +32,6 @@
    leftquotation=\upperleftdoublesixquote,
    rightquotation=\upperrightdoubleninequote]
 
-\setdigitmode 4 % thinmuskips & period, gebruik altijd "," in getallen!
-
 %D \section{Korps}
 %D
 %D We gebruiken het lettertype \emph{Utopia}, ontworpen door Robert Slimbach in 1989. Sinds 2006 wordt Utopia gratis verspreid met \TEX, dus hij zou bij elke moderne \TEX-distributie te vinden moeten zijn. De belangrijkste eis is natuurlijk dat we ook wiskunde kunnen zetten. Hiervoor laden we de wiskundige symbolen van de \emph{Fourier} letter. Tot slot gebruiken we standaard \emph{Helvetica} als schreefloze aanvulling voor kopjes en andere stilistische onderdelen. Helvetica heeft standaard een iets grotere x-hoogte dan dan Utopia, dus we moeten die iets bijschalen.
@@ -152,21 +41,16 @@
 %D \online{http://www.tug.org/store/lucida/designnotes.html}
 %D \online{http://mysite.verizon.net/william_franklin_adams/lucida.txt}
 
-\usetypescript[serif][hanging][normal]
-
-\usetypescript[lucida][ec]
 \setupbodyfont[lucida,10pt]
 
 \setupbodyfontenvironment[default]
-  [em=\it]
+  [em=italic]%TODO: or slanted?
 
-%D \section{Broodtekst}
+%D \section{Broodtekst, noten en margeteksten}
 %D
 %D Het korps is ingesteld. Nu het uiterlijk van de tekst nog. Zoals hierboven vermeld vullen we de tekst uit met daarbij hangende komma's en afbreekstreepjes. Een strikte tolerantie geeft aan dat we gaten bij het uitlijnen zoveel mogelijk willen vermijden, maar dat eventueel een extra rek mag worden toegevoegd. Dit is vooral van belang bij het zetten van figuren naast de lopende tekst (zijfiguren dus). Tot slot kiezen we voor witruimte tussen alinea's in plaats van inspringen.
 %D
 %D Opsommingen willen we op elkaar. De kopjes die we in een opsomming kunnen zetten, geven we eenzelfde stijl als andere stilistische elementen in de tekst. Het instellen van \tex{quotation} heeft als doel dat de aanhalingstekens automatisch gekozen worden, naar gelang de diepte.
-
-\setupalign[hanging]
 
 \setuptolerance[strict,stretch]
 
@@ -177,42 +61,50 @@
 \setupurl
   [style=\tt]
 
-\setupitemize[each]
+%\def\cap%TODO
+  %{\ifss\oldcap\else\sc\word\fi}
+%\setupcapitals
+  %[sc=yes]
+
+\setupsynonyms[abbreviation]
+  [textstyle=\tf,
+   synonymstyle=\cap]
+
+\setupitemgroup[itemize][each]
   [packed,autointro]
   [headstyle=\ss\bf]
 
-\setupquote
+\setupdelimitedtext[quote]% TODO: check quote/quotation
   [location=margin,
    leftmargin=standard,
-   style=\it]
-\setupquote[2]
+   style=\it,
+   repeat=yes,
+   middle={\symbol[leftquote]}]
+
+\setupdelimitedtext[quote:2]
   [left={\symbol[leftquotation]},
    right={\symbol[rightquotation]}]
-\setupquotation[2]
+\setupdelimitedtext[quotation:2]
   [left={\symbol[leftquote]},
    right={\symbol[rightquote]}]
 
-\setupfootnotes
+\setupnotes% TODO: check footnotes
+  [rulethickness=1pt]
+\setupnotations
   [way=bychapter,
-   rulethickness=1pt,
-   numbercommand=] % We willen geen superscript
-\setupfootnotedefinition
-  [location=left,
+   alternative=left,
+   numbercommand=, % We willen geen superscript
    distance=0.5em]
 
-\setupinmargin
-  [style={\tfx\it\setupinterlinespace[small]}]
+\setupmargindata%TODO: always outer!
+  [style={\tfx\it\setupinterlinespace[small]}]% TODO: line=2.4ex?
 
 \setupframedtexts
   [width=broad,
    rulethickness=1pt]
 
-\setupcapitals
-  [sc=yes,
-   title=no]% Ondersteund Lucida niet
-
-\setupsynonyms[abbreviation]
-  [textstyle={\cap\lowercase}]
+\setupunits
+  [method=4]% thin space, period
 
 %D \section{Paginalayout}
 %D
@@ -243,9 +135,7 @@
 
 \setuppagenumbering
   [alternative=doublesided,
-   location=,               % Die plaatsen we hieronder zelf.
-   way=bytext,
-   partnumber=no]
+   location=]               % Die plaatsen we hieronder zelf.
 
 %\setupheader
   %[state=none]
@@ -253,30 +143,47 @@
   [style=\ss\bfx]
 
 \setupfootertexts
-  [][{\getmarking[chapter] \quad \pagenumber}] % Rechter pagina
-  [{\pagenumber \quad \getmarking[part]}][]    % Linker pagina
+  [][{\getmarking[chapter] \quad \userpagenumber}] % Rechter pagina
+  [{\userpagenumber \quad \getmarking[part]}][]    % Linker pagina
 
 %D \section{Koppen}
 %D
 %D Koppen zijn door het hele document niet genummerd. Daarnaast stellen we per soort kop de stijl in (hetzij met een macro, hetzij direct) en de witruimte eromheen. Ook willen we \tex{part}s graag op een rechter pagina laten beginnen, en \tex{chapter}s op een willekeurige nieuwe pagina.
 
-\setupsection[part]
-  [conversion=Romannumerals]
+\definestructureresetset[default]
+  [1,0][1]% reset parts niet, chapters wel, rest niet
 
-\setupheads
-  [sectionnumber=no]
+\setuphead
+  [sectionresetset=default,
+   number=no]
 
 \setuphead[part]
-  [resetnumber=no,
+  [number=no,
+   %resetnumber=no,% Nu met structureresetset...
    placehead=yes,
-   number=no,
    page=right,
-   textcommand=\getvalue{travellayout::lowrightwaved},
+   textcommand=\getvalue{travellayout::bottomrightwaved},
    style=\ss\bfc]
+
 \setuphead[chapter]
   [page=yes,
    style=\ss\bfc,
-   after={\getvalue{travellayout::placedecoration}\blank[2*big]}]
+   after=\setups{travellayout::chapterdata},
+   aftersection=\setups{travellayout::chapterpubs}]
+
+\startsetups travellayout::chapterdata
+  \getvalue{travellayout::broadbottomwaved}
+    {\ss\bfx \structureuservariable{date} \hfill \structureuservariable{author}}
+  \blank[2*big]
+\stopsetups
+
+\startsetups travellayout::chapterpubs
+  %\doifnotempty{\structureuservariable{publications}}{
+  \doifnotempty{\placepublications}{
+    \section{\headtext{pubs}}
+    \placepublications
+  }
+\stopsetups
 
 \setuphead[section,subsection]
   [page=preference,
@@ -288,8 +195,8 @@
   [style=\ss\bf,
    aligntitle=float]         % Zodat float's naast koppen kunnen staan.
 \setuphead[subsubsection]
-  [style=\ss,
-   aligntitle=float]
+  [style=\ss]
+   %aligntitle=float]%TODO: zou niet nodig moeten zijn
 
 %D \section{Lijsten}
 %D
@@ -297,20 +204,17 @@
 
 \setupcombinedlist[content]
   [alternative=a,
-   level=chapter,
-   interaction=pagenumber,
-   headnumber=no,
-   partnumber=no,            % Slaat op part-toevoeging aan paginanummering.
-   pagestyle=\quad\it]
+   list={part,chapter},
+   interaction=all]
 
 \setuplist[part]
-  [label=no,
-   pagenumber=no,
+  [pagenumber=no,
    style=\ss\bf,
    textcommand=\getvalue{travellayout::broadbottomframed}]
 \setuplist[chapter]
   [before={\blank[none]},
-   margin=1em]
+   margin=1em,
+   pagestyle=\it]
 
 %D \section[sec:floats]{Tabellen en figuren}
 %D
@@ -332,20 +236,17 @@
               ../figuren,../afbeeldingen,../figures,../images}]
 
 \setupcaptions
-  [style={\ss\bfx\setupinterlinespace[small]},
+  [style={\ss\bfx\setupinterlinespace[line=2.6ex]},% Iets kleiner dan gewoonlijk
    align=flushleft,
    width=max]
 \setupcombinations
-  [style={\ss\bfx\setupinterlinespace[small]},
+  [style={\ss\bfx\setupinterlinespace[line=2.6ex]},
    align=flushleft]
 
 \setupcaption[table]
   [location=top]
 
-\setupfloat[figure]
-  [sidespacebefore=1ex,
-   sidespaceafter=1ex]
-\definefloat[marginfigure][marginfigures][figure]
+\definefloat[marginfigure][marginfigures][figure]%TODO: weghalen?
 \setupfloat[marginfigure]
   [default=outermargin,
    maxwidth=\marginwidth]
@@ -380,17 +281,16 @@
 %\setupsectionblock[frontpart][page=no]
 %\setupsectionblock[bodypart] [page=no]
 %\setupsectionblock[appendix] [page=no]
-\setupsectionblock[backpart] [page=no]% Lost onze uitdaging van een extra lege pagina op!
+%\setupsectionblock[backpart] [page=no]% Lost onze uitdaging van een extra lege pagina op!
 
 \startsectionblockenvironment[frontpart]
-  \setuppagenumbering
-    [conversion=romannumerals]
+  \setupuserpagenumber
+    [numberconversion=romannumerals]
 \stopsectionblockenvironment
 
 \startsectionblockenvironment[bodypart]
   \writebetweenlist[chapter]{\blank}
-  \setuppagenumber
-    [number=1]
+  \resetuserpagenumber
 \stopsectionblockenvironment
 
 \startsectionblockenvironment[appendix]
@@ -400,6 +300,7 @@
 \startsectionblockenvironment[backpart]
   \writebetweenlist[chapter]{\blank}
   \switchtobodyfont[small]
+  \setupinterlinespace% TODO: NODIG!!!
   \setuphead[section]
     [textcommand=\getvalue{travellayout::broadbottomframed}]
 \stopsectionblockenvironment
@@ -431,7 +332,9 @@
 \startmode[reader,scenario]
   \setuppapersize[A5][A5]
   \mainlanguage[nl]
-  \setdigitmode 3 % thinmuskips & comma
+  \setupunits
+    [method=3,% thin space, comma
+     order=reverse]% comma as decimal mark
 \stopmode
 
 \startmode[scenario]
@@ -527,7 +430,13 @@
    align=flushleft,
    rulethickness=1pt]
 
-\defineframed[travellayout::lowrightwaved]
+\defineframed[travellayout::broadbottomwaved]
+  [frame=off,
+   offset=0pt,
+   width=broad,
+   background=travellayout::\doifoddpageelse{rightwave}{leftwave}]
+
+\defineframed[travellayout::bottomrightwaved]
   [frame=off,
    offset=0pt,
    height=\bottomspace,
@@ -542,9 +451,6 @@
   {\cutspace}
 
 %D Nu gaan we een golfje tekenen. Een extra stukje decoratie dat we gaan gebruiken om nieuwe hoofdstukken aan te geven. Dit doen we met in de tekentaal \METAPOST. Eerst moeten we \CONTEXT\ vertellen dat zij \METAPOST\ niet tijdens de \TEX-run kan uitvoeren. Hiervoor is \tex{write18} nodig, dat op de universiteit standaard uit staat. In plaats daarvan wordt \METAPOST\ uitgevoerd tussen de \TEX-runs.
-
-% NIET MEER NODIG!
-% \runMPgraphicsfalse
 
 %D Nu definieeren we enkele grootheden die we in de \METAPOST\ figuren gaan gebruiken. De eerste is de breedte van het snijwit, dit wordt de breedte van ons golfje. Vervolgens geven we het aantal periodes op van het golfje en berekenen we de breedte van het golfje.
 %D
@@ -588,13 +494,13 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 %D Uiteindelijk is dit het commando dat we gebruiken om de auteur en datum te plaatsen én de lijn met het golfje. Let op de \type{background=} waar we, naar gelang we op en rechter- of linker pagina zitten, de juiste overlay kiezen. Ook moeten we er op letten dat we de variabelen, die we bij \tex{report} hebben ingesteld, weer leeg maken. Anders krijgt de volgende \tex{chapter} dezelfde datum en auteur als de vorige. Dit betekend dat we de decoratie met de huidige waarden maar een keer kunnen plaatsen!
 
-\starttexdefinition travellayout::placedecoration
+\starttexdefinition travellayout::placechapterdata
   \framed
     [frame=off,
      offset=0pt,
      width=broad,
      background=travellayout::\doifoddpageelse{rightwave}{leftwave}]
-    {\ss\bfx \getvariable{chapter}{date} \hfill \getvariable{chapter}{author}}
+    {\ss\bfx \structureuservariable{date} \hfill \structureuservariable{author}}
 \stoptexdefinition
 
 %C -----------------------------------------------------------------------------
@@ -610,32 +516,6 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D
 %D Zie meer informatie in de handleiding.
 
-\starttexdefinition startchapter
-  \dodoubleargument\dostartchapter
-\stoptexdefinition
-
-\starttexdefinition dostartchapter [#1][#2]
-  \setvariables[chapter][#1]% Hier zetten we de variabelen...
-  \setvariables[chapter][#2]% ...allebei in dezelfde namespace.
-  \doifnot {\getvariable{chapter}{publications}} {no}
-    {\processfile{\jobname.bbl}}% Hack om globaal utf8 regime te gebruiken.
-  % \expanded nodig om het geheel in de inhoudsopgave te krijgen.
-  \expanded{\chapter[\getvariable{chapter}{label}]{\getvariable{chapter}{title}}}
-\stoptexdefinition
-
-\starttexdefinition stopchapter
-  \doifnot {\getvariable{chapter}{publications}} {no}
-    {\section{\headtext{pubs}}
-     \kern 6pt% Hack om publicaties geen ruimte te laten opslokken.
-     \placepublications}
-  \setvariables[chapter]
-    [title=,
-     label=,
-     date=,
-     author=,
-     publications=]
-\stoptexdefinition
-
 %D \section{In de tekst}
 %D
 %D \subsection{Opmaak}
@@ -644,13 +524,13 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D
 %D In \CONTEXT wordt benadrukte tekst gezet met de \tex{em}-declaratie. Om de \LATEX\ gebruiker te hulp te schieten, en omdat het er (naar mijn mening) netter uit ziet, definieeren we de oude vertrouwde \tex{emph} hier. Om meerdere alinea's te benadrukken definieeren we ook de omgeving \tex{start/stopemphasize}
 
-\define[1]\emph
-  {{\em #1}}
+\definehighlight[emph]
+  [style=\em]
 \definestartstop[emphasize]
   [style=\em]
 
-\define[1]\alert
-  {{\ss\bf #1}}
+\definehighlight[alert]
+  [style=\ss\bf]
 
 %D \macros{online}
 %D
@@ -718,7 +598,7 @@ setbounds currentpicture to boundingbox OverlayBox;
   [alternative=num]
 \setuppublicationlist
   [align=flushleft,% Zodat URL's netjes afgebroken worden
-   after={\kern -6pt}]% Hack om afstand tussen items te reduceren.
+   after={\kern -6pt}]% Hack om afstand tussen items te reduceren. TODO: nodig?
 
 %D \BIBTEX\ verwerkt netjes publicaties van het type \type{electronic} maar standaard kan \CONTEXT\ daar niets mee, die zullen we zelf moeten definiëren. Dat doen we door simpelweg de auteur, de titel en de \URL\ in te voegen met hier en daar een punt of een spatie.
 
@@ -727,16 +607,8 @@ setbounds currentpicture to boundingbox OverlayBox;
    \inserttitle{\bgroup\em}{\egroup.\space}{}%
    \inserturl{\bgroup\tt}{\egroup.}{}}
 
-%D \section{Eenheden}
-
-\define[1]\unit
-  {\math{\rm\,#1}}
-
-\define[2]\quantity
-  {\digits{#1}\unit{#2}}
-
 \define\degree
-  {{\math{^{\circ}}}}% Ja, echt met zoveel haakjes!!!
+  {{\math{^{\circ}}}}% Ja, echt met zoveel haakjes!!! TODO: nodig?
 
 %D \section{Chemical}
 
@@ -795,25 +667,6 @@ setbounds currentpicture to boundingbox OverlayBox;
 \useurl[mailto:marie]
   [mailto:bestuur@marie-curie.nl][]
   [bestuur@marie-curie.nl]
-
-%D \section{Te doen}
-
-%FIXME: als register
-\definelist[todo]
-  [alternative=a,
-   partnumber=no,
-   pagestyle=\quad\it]
-\definecombinedlist[todos]
-  [chapter,todo]
-\setupcombinedlist[todos]
-  [level=current,% Waarom weet ik ook niet, maar het werkt.
-   interaction=pagenumber]
-
-\starttexdefinition todo #1
-  \inmargin{Todo}
-  \underbar{#1}
-  \writetolist[todo]{}{#1}
-\stoptexdefinition
 
 %D Dit is het laatste wat we nog wilden definiëren in de omgeving en hiermee zijn we ook aan het eind gekomen.
 
