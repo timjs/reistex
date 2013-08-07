@@ -88,7 +88,7 @@
   [left={\symbol[leftquote]},
    right={\symbol[rightquote]}]
 
-\setupnotes% TODO: check footnotes
+\setupnotes% TODO: check footnotes, and rule!!!
   [rulethickness=1pt]
 \setupnotations
   [way=bychapter,
@@ -168,8 +168,7 @@
 \setuphead[chapter]
   [page=yes,
    style=\ss\bfc,
-   after=\setups{travellayout::chapterdata},
-   aftersection=\setups{travellayout::chapterpubs}]
+   after=\setups{travellayout::chapterdata}]
 
 \startsetups travellayout::chapterdata
   \getvalue{travellayout::broadbottomwaved}
@@ -272,6 +271,45 @@
 
 \defineexternalfigure[margin][width=\marginwidth]%=6pc/4pc
 \defineexternalfigure[page]  [height=\textheight,width=\textwidth]%=55pc/40pc
+
+%D \section{Publicaties}
+%D
+%D Om een lijst van publicaties te zetten maken we gebruik van een \BIBTEX-bibliografie. Deze wordt eerst door \BIBTEX\ verwerkt waarna \CONTEXT\ de gegevens kan zetten met behulp van \tex{placepublications}. We kunnen dan per hoofdstuk (of \type{report}) een lijst plaatsen van de in dat hoofdstuk geciteerde publicaties. Deze oplossing is erg gestructureerd en we weten zeker dat alle referenties op de zelfde manier zijn opgemaakt.
+%D
+%D Allereerst vertellen we \BIBTEX\ dat de database met publicaties standaard dezelfde naam heeft als het huidige stukje (weergegeven door \tex{jobname}). Zo hoeft niet elke deelnemer bovenaan zijn of haar stukje een database te specificeren. We willen ook dat \BIBTEX\ de publicaties sorteert op auteursnaam zodat we dit kunnen gebruiken bij het plaatsen van de lijst.
+%D Refereren naar publicaties doen we met nummers tussen teksthaken. De opmaak van de data gebeurt volgens standaard conventies.
+%D
+%D Door de publicatielijst links uit te lijnen, lossen we al onze problemen op met \URL's die verkeerd worden afgebroken en in de marge lopen.
+%D De \type{num}-stijl voegt standaard een extra ruimte in van 6~pt tussen de onderdelen.\footnote{Zie de toevoeging van \tex{vadjust} in de definitie van \tex{setuppublicationlayout} in \type{bibl-num.tex}.} Hier moeten we voor compenseren.
+
+\setupbibtex
+  [database=\jobname]
+  %bibtex=bibtexu% Lijkt sommige .bib's niet te slikken...
+
+\setuppublications
+  [alternative=num,
+   criterium=chapter]% Lijsten per hoofdstuk
+\setuppublicationlist
+  [align=flushleft]% Zodat URL's netjes afgebroken worden
+   %before=b,
+   %inbetween=i,
+   % after={\blank[disable]}]
+
+%D \BIBTEX\ verwerkt netjes publicaties van het type \type{electronic} maar standaard kan \CONTEXT\ daar niets mee, die zullen we zelf moeten definiëren. Dat doen we door simpelweg de auteur, de titel en de \URL\ in te voegen met hier en daar een punt of een spatie.
+
+\setuppublicationlayout[electronic]
+  {\insertauthors{}{.\space}{}%
+   \inserttitle{\bgroup\em}{\egroup.\space}{}%
+   \inserturl{\bgroup\tt}{\egroup.}{}}
+
+\starttexdefinition completepublications
+  \dosingleempty\docompletepublications
+\stoptexdefinition
+
+\starttexdefinition docompletepublications [#1]
+  \section{\headtext{pubs}}
+  \placepublications[#1]
+\stoptexdefinition
 
 %D \section{Sectieblokken}
 %D
@@ -579,33 +617,6 @@ setbounds currentpicture to boundingbox OverlayBox;
 %D We definieëren twee standaardformaten voor figuren. \type{passphoto} is goed te gebruiken bij \tex{personalia}, aangezien die even breedt is als de eerste kolom. \type{broad} is een handigheidje voor figuren die de tekstbreedte en de marge innemen.
 %D
 %D De meeste instellingen gaan over de breedte van het plaatje, dus over de hoeveelheid letters die ze opslokken als je ze naast de tekst zet.
-
-%D \section{Publicaties}
-%D
-%D Om een lijst van publicaties te zetten maken we gebruik van een \BIBTEX-bibliografie. Deze wordt eerst door \BIBTEX\ verwerkt waarna \CONTEXT\ de gegevens kan zetten met behulp van \tex{placepublications}. We kunnen dan per hoofdstuk (of \type{report}) een lijst plaatsen van de in dat hoofdstuk geciteerde publicaties. Deze oplossing is erg gestructureerd en we weten zeker dat alle referenties op de zelfde manier zijn opgemaakt.
-%D
-%D Allereerst vertellen we \BIBTEX\ dat de database met publicaties standaard dezelfde naam heeft als het huidige stukje (weergegeven door \tex{jobname}). Zo hoeft niet elke deelnemer bovenaan zijn of haar stukje een database te specificeren. We willen ook dat \BIBTEX\ de publicaties sorteert op auteursnaam zodat we dit kunnen gebruiken bij het plaatsen van de lijst.
-%D Refereren naar publicaties doen we met nummers tussen teksthaken. De opmaak van de data gebeurt volgens standaard conventies.
-%D
-%D Door de publicatielijst links uit te lijnen, lossen we al onze problemen op met \URL's die verkeerd worden afgebroken en in de marge lopen.
-%D De \type{num}-stijl voegt standaard een extra ruimte in van 6~pt tussen de onderdelen.\footnote{Zie de toevoeging van \tex{vadjust} in de definitie van \tex{setuppublicationlayout} in \type{bibl-num.tex}.} Hier moeten we voor compenseren.
-
-\setupbibtex
-  [database=\jobname]
-  %bibtex=bibtexu% Lijkt sommige .bib's niet te slikken...
-
-\setuppublications
-  [alternative=num]
-\setuppublicationlist
-  [align=flushleft,% Zodat URL's netjes afgebroken worden
-   after={\kern -6pt}]% Hack om afstand tussen items te reduceren. TODO: nodig?
-
-%D \BIBTEX\ verwerkt netjes publicaties van het type \type{electronic} maar standaard kan \CONTEXT\ daar niets mee, die zullen we zelf moeten definiëren. Dat doen we door simpelweg de auteur, de titel en de \URL\ in te voegen met hier en daar een punt of een spatie.
-
-\setuppublicationlayout[electronic]
-  {\insertauthors{}{.\space}{}%
-   \inserttitle{\bgroup\em}{\egroup.\space}{}%
-   \inserturl{\bgroup\tt}{\egroup.}{}}
 
 \define\degree
   {{\math{^{\circ}}}}% Ja, echt met zoveel haakjes!!! TODO: nodig?
