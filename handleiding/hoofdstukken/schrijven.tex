@@ -12,7 +12,6 @@ In dit hoofdstuk geven we een overzicht van de meest gebruikte commando's van \C
 
 \placecontent
 
-\setupheadnumber[section][-1]
 \section[sec:commandos]{Commando's}
 
 \TEX\ is een opmaaktaal speciaal voor het zetten van documenten. We schrijven een tekst in een \type{.tex}-bestand, ook wel de \emph{bron} genoemd. Dit is gewoon platte tekst, die je kunt bewerken in je lievelingstekstbewerker.\footnote{Vim natuurlijk!} Vervolgens laten we dit door \TEX\ omzetten naar een \PDF, het \emph{compileren}.
@@ -241,16 +240,16 @@ Tussen \tex{starttabulate} en \tex{stoptabulate} geef je de inhoud van de tabel.
 \HL
 \NC Specification                   \NC Value                     \NR
 \HL
-\NC Spectral range                  \NC \quantity{0.1 -- 1.5}{mm} \NR
-\NC Micro-pulse frequency           \NC \quantity{3}{GHz}         \NR
-\NC Micro-pulse duration            \NC \quantity{10 -- 100}{ps}  \NR
-\NC Macro-pulse duration            \NC \quantity{10 -- 15}{μs}   \NR
-\NC Repetition rate of macro-pulses \NC \quantity{10}{Hz}         \NR
-\NC Electron beam energy            \NC \quantity{10 -- 15}{MeV}  \NR
-\NC Undulator period                \NC \quantity{110}{mm}        \NR
-\NC Number of undulator periods     \NC \quantity{40}{}           \NR
-\NC Undulator parameter Krms        \NC \quantity{0.7 -- 3.4}{}   \NR
-\NC Optical cavity length           \NC \quantity{7.5}{m}         \NR
+\NC Spectral range                  \NC \unit{0.1 -- 1.5 mm} \NR
+\NC Micro-pulse frequency           \NC \unit{3 GHz}         \NR
+\NC Micro-pulse duration            \NC \unit{10 -- 100 ps}  \NR
+\NC Macro-pulse duration            \NC \unit{10 -- 15 μs}   \NR
+\NC Repetition rate of macro-pulses \NC \unit{10 Hz}         \NR
+\NC Electron beam energy            \NC \unit{10 -- 15 MeV}  \NR
+\NC Undulator period                \NC \unit{110 mm}        \NR
+\NC Number of undulator periods     \NC \unit{40 }           \NR
+\NC Undulator parameter Krms        \NC \unit{0.7 -- 3.4 }   \NR
+\NC Optical cavity length           \NC \unit{7.5 m}         \NR
 \HL
 \stoptabulate
 \stopbuffer
@@ -413,7 +412,7 @@ Zo, nu zijn de scheikundigen wel tevreden! \tex{chemical} kun je ook in de lopen
 
 \subsection[sec:eenheden]{Eenheden}
 
-Vaak zul je in je tekst natuurkundige grootheden gebruiken zoals \quantity{6,626068e-34}{m^2kg/s} en \quantity{2,99792458}{m/s}. Laten we even kijken wat er gebeurt wanneer we dit in wiskundemodus zetten.
+Vaak zul je in je tekst natuurkundige grootheden gebruiken zoals \unit{6,626068e-34 m^2kg/s} en \unit{2,99792458 m/s}. Laten we even kijken wat er gebeurt wanneer we dit in wiskundemodus zetten.
 
 \startbuffer
 \startformulas
@@ -437,10 +436,10 @@ Zoals je nu al vermoedt hoef je \tex{quantity} niet allen in wiskundemodus te ge
 \startbuffer
 \startformulas
 \startformula
-\hbar = \quantity{6,626068e-34}{m^2kg/s}
+\hbar = \unit{6,626068e-34 m^2kg/s}
 \stopformula
 \startformula
-c = \quantity{2,99792458}{m/s}
+c = \unit{2,99792458 m/s}
 \stopformula
 \stopformulas
 \stopbuffer
