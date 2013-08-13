@@ -10,7 +10,7 @@ We hebben nu alleen nog maar losse stukjes. Deze moeten natuurlijk gecombineerd 
 
 \placecontent
 
-\todo{\type{\\} in secties}
+\todo{@\\@ in secties}
 
 \section[sec:mapstructuur]{Mapstructuur}
 
@@ -18,7 +18,7 @@ Allereerst moeten we even stilstaan bij een overzichtelijke mapstructuur. We heb
 
 Figuren moeten voor \TEX\ eigenlijk in dezelfde map staan waarin ook de bron staat. Anders moeten we paden gaan specificeren. We moeten er niet alleen rekening mee houden dat we de stukjes afzonderlijk willen \TEX en. Ook als we alles samenvoegen willen we dezelfde figuren gebruiken.
 
-\CONTEXT\ heeft de mogelijkheid om mappen op te geven waarin zij naar figuren moet zoeken. In \type{travellayout} staat gedefinieerd in welke mappen \CONTEXT\ op zoek kan gaan.
+\CONTEXT\ heeft de mogelijkheid om mappen op te geven waarin zij naar figuren moet zoeken. In @travellayout@ staat gedefinieerd in welke mappen \CONTEXT\ op zoek kan gaan.
 
 \startitemize
 \item figuren
@@ -49,15 +49,15 @@ We kunnen nu de volgende mapstructuur opbouwen.
     +-- verslag.tex
 \stoptyping
 
-Stel, we willen het cultuurstukje \type{museum.tex} compileren. Dit stukje maakt gebruik van de figuren \type{schilderij.png} en \type{standbeeld.jpg}. \CONTEXT\ gaat op zoek naar deze figuren. De eerste plek waar \CONTEXT\ kijkt is de map zelf. Helaas daar zijn ze niet te vinden. Stap twee is in een submap met een van de namen die we hierboven hebben opgegeven. Weer mis, die bestaan niet. Tot slot stap drie, zo'n map maar dan een hoger in de hiërarchie. Check! De map \type{verslag/figuren} bestaat! En daarin staan beide figuren die we nodig hebben.
+Stel, we willen het cultuurstukje @museum.tex@ compileren. Dit stukje maakt gebruik van de figuren @schilderij.png@ en @standbeeld.jpg@. \CONTEXT\ gaat op zoek naar deze figuren. De eerste plek waar \CONTEXT\ kijkt is de map zelf. Helaas daar zijn ze niet te vinden. Stap twee is in een submap met een van de namen die we hierboven hebben opgegeven. Weer mis, die bestaan niet. Tot slot stap drie, zo'n map maar dan een hoger in de hiërarchie. Check! De map @verslag/figuren@ bestaat! En daarin staan beide figuren die we nodig hebben.
 
-Met dezelfde redenatie kunnen we zien dat dit ook goed gaat in het geval dat we \type{proloog.tex} compileren. Wanneer deze bijvoorbeeld de afbeelding \type{groep.jpg} nodig heeft, kan \CONTEXT\ deze in stap twee al vinden.\footnote{Misschien denk je nu: maar hoe zit het dan met de omgeving: \type{travellayout}? Die staat namelijk niet in de mappen \type{cultuur/} en \type{fysica/}. Dan krijgen we toch lelijke stukjes? Nou, \CONTEXT\ zoekt inderdaad naar omgevingen in dezelfde map\seedocumentation{--}{2.4}. Wanneer zij die niet kan vinden, en gaat zij tot drie niveaus omhoog in de mapstructuur om het opnieuw te proberen.}
+Met dezelfde redenatie kunnen we zien dat dit ook goed gaat in het geval dat we @proloog.tex@ compileren. Wanneer deze bijvoorbeeld de afbeelding @groep.jpg@ nodig heeft, kan \CONTEXT\ deze in stap twee al vinden.\footnote{Misschien denk je nu: maar hoe zit het dan met de omgeving: @travellayout@? Die staat namelijk niet in de mappen @cultuur/@ en @fysica/@. Dan krijgen we toch lelijke stukjes? Nou, \CONTEXT\ zoekt inderdaad naar omgevingen in dezelfde map\seedocumentation{--}{2.4}. Wanneer zij die niet kan vinden, en gaat zij tot drie niveaus omhoog in de mapstructuur om het opnieuw te proberen.}
 
 We hebben dus een structuur gecreëerd waarin deelnemers zelf hun stukje kunnen compileren. Zij hebben hoogstwaarschijnlijk de plaatjes in dezelfde map staan. Wij kunnen hun afzonderlijke componenten compileren in deze mapstructuur en ook als we het hele verslag compileren. Maar daarvoor moeten we eerst een \emph{product} maken.
 
 \section{Producten aanmaken}
 
-Net als bij een component moeten we \CONTEXT\ eerst vertellen dat zij met een product te maken heeft\seedocumentation{--}{2.3}. We noemen het product in dit voorbeeld \emph{verslag} en slaan het op in het bestand \type{verslag.tex}. Ook willen we aangeven in welke omgeving we werken.
+Net als bij een component moeten we \CONTEXT\ eerst vertellen dat zij met een product te maken heeft\seedocumentation{--}{2.3}. We noemen het product in dit voorbeeld \emph{verslag} en slaan het op in het bestand @verslag.tex@. Ook willen we aangeven in welke omgeving we werken.
 
 \starttyping
 \startproduct verslag
@@ -76,7 +76,7 @@ Standaard staat \CONTEXT\ ingesteld op de Engelse taal. Dat betekend dat zij woo
 
 \section{Componenten aanroepen}
 
-Binnen de \type{product} omgeving kunnen we nu de componenten aanroepen. Hier zorgt \tex{component} voor\seedocumentation{--}{2.3}. Als argument (zonder accolades) geven we de naam van een stukje op, eventueel voorafgegaan door de map waarin die staat. Zo voegen we de stukjes uit de mapstructuur van \in{sectie}[sec:mapstructuur] toe.
+Binnen de @product@ omgeving kunnen we nu de componenten aanroepen. Hier zorgt @\component@ voor\seedocumentation{--}{2.3}. Als argument (zonder accolades) geven we de naam van een stukje op, eventueel voorafgegaan door de map waarin die staat. Zo voegen we de stukjes uit de mapstructuur van \in{sectie}[sec:mapstructuur] toe.
 
 \starttyping
 \component proloog
@@ -86,7 +86,7 @@ Binnen de \type{product} omgeving kunnen we nu de componenten aanroepen. Hier zo
 \component colofon
 \stoptyping
 
-Dat is alles! Als we nu het bestand \type{verslag.tex} compileren, krijgen we een \PDF'je met daarin de proloog, de colofon en maar liefst drie stukjes van reisdeelnemers!
+Dat is alles! Als we nu het bestand @verslag.tex@ compileren, krijgen we een \PDF'je met daarin de proloog, de colofon en maar liefst drie stukjes van reisdeelnemers!
 
 \section{Inhoudsopgave en andere lijsten toevoegen}
 
@@ -110,23 +110,23 @@ In het hoogst onwaarschijnlijke geval dat je ook een lijst van figuren, tabellen
 
 Saai, maar simpel.
 
-\todo{Iets over \tex{placecontent} en familie}
+\todo{Iets over @\placecontent@ en familie}
 
 \section{Hoofdstukken groeperen}
 
-Zoals je weet begint elk stukje met \tex{report}. Stiekem is dit gewoon een \tex{chapter} (zie ook \in{sectie}[sec:report])\seedocumentation{5}{8.2}, vandaar dat de reisdeelnemers alleen \tex{section} en lager mogen gebruiken voor kopjes. Een niveau hoger hebben we nog een deel of \tex{part}. Die kunnen we dus gebruiken om ons verslag op te delen naar bijvoorbeeld stad of land.
+Zoals je weet begint elk stukje met @\report@. Stiekem is dit gewoon een @\chapter@ (zie ook \in{sectie}[sec:report])\seedocumentation{5}{8.2}, vandaar dat de reisdeelnemers alleen @\section@ en lager mogen gebruiken voor kopjes. Een niveau hoger hebben we nog een deel of @\part@. Die kunnen we dus gebruiken om ons verslag op te delen naar bijvoorbeeld stad of land.
 
 \starttyping
 \part{Stad}
 \stoptyping
 
-Delen beginnen altijd op een rechter pagina. Die pagina is standaard redelijk leeg. Het is een leuk idee om die op te fleuren met een leuk plaatje. Hier kun je gewoon \tex{externalfigure} voor gebruiken.
+Delen beginnen altijd op een rechter pagina. Die pagina is standaard redelijk leeg. Het is een leuk idee om die op te fleuren met een leuk plaatje. Hier kun je gewoon @\externalfigure@ voor gebruiken.
 
 \starttyping
 \externalfigure[universiteit][width=\textwidth]
 \stoptyping
 
-Als je een kleiner figuur wilt centreren op de pagina kun je dit doen met behulp van \tex{midaligned}. Met behulp van twee \tex{vfill}'s kun je de afbeelding ook verticaal centreren.
+Als je een kleiner figuur wilt centreren op de pagina kun je dit doen met behulp van @\midaligned@. Met behulp van twee @\vfill@'s kun je de afbeelding ook verticaal centreren.
 
 \starttyping
 \vfill
@@ -185,7 +185,7 @@ Wanneer we nu al het bovenstaande combineren krijgen we een product dat er ongev
 \stopproduct
 \stoptyping
 
-Nu hoeven we in de map \type{verslag/} alleen nog het commando
+Nu hoeven we in de map @verslag/@ alleen nog het commando
 \starttyping
 texexec verslag
 \stoptyping
@@ -201,14 +201,14 @@ Geen enkel probleem. \CONTEXT\ heeft een functie genaamd \emph{modi} of \emph{\e
 \NC a5  \NC
     Zet het document op A5 in plaats van A4. Dit is vooral handig om te kijken hoe de pagina's van bijvoorbeeld de reader er uit komen te zien. Daarvoor zijn onderstaande twee modi minder geschikt. \NC\NR
 \NC A5  \NC
-    Zelfde als \type{a5}.  \NC\NR
+    Zelfde als @a5@.  \NC\NR
 \NC sideways  \NC
-    Plaatst twee A5 pagina's naast elkaar op een A4'tje voor papier besparing. Deze impositie is puur enkelzijdig, dus hij houdt geen rekening met linker- en rechter pagina's. Vergeet niet de optie \type{--arrange} mee te geven aan \type{texexec}! Doe je dit niet, dan worden de inhoudsopgave en de verwijzingen niet gegenereerd.  \NC\NR
+    Plaatst twee A5 pagina's naast elkaar op een A4'tje voor papier besparing. Deze impositie is puur enkelzijdig, dus hij houdt geen rekening met linker- en rechter pagina's. Vergeet niet de optie @--arrange@ mee te geven aan @texexec@! Doe je dit niet, dan worden de inhoudsopgave en de verwijzingen niet gegenereerd.  \NC\NR
 \NC booklet  \NC
-    Geeft een boekje als uitvoer, zoals gewenst voor de reader en het draaiboek. Geeft als uitvoer dus twee A5 pagina's op een A4'tje maar de pagina's zijn zo geordend, dat wanneer je ze uit print je een boekje kunt vouwen. Ook hierbij geldt dat je de optie \type{--arrange} mee moet geven, wil je dat alle verwijzingen en lijsten worden gegenereerd. \NC\NR
+    Geeft een boekje als uitvoer, zoals gewenst voor de reader en het draaiboek. Geeft als uitvoer dus twee A5 pagina's op een A4'tje maar de pagina's zijn zo geordend, dat wanneer je ze uit print je een boekje kunt vouwen. Ook hierbij geldt dat je de optie @--arrange@ mee moet geven, wil je dat alle verwijzingen en lijsten worden gegenereerd. \NC\NR
 \stoptabulate
 
-Dus als we een boekje willen afdrukken van bovenstaand verslag, dan compileren we dit als volgt. (Let op de \type{--arrange}!)
+Dus als we een boekje willen afdrukken van bovenstaand verslag, dan compileren we dit als volgt. (Let op de @--arrange@!)
 \starttyping
 texexec --modus=booklet --arrange verslag
 \stoptyping

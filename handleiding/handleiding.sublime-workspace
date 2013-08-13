@@ -11,7 +11,7 @@
 			"file": "handleiding.tex",
 			"settings":
 			{
-				"buffer_size": 1006,
+				"buffer_size": 1012,
 				"line_ending": "Unix"
 			}
 		},
@@ -19,7 +19,7 @@
 			"file": "zetwerk/kaft.tex",
 			"settings":
 			{
-				"buffer_size": 550,
+				"buffer_size": 584,
 				"line_ending": "Unix"
 			}
 		},
@@ -35,7 +35,7 @@
 			"file": "hoofdstukken/schrijven.tex",
 			"settings":
 			{
-				"buffer_size": 32445,
+				"buffer_size": 32375,
 				"line_ending": "Unix"
 			}
 		},
@@ -83,7 +83,7 @@
 			"file": "appendices/commandos.tex",
 			"settings":
 			{
-				"buffer_size": 5089,
+				"buffer_size": 5065,
 				"line_ending": "Unix"
 			}
 		},
@@ -107,9 +107,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 375.0,
+		"height": 49.0,
 		"selected_items":
 		[
+			[
+				"contex",
+				"Set Syntax: ConTeXt"
+			],
 			[
 				"conte",
 				"Set Syntax: ConTeXt"
@@ -148,16 +152,38 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 95.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"tekst",
+			"\\\\quantity\\{([^}]*)\\}\\{([^}]*)\\}",
+			"\\\\quantity\\{([^}]*)\\}\\{[^}]*)\\}",
+			"\\\\quantity\\{([^}]*)\\}\\{([^}]*)\\}",
+			"\\\\quantity\\{([^}])\\}\\{[^}]",
+			"\\\\quantity\\{([^}])\\}\\{",
+			"\\\\quantity\\{([^}])\\}",
+			"\\\\quantity\\{([^}])\\}\\{([^}])\\}",
+			"\\\\quantity\\{([^}])\\}\\{([^}])\\",
+			"\\\\quantity\\{([^}])\\}\\{([^}])\\}",
+			"\\\\quantity\\{([^}])\\}",
+			"\\\\quantity\\{([^}])\\}\\{([^}])\\}",
+			"\\\\quantity\\{([^}])\\}",
+			"\\\\quantity\\{([^])\\}",
+			"\\\\quantity\\{([^})\\}",
+			"\\\\quantity\\{",
+			"\\\\quantity",
+			"\\\\quantiity{",
+			"\\\\quantiity\\{",
+			"\\\\quanti",
+			"\\\\quantity\\{([^}])\\}\\{([^}])\\}",
 			"chapterpubs",
 			"completepub",
 			"setuppublicationlist",
@@ -169,9 +195,11 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			"\\\\unit{\\1 \\2}",
+			"\\unit{\\1 \\2}"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -182,7 +210,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 9,
 			"sheets":
 			[
 				{
@@ -191,15 +219,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1006,
+						"buffer_size": 1012,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								662,
+								662
 							]
 						],
 						"settings":
@@ -209,7 +237,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 328.0,
+						"translation.y": 202.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -220,20 +248,20 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 550,
+						"buffer_size": 584,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								432,
+								432
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
@@ -276,15 +304,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 32445,
+						"buffer_size": 32375,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								15600,
+								15600
 							]
 						],
 						"settings":
@@ -294,7 +322,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 5583.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -444,23 +472,23 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5089,
+						"buffer_size": 5065,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1982,
+								1982
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1494.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

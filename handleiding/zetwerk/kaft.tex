@@ -4,24 +4,26 @@
 
 \startstandardmakeup
 
-\framed
-  [frame=off,
-   align=flushright,
-   offset=overlay]
-  {{\ss\bfc\getvalue{travellayout::lowrightwaved}{Reis\TeX en voor iedereen}}\\
-   {\ss\bf
-    \doifmode{deelnemer}{Deelnemershandleiding\\}
-    Tim Steenvoorden\\
-    \currentdate[month,year]}}
+\startframed[frame=off,align=flushright,offset=overlay]
+  {\ss\bfc \getvalue{travellayout::bottomrightwaved}{Reis\TeX en voor iedereen}}
+
+  {\ss\bf \doifmode{deelnemer}{Deelnemershandleiding\\}
+          Tim Steenvoorden\\
+          \currentdate[month,year]}
+\stopframed
 
 \vfill
 
-\startalignment[flushright]
+\startalignment[flushright]%TODO: werkt niet???
   \startlines
   Een introductie in \CONTEXT\ voor
   reisdeelnemers en verslagleggers
   \stoplines
 \stopalignment
+
+\showcolorgroup[primary][name]
+\showcolorgroup[complementary][name]
+\showpalet[handleiding][vertical,name,number]
 
 \stopstandardmakeup
 

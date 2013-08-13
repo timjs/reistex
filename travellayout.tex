@@ -15,6 +15,9 @@
 \writestatus{environment}{Dit is Travellayout voor ConTeXt MkIV}
 \writestatus{environment}{versie 2013.08.01 door Tim Steenvoorden}
 
+\define\noblank
+  {{\blank[none]}}
+
 %C -----------------------------------------------------------------------------
 %D \chapter{Ontwerp en opmaak}
 %D
@@ -88,7 +91,7 @@
   [left={\symbol[leftquote]},
    right={\symbol[rightquote]}]
 
-\setupnotes% TODO: check footnotes, and rule!!!
+\setupnotes
   [rulethickness=1pt]
 \setupnotations
   [way=bychapter,
@@ -150,16 +153,18 @@
 %D
 %D Koppen zijn door het hele document niet genummerd. Daarnaast stellen we per soort kop de stijl in (hetzij met een macro, hetzij direct) en de witruimte eromheen. Ook willen we \tex{part}s graag op een rechter pagina laten beginnen, en \tex{chapter}s op een willekeurige nieuwe pagina.
 
-\definestructureresetset[default]
+\defineprefixset[default]%TODO: hier of bij handleiding?
+  [chapter,section,subsection]
+\defineresetset[default]
   [1,0][1]% reset parts niet, chapters wel, rest niet
 
 \setupheads
-  [sectionresetset=default,
+  [sectionset=default,% Slaat op prefix
    number=no]
 
 \setuphead[part]
   [number=no,
-   %resetnumber=no,% Nu met structureresetset...
+   %resetnumber=no,% Nu met reresetset...
    placehead=yes,
    page=right,
    textcommand=\getvalue{travellayout::bottomrightwaved},
@@ -174,14 +179,6 @@
   \getvalue{travellayout::broadbottomwaved}
     {\ss\bfx \structureuservariable{date} \hfill \structureuservariable{author}}
   \blank[2*big]
-\stopsetups
-
-\startsetups travellayout::chapterpubs
-  %\doifnotempty{\structureuservariable{publications}}{
-  \doifnotempty{\placepublications}{
-    \section{\headtext{pubs}}
-    \placepublications
-  }
 \stopsetups
 
 \setuphead[section,subsection]
@@ -203,15 +200,15 @@
 
 \setupcombinedlist[content]
   [alternative=a,
-   list={part,chapter},
-   interaction=all]
+   list={part,chapter}]
+   %interaction=pagenumber]%TODO: werkt niet?
 
 \setuplist[part]
   [pagenumber=no,
    style=\ss\bf,
    textcommand=\getvalue{travellayout::broadbottomframed}]
 \setuplist[chapter]
-  [before={\blank[none]},
+  [before=\noblank,
    margin=1em,
    pagestyle=\it]
 
@@ -620,6 +617,10 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \define\degree
   {{\math{^{\circ}}}}% Ja, echt met zoveel haakjes!!! TODO: nodig?
+
+\let\todo\relax
+\let\personalia\relax
+\let\smallint\relax
 
 %D \section{Chemical}
 

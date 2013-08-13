@@ -22,42 +22,97 @@
 
 % Niet \makecharacteractive gebruiken, dan vergeet ie 'm weer,
 % nu passen we \ctxcatcodes impliciet aan:
-%\installactivecharacter @ %@
+\installactivecharacter @ %@
 % Slim, maar werkt alleen in klein voorbeeld:
 %\defineactivecharacter @
-%  {\type@}
-% Pakt 'm tot de laatste @:
-%\def@#1@
-%  {\rescan{\type{#1}}}
+ %{\type@}
 % Werkt niet met \type:
 %\defineactivecharacter @ %
 %  {\bgroup\tt
 %   \defineactivecharacter @ {\egroup}}
+% Doet het prima, vergeet de \unexpanded niet!
+\unexpanded\def@#1@%
+  {\type{#1}}
+
+\definecolorgroup[primary]
+  [0.97:0.70:0.00,
+   0.60:0.50:0.23,
+   0.46:0.33:0.00,
+   0.99:0.82:0.37,
+   0.99:0.90:0.67]
+\definecolorgroup[complementary]
+  [0.09:0.16:0.67,
+   0.19:0.22:0:42,
+   0.01:0.05:0.32,
+   0.42:0.48:0.92,
+   0.66:0.69:0.92]
+
+\definepalet[handleiding]
+  [head=primary:1,
+   number=primary:4,
+   section=primary:4,
+   accent=complementary:1,
+   background=primary:5,
+   link=complementary:1,
+   contrastlink=complementary:4,
+   identifier=primary:3,
+   brace=primary:2,
+   special=primary:2,
+   comment=primary:5]
+\setuppalet[handleiding]
+
+\setupinteraction
+  [color=link,
+   contrastcolor=contrastlink]
+\setupstartstop[TexSnippetName]
+  [color=identifier,
+   style=normal]
+\setupstartstop[TexSnippetGroup]
+  [color=special,
+   style=normal]
+\setupstartstop[TexSnippetBoundary]
+  [color=special,
+   style=normal]
+\setupstartstop[TexSnippetSpecial]
+  [color=special,
+   style=normal]
+\setupstartstop[TexSnippetComment]
+  [color=comment,
+   style=normal]
 
 % ------------------------------------------------------------------------------
 % Instellingen
 % ------------------------------------------------------------------------------
 
 \setupheads
-  [number=yes]
+  [number=yes,
+   sectionsegments=chapter:subsection,
+   alternative=inmargin,
+   color=head,
+   numbercolor=number]%TODO: werkt niet???
+\setuphead[chapter]
+  [numbercolor=number]
+\setuphead[section]
+  [numbercolor=number]
 
 \setupcombinedlist[content]
-  [level=subsection,
-   headnumber=yes]
-\setuplist[part]
-  [headnumber=no,
-   after={\blank[big]}]
+  [list={part,chapter,section,subsection}]
+% \setuplist[part]
+  % [after={\blank[big]}]
 \setuplist[chapter]
   [before=\blank,
    style=\ss\bf,
    pagenumber=no,
+   partnumber=no,
    margin=0em,
    width=2em]
 \setuplist[section]
-  [margin=2em,
+  [before=\noblank,
+   margin=2em,
    width=3em]
 \setuplist[subsection]
-  [margin=5em,
+  [before=\noblank,
+   margin=5em,
    width=3em]
 
 %\setupfootertexts
@@ -65,11 +120,9 @@
   %[{\pagenumber \quad Reis\TeX en voor iedereen}][]
 
 \setuptyping
-  [palet=graypretty,
-   option=TEX]
-%\setuptype %FIXME: error bij \chemical{}
-  %[palet=graypretty,
-   %option=TEX]
+  [option=TEX]
+\setuptype
+  [option=TEX]
 
 \setupinteraction
   [title={Reis\TeX en voor iedereen},

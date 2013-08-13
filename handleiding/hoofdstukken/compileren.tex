@@ -14,7 +14,7 @@ Dit hoofdstuk is nog erg sumier en heeft uitbreiding nodig. Ik hoop dat iedereen
 
 Op de universiteit zijn alle programma's beschikbaar om je document te compileren. Om dit ook op je eigen computer te kunnen doen, zul je \CONTEXT\ moeten installeren. Je moet daarvoor eerst een \TEX-distributie installeren. Hieronder vind je een overzichtje voor verschillende systemen.
 
-\startitemize 
+\startitemize
 \head Microsoft Windows
 
 \MIKTEX\ is een goede keuze. Bij de installatie zal \MIKTEX\ alleen een basis hoeveelheid \TEX\ op je computer zetten. Wanneer je pakketten gebruikt die nog niet geïnstalleerd zijn, zal \MIKTEX\ die automatisch downloaden en installeren. Als alternatief kun je \TEXLIVE\ gebruiken.
@@ -42,13 +42,13 @@ Op de universiteit zijn alle programma's beschikbaar om je document te compilere
 
 \section{Inloggen op de universiteit}
 
-Je kunt vanaf je eigen computer inloggen op de servers van de universiteit. Voor Windows heb je het programma PuTTY of XWin nodig. Op Linux of \MACOSX\ kun je gebruik maken van het standaard commando \type{ssh}.
+Je kunt vanaf je eigen computer inloggen op de servers van de universiteit. Voor Windows heb je het programma PuTTY of XWin nodig. Op Linux of \MACOSX\ kun je gebruik maken van het standaard commando @ssh@.
 
 \starttyping
 > ssh lilo.science.ru.nl
 \stoptyping
 
-\type{ssh} vraagt dan naar je inlognaam en wachtwoord.\footnote{Let op! Wanneer je je wachtwoord intikt verschijnen er geen tekens op het scherm. Ook geen sterretjes of bolletjes.}
+@ssh@ vraagt dan naar je inlognaam en wachtwoord.\footnote{Let op! Wanneer je je wachtwoord intikt verschijnen er geen tekens op het scherm. Ook geen sterretjes of bolletjes.}
 
 \section{Met de commandoregel werken}
 
@@ -92,12 +92,12 @@ Een stukje kun je vervolgens compileren door het volgende op de commandoregel in
 > texexec mijnstukje.tex
 \stoptyping
 
-Na een hele berg informatie die over je scherm heen vliegt, vind je een nieuw bestand genaamd \type{mijnstukje.pdf} in je map. Zo ziet jouw document er dus uit nadat \CONTEXT\ het opgemaakt heeft!
+Na een hele berg informatie die over je scherm heen vliegt, vind je een nieuw bestand genaamd @mijnstukje.pdf@ in je map. Zo ziet jouw document er dus uit nadat \CONTEXT\ het opgemaakt heeft!
 
 \startframedtext
-Vergeet niet om alle figuren en het bestand \type{travellayout.tex} in \emph{dezelfde map} te zetten waar je stukje staat. Doe je dit niet, dan krijg je waarschijnlijk een paar foutmeldingen, een saaie opmaak en grijze blokken waar eigenlijk jouw figuren horen te staan.
+Vergeet niet om alle figuren en het bestand @travellayout.tex@ in \emph{dezelfde map} te zetten waar je stukje staat. Doe je dit niet, dan krijg je waarschijnlijk een paar foutmeldingen, een saaie opmaak en grijze blokken waar eigenlijk jouw figuren horen te staan.
 
-Het is ook belangrijk dat je geen spaties gebruikt in de bestandsnaam, \TEX\ kan dan je stukje niet vinden. Gebruik in plaats van spaties lage streepjes (\type{_}). Het zelfde geld voor de tekst achter \tex{startcomponent}. Zet hier gewoon de bestandsnaam, maar dan zonder extensie.
+Het is ook belangrijk dat je geen spaties gebruikt in de bestandsnaam, \TEX\ kan dan je stukje niet vinden. Gebruik in plaats van spaties lage streepjes (@_@). Het zelfde geld voor de tekst achter @\startcomponent@. Zet hier gewoon de bestandsnaam, maar dan zonder extensie.
 \stopframedtext
 
 %Wanneer je dit compileert krijg je een pagina met daarop de tekst \quote{Dit is een saai stukje.}. Dat is natuurlijk een beetje, tsja, saai. Het is de bedoeling dat je een leuk stukje schrijft! Hier gaan we wat aan doen.
@@ -109,11 +109,11 @@ Foutmeldingen bij \TEX\ komen altijd voor. Hopelijk kun je je foutmelding terugv
 \subsection{Algemeen}
 
 \startitemize
-\head \type{Paragraph ended before \dosplitstring was complete. l.3}
+\head @Paragraph ended before \dosplitstring was complete. l.3@
 
-Je hebt de naam van het component of product niet opgegeven aan \tex{startcomponent} of \tex{startproduct}.
+Je hebt de naam van het component of product niet opgegeven aan @\startcomponent@ of @\startproduct@.
 
-\head \type{TeXExec | nothing to process}
+\head @TeXExec | nothing to process@
 
 Er staat een spatie in je bestandsnaam. \TEX\ kan je bestand niet vinden en kan hem dus ook niet compileren. Gebruik lage streepjes in plaats van spaties.
 \stopitemize
@@ -131,12 +131,12 @@ Heb je ze geciteerd in je tekst? Niet geciteerde werken komen niet in je bronnen
 
 \head Ik krijg helemaal geen bronnenlijst.
 
-Ben je misschien \tex{stopchapter} vergeten?
+Ben je misschien @\stopchapter@ vergeten?
 \stopitemize
 
 \section{Overbodige bestanden opruimen}
 
-Tijdens het compileren produceert \CONTEXT\ een hele hoop hulpbestanden. Om die in een klap te verwijderen, zonder je bronbestand en je \PDF'je kun je gebruik maken van \type{tex-purge}.
+Tijdens het compileren produceert \CONTEXT\ een hele hoop hulpbestanden. Om die in een klap te verwijderen, zonder je bronbestand en je \PDF'je kun je gebruik maken van @tex-purge@.
 
 \starttyping
 > tex-purge
