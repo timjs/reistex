@@ -26,19 +26,30 @@ data Symbol  = Brace
              | Paren
              | Math
              | Delim
-             | Stop Name
-             | End  Name
+             | Block Name
+             | Env   Name
              deriving (Eq, Ord)
 type Name    = String
 
-instance Show Symbol where
-  show Brace    = "}"
-  show Bracket  = "]"
-  show Paren    = ")"
-  show Math     = "$"
-  show Delim    = "\\right"
-  show (Stop n) = "\\stop" ++ n
-  show (End n)  = "\\end{" ++ n ++ "}"
+open :: Symbol -> String
+open s = case s of
+  Brace   -> "{"
+  Bracket -> "["
+  Paren   -> "("
+  Math    -> "$"
+  Delim   -> "\\left"
+  Block n  -> "\\start" ++ n
+  Env n   -> "\\begin{" ++ n ++ "}"
+
+close :: Symbol -> String
+close s = case s of
+  Brace   -> "}"
+  Bracket -> "]"
+  Paren   -> ")"
+  Math    -> "$"
+  Delim   -> "\\right"
+  Block n  -> "\\stop" ++ n
+  Env n   -> "\\end{" ++ n ++ "}"
 
 -- | /O(n)/ Bereken hoe vaak @x@ in de lijst voorkomt.
 count :: (Eq a) => a -> [a] -> Int
@@ -67,10 +78,10 @@ isOpening m s
   | Just r <- stripPrefix "\\left" s
   , Just r <- isDelimiter r          = Just (Delim, m, r)
   | Just r <- stripPrefix "\\start" s
-  , (n,r)  <- span isLetter r        = Just (Stop n, m, r)
+  , (n,r)  <- span isLetter r        = Just (Block n, m, r)
   | Just r <- stripPrefix "\\begin{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just (End n, m, r)
+  , Just r <- stripPrefix "}" r      = Just (Env n, m, r)
   | otherwise                        = Nothing
 
 -- | Analoog aan @isOpening@, maar dan voor sluithaakjes en stop-commando's.
@@ -83,10 +94,10 @@ isClosing m s
   | Just r <- stripPrefix "\\right" s
   , Just r <- isDelimiter r          = Just (Delim, m, r)
   | Just r <- stripPrefix "\\stop" s
-  , (n,r)  <- span isLetter r        = Just (Stop n, m, r)
+  , (n,r)  <- span isLetter r        = Just (Block n, m, r)
   | Just r <- stripPrefix "\\end{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just (End n, m, r)
+  , Just r <- stripPrefix "}" r      = Just (Env n, m, r)
   | otherwise                        = Nothing
 
 -- | Controleer of de string begint met een reeks van tekens dat we als haakje
@@ -115,11 +126,25 @@ isComment s
   | Just r <- stripPrefix "%" s      = Just $ dropWhile (/= '\n') r
   | otherwise                        = Nothing
 
--- | Controleer of de string begint met een geescaped procent of dollar teken.
+-- | Controleer of we in een woordelijke omgeving zitten. Alles tussen twee
+-- apenstaartjes negeeren we.
+isVerbatim :: String -> Maybe String
+isVerbatim s
+  | Just r     <- stripPrefix "@" s          = Just $ tail $ dropWhile (/= '@') r
+  -- | Just r     <- stripPrefix "\\starttyping" s = Just $ tail $ dropWhile
+  -- | Just r     <- stripPrefix "\\type{" s    = Just $ tail $ dropWhile (/= '}') r
+  -- | Just r     <- stripPrefix "\\type(" s    = Just $ tail $ dropWhile (/= ')') r
+  -- | Just r     <- stripPrefix "\\type[" s    = Just $ tail $ dropWhile (/= ']') r
+  -- | Just r     <- stripPrefix "\\type<" s    = Just $ tail $ dropWhile (/= '>') r
+  -- | Just (c:r) <- stripPrefix "\\type"  s    = Just $ tail $ dropWhile (/=  c ) r
+  | otherwise                                = Nothing
+
+-- | Controleer of de string begint met een geescaped procent teken, dollar
+-- teken of apenstaartje.
 -- We willen immers niet dat we over de backslash heen lezen, en vervolgens de
 -- procent of het dollar teken aanzien voor commentaar dan wel wiskunde...
 isEscaped :: String -> Maybe String
-isEscaped s = listToMaybe $ mapMaybe (`stripPrefix` s) [ "\\%", "\\$"]
+isEscaped s = listToMaybe $ mapMaybe (`stripPrefix` s) [ "\\%", "\\$", "\\@"]
 
 -- | Recursief algoritme om te controleren of de string gebalanceerd is
 -- wat betreft haakjes en start/stop-paren.
@@ -144,16 +169,17 @@ isEscaped s = listToMaybe $ mapMaybe (`stripPrefix` s) [ "\\%", "\\$"]
 -- dit maar een script is, gaan we het ons niet te ingewikkeld maken...
 balanced :: Line -> Stack (Line,Symbol) -> Bool -> String -> (Bool,Error)  -- Writer Error Bool
 balanced _ []        False  ""    = (True, "")
-balanced l ((k,o):_) _      ""    = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
+balanced l ((k,o):_) _      ""    = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ close o ++ "'\n   " ++ "(to match with '" ++ open o ++ "' from line " ++ show k ++ ")")
 balanced l os m s
   | Just r       <- isNewLine s   = balanced (l+1) os m r
   | Just r       <- isEscaped s   = balanced l os m r
   | Just r       <- isComment s   = balanced l os m r
+  | Just r       <- isVerbatim s  = balanced l os m r
   | Just (o,m,r) <- isOpening m s = balanced l ((l,o):os) m r
   | Just (c,m,r) <- isClosing m s = case os of
-    []                           -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', closed without opening")
+    []                           -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ close c ++ "', closed without opening")
     (k,o) : os  | c == o         -> balanced l os m r
-                | otherwise      -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ show c ++ "', expected '" ++ show o ++ "'\n   " ++ "(to match with line " ++ show k ++ ")")
+                | otherwise      -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ close c ++ "', expected '" ++ close o ++ "'\n   " ++ "(to match with '" ++ open o ++ "' from line " ++ show k ++ ")")
   | otherwise                     = balanced l os m $ tail s
 
 -- | Controleer of de string gebalanceerd. We beginnen bij regel 1 met een lege
