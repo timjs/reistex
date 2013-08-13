@@ -69,14 +69,14 @@ count x (y:ys)
 -- controleren of dit de openings- of sluitings-dollar is. We houden in een
 -- extra argument @m@ bij of we in wiskundemodus zitten of niet. Dit helpt ons
 -- bij het onderscheid.
-isOpening :: Bool -> String -> Maybe (Symbol, Bool, String)
-isOpening m s
+stripOpening :: Bool -> String -> Maybe (Symbol, Bool, String)
+stripOpening m s
   | Just r <- stripPrefix "$" s      = if m then Nothing else Just (Math, True, r)
   | Just r <- stripPrefix "{" s      = Just (Brace, m, r)
   | Just r <- stripPrefix "[" s      = Just (Bracket, m, r)
   | Just r <- stripPrefix "(" s      = Just (Paren, m, r)
   | Just r <- stripPrefix "\\left" s
-  , Just r <- isDelimiter r          = Just (Delim, m, r)
+  , Just r <- stripDelimiter r       = Just (Delim, m, r)
   | Just r <- stripPrefix "\\start" s
   , (n,r)  <- span isLetter r        = Just (Block n, m, r)
   | Just r <- stripPrefix "\\begin{" s
@@ -84,15 +84,15 @@ isOpening m s
   , Just r <- stripPrefix "}" r      = Just (Env n, m, r)
   | otherwise                        = Nothing
 
--- | Analoog aan @isOpening@, maar dan voor sluithaakjes en stop-commando's.
-isClosing :: Bool -> String -> Maybe (Symbol, Bool, String)
-isClosing m s
+-- | Analoog aan @stripOpening@, maar dan voor sluithaakjes en stop-commando's.
+stripClosing :: Bool -> String -> Maybe (Symbol, Bool, String)
+stripClosing m s
   | Just r <- stripPrefix "$" s      = if m then Just (Math, False, r) else Nothing
   | Just r <- stripPrefix "}" s      = Just (Brace, m, r)
   | Just r <- stripPrefix "]" s      = Just (Bracket, m, r)
   | Just r <- stripPrefix ")" s      = Just (Paren, m, r)
   | Just r <- stripPrefix "\\right" s
-  , Just r <- isDelimiter r          = Just (Delim, m, r)
+  , Just r <- stripDelimiter r       = Just (Delim, m, r)
   | Just r <- stripPrefix "\\stop" s
   , (n,r)  <- span isLetter r        = Just (Block n, m, r)
   | Just r <- stripPrefix "\\end{" s
@@ -103,8 +103,8 @@ isClosing m s
 -- | Controleer of de string begint met een reeks van tekens dat we als haakje
 -- kunnen gebruiken voor \left of \right. (Doen we op een creatieve manier
 -- waarbij we optimaal gebruik maken van de luiheid van Haskell!)
-isDelimiter :: String -> Maybe String
-isDelimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
+stripDelimiter :: String -> Maybe String
+stripDelimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
   [ ".", "(", ")", "\\{", "\\}", "[", "]", "<", ">", "|", "\\|", "/"
   , "\\lgroup", "\\rgroup", "\\lbrace", "\\rbrace", "\\langle", "\\rangle"
   , "\\vert", "\\lvert", "\\rvert", "\\Vert", "\\lVert", "\\rVert"
@@ -115,21 +115,21 @@ isDelimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
 
 -- | Controleer of de string begint met een nieuwe regel. Strip deze en geef de
 -- rest van de string terug.
-isNewLine :: String -> Maybe String
-isNewLine = stripPrefix "\n"
+stripNewLine :: String -> Maybe String
+stripNewLine = stripPrefix "\n"
 
 -- | Controleer of de string begint met een procent teken. In dat geval gooien
 -- we alle tekens weg tot het einde van de regel, en geven de rest van de string
 -- terug.
-isComment :: String -> Maybe String
-isComment s
+stripComment :: String -> Maybe String
+stripComment s
   | Just r <- stripPrefix "%" s      = Just $ dropWhile (/= '\n') r
   | otherwise                        = Nothing
 
 -- | Controleer of we in een woordelijke omgeving zitten. Alles tussen twee
 -- apenstaartjes negeeren we.
-isVerbatim :: String -> Maybe String
-isVerbatim s
+stripVerbatim :: String -> Maybe String
+stripVerbatim s
   | Just r     <- stripPrefix "@" s          = Just $ tail $ dropWhile (/= '@') r
   -- | Just r     <- stripPrefix "\\starttyping" s = Just $ tail $ dropWhile
   -- | Just r     <- stripPrefix "\\type{" s    = Just $ tail $ dropWhile (/= '}') r
@@ -143,8 +143,8 @@ isVerbatim s
 -- teken of apenstaartje.
 -- We willen immers niet dat we over de backslash heen lezen, en vervolgens de
 -- procent of het dollar teken aanzien voor commentaar dan wel wiskunde...
-isEscaped :: String -> Maybe String
-isEscaped s = listToMaybe $ mapMaybe (`stripPrefix` s) [ "\\%", "\\$", "\\@"]
+stripEscaped :: String -> Maybe String
+stripEscaped s = listToMaybe $ mapMaybe (`stripPrefix` s) [ "\\%", "\\$", "\\@"]
 
 -- | Recursief algoritme om te controleren of de string gebalanceerd is
 -- wat betreft haakjes en start/stop-paren.
@@ -171,16 +171,16 @@ balanced :: Line -> Stack (Line,Symbol) -> Bool -> String -> (Bool,Error)  -- Wr
 balanced _ []        False  ""    = (True, "")
 balanced l ((k,o):_) _      ""    = (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected end of file, expected '" ++ close o ++ "'\n   " ++ "(to match with '" ++ open o ++ "' from line " ++ show k ++ ")")
 balanced l os m s
-  | Just r       <- isNewLine s   = balanced (l+1) os m r
-  | Just r       <- isEscaped s   = balanced l os m r
-  | Just r       <- isComment s   = balanced l os m r
-  | Just r       <- isVerbatim s  = balanced l os m r
-  | Just (o,m,r) <- isOpening m s = balanced l ((l,o):os) m r
-  | Just (c,m,r) <- isClosing m s = case os of
-    []                           -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ close c ++ "', closed without opening")
-    (k,o) : os  | c == o         -> balanced l os m r
-                | otherwise      -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ close c ++ "', expected '" ++ close o ++ "'\n   " ++ "(to match with '" ++ open o ++ "' from line " ++ show k ++ ")")
-  | otherwise                     = balanced l os m $ tail s
+  | Just r       <- stripNewLine s   = balanced (l+1) os m r
+  | Just r       <- stripEscaped s   = balanced l os m r
+  | Just r       <- stripComment s   = balanced l os m r
+  | Just r       <- stripVerbatim s  = balanced l os m r
+  | Just (o,m,r) <- stripOpening m s = balanced l ((l,o):os) m r
+  | Just (c,m,r) <- stripClosing m s = case os of
+    []                              -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ close c ++ "', closed without opening")
+    (k,o) : os  | c == o            -> balanced l os m r
+                | otherwise         -> (False, "Line " ++ show l ++ ":\n   " ++ "Unexpected '" ++ close c ++ "', expected '" ++ close o ++ "'\n   " ++ "(to match with '" ++ open o ++ "' from line " ++ show k ++ ")")
+  | otherwise                        = balanced l os m $ tail s
 
 -- | Controleer of de string gebalanceerd. We beginnen bij regel 1 met een lege
 -- stapel en niet in wiskundemodus.
