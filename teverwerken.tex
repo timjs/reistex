@@ -1,0 +1,133 @@
+%D \section{Catcodes}
+%D
+%D We maken gebruik van een iets modernere \emph{catcode} instellingen.
+%D Onderstaande is al standaard in Mark IV (de nieuwste versie van \CONTEXT).
+%D Simpel gezegd houdt het in dat de tekens \type{^}, \type{_}, \type{&}
+%D en \type{|} geen speciale betekenis meer hebben in de lopende tekst.
+%D \type{^} en \type{_} kunnen natuurlijk nog steeds gebruikt worden in
+%D wiskunde modus!
+
+% Maakt alleen ^ en _ other:
+%\nonknuthmode
+
+% Zo doen we ook & en |:
+%\define[1]\makecharacterother
+%  {\catcode`#1\other}
+%\makecharacterother _
+%\makecharacterother ^
+%\makecharacterother &
+%\makecharacterother |
+% Maar beiden gaan falicant mis na \getbuffer en wss ook andere commando's
+
+% En deze pakt ie al helemaal niet goed:
+%\startextendcatcodetable \ctxcatcodes
+%    \catcode\underscoreasciicode\othercatcode
+%    \catcode\circumflexasciicode\othercatcode
+%    \catcode\ampersandasciicode \othercatcode
+%    \catcode\barasciicode       \othercatcode
+%\stopextendcatcodetable
+
+% Is dit nodig?
+%\let\\\letterbackslash
+%\let\~\lettertilde
+% Deze twee niet denk ik...
+%\let\{\letteropenbrace
+%\let\}\letterclosebrace
+
+
+%D \section{Documentatie}
+%D
+%D Zie de handleiding.
+%D
+%D \section{Aanpassingen}
+%D
+%D \subsubsubject{juli – augustus 2010}
+%D
+%D Initiële versie.
+%D
+%D \startitemize
+%D \item Opmaak zoals bij het oude reisverslag
+%D \item Macro voor hoofdstukken met auteur en datum
+%D \item \LATEX-compatibele macro's
+%D \item Zijfiguren
+%D \item Vele afkortingen en \cap{url}'s
+%D \item Modes voor boekjes en correctieversies
+%D \stopitemize
+%D
+%D Tim Steenvoorden
+%D
+%D \subsubject{oktober – november 2010}
+%D
+%D Versies 0.5 en 0.7
+%D
+%D \startitemize
+%D \item Paginamarges
+%D \item Microtyping
+%D \item Onderlijnde koppen
+%D \item Inhoudsopgave
+%D \item Bibliografieën en referenties
+%D \item Lijnen van tabellen en tabulaties
+%D \item Opmaak koppen
+%D \stopitemize
+%D
+%D Tim Steenvoorden
+%D
+%D \subsubject{januarie 2011}
+%D
+%D Versie 0.9
+%D
+%D \startitemize
+%D \item Citaten
+%D \item Sjabloondocument voor reisdeelnemers
+%D \stopitemize
+%D
+%D Tim Steenvoorden
+%D
+%D \section{Te doen}
+%D
+%D \startitemize
+%D \item Draaiboek
+%D \item Documentatie uitbreiden
+%D \item Samenvatting schrijven
+%D \item \tex{E} toevoegen?
+%D \stopitemize
+
+
+\usetypescript[serif][hanging][normal]
+\setupalign[hanging]
+
+
+
+\setupsection[part]
+  [conversion=Romannumerals]
+
+%D \section{Te doen}
+
+%FIXME: als register
+\definelist[todo]
+  [alternative=a,
+   partnumber=no,
+   pagestyle=\quad\it]
+\definecombinedlist[todos]
+  [chapter,todo]
+\setupcombinedlist[todos]
+  [level=current,% Waarom weet ik ook niet, maar het werkt.
+   interaction=pagenumber]
+
+\starttexdefinition todo #1
+  \inmargin{Todo}
+  \underbar{#1}
+  \writetolist[todo]{}{#1}
+\stoptexdefinition
+
+
+
+[x] auto \placepublications aftersection chapter or redefine \completepublications?
+[ ] rule before footnotes
+[ ] distance before text floats around left/right figure
+[ ] marginfigures
+[ ] inmargin always in outer
+[ ] redefine \cap?
+[ ] space between number and heading in \subsection
+
+[ ] titels secties Commando's en Schrijven

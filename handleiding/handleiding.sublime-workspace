@@ -19,7 +19,7 @@
 			"file": "zetwerk/kaft.tex",
 			"settings":
 			{
-				"buffer_size": 584,
+				"buffer_size": 699,
 				"line_ending": "Unix"
 			}
 		},
@@ -27,7 +27,7 @@
 			"file": "hoofdstukken/inleiding.tex",
 			"settings":
 			{
-				"buffer_size": 4924,
+				"buffer_size": 4908,
 				"line_ending": "Unix"
 			}
 		},
@@ -35,7 +35,7 @@
 			"file": "hoofdstukken/schrijven.tex",
 			"settings":
 			{
-				"buffer_size": 32375,
+				"buffer_size": 31912,
 				"line_ending": "Unix"
 			}
 		},
@@ -43,7 +43,7 @@
 			"file": "hoofdstukken/compileren.tex",
 			"settings":
 			{
-				"buffer_size": 5939,
+				"buffer_size": 5886,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,7 +51,7 @@
 			"file": "hoofdstukken/samenvoegen.tex",
 			"settings":
 			{
-				"buffer_size": 12674,
+				"buffer_size": 12547,
 				"line_ending": "Unix"
 			}
 		},
@@ -59,7 +59,7 @@
 			"file": "hoofdstukken/opmaken.tex",
 			"settings":
 			{
-				"buffer_size": 15179,
+				"buffer_size": 15268,
 				"line_ending": "Unix"
 			}
 		},
@@ -67,7 +67,7 @@
 			"file": "hoofdstukken/aanpassen.tex",
 			"settings":
 			{
-				"buffer_size": 984,
+				"buffer_size": 985,
 				"line_ending": "Unix"
 			}
 		},
@@ -75,7 +75,7 @@
 			"file": "appendices/symbolen.tex",
 			"settings":
 			{
-				"buffer_size": 8397,
+				"buffer_size": 8392,
 				"line_ending": "Unix"
 			}
 		},
@@ -83,7 +83,7 @@
 			"file": "appendices/commandos.tex",
 			"settings":
 			{
-				"buffer_size": 5065,
+				"buffer_size": 5102,
 				"line_ending": "Unix"
 			}
 		},
@@ -91,7 +91,7 @@
 			"file": "appendices/bibtex.tex",
 			"settings":
 			{
-				"buffer_size": 3506,
+				"buffer_size": 2801,
 				"line_ending": "Unix"
 			}
 		},
@@ -107,15 +107,19 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 49.0,
+		"height": 375.0,
 		"selected_items":
 		[
 			[
-				"contex",
+				"conte",
 				"Set Syntax: ConTeXt"
 			],
 			[
-				"conte",
+				"con",
+				"Set Syntax: ConTeXt"
+			],
+			[
+				"contex",
 				"Set Syntax: ConTeXt"
 			]
 		],
@@ -139,6 +143,11 @@
 	},
 	"file_history":
 	[
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-all.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-beta.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-check.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-run.fish",
+		"/Users/Tim/Dropbox/Voorkeuren/functions/context-update.fish",
 		"/usr/local/texlive/2013/texmf-dist/tex/context/base/bibl-tra.mkiv",
 		"/Users/Tim/Projects/ReisTeX-mkiv/voorbeeld/report.bbl",
 		"/Users/Tim/Projects/ReisTeX-mkiv/voorbeeld/report.blg",
@@ -163,6 +172,24 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"personalia",
+			"@([^@]+)@",
+			"\\\\type\\{",
+			"\\\\tex\\{",
+			"\\\\tex",
+			"\\\\type",
+			"\\\\type\\{",
+			"\\\\type\\{([^}]+)\\}",
+			"@\\}",
+			"@}",
+			"\\\\type\\{([^}]+)\\}",
+			"\\\\tex\\{",
+			"\\\\type\\{([^}]+)\\}",
+			"@\\}",
+			"\\\\type\\{([^}]+)\\}",
+			"\\\\type\\{[^}]+\\}",
+			"\\\\tex\\{",
+			"\\\\type",
 			"tekst",
 			"\\\\quantity\\{([^}]*)\\}\\{([^}]*)\\}",
 			"\\\\quantity\\{([^}]*)\\}\\{[^}]*)\\}",
@@ -198,6 +225,9 @@
 		"regex": true,
 		"replace_history":
 		[
+			"\\\\type{\\1}",
+			"@\\1@",
+			"\\\\type{\\\\",
 			"\\\\unit{\\1 \\2}",
 			"\\unit{\\1 \\2}"
 		],
@@ -210,7 +240,7 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -226,8 +256,8 @@
 						"selection":
 						[
 							[
-								662,
-								662
+								661,
+								661
 							]
 						],
 						"settings":
@@ -237,7 +267,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 202.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -248,15 +278,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 584,
+						"buffer_size": 699,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								432,
-								432
+								547,
+								547
 							]
 						],
 						"settings":
@@ -277,7 +307,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4924,
+						"buffer_size": 4908,
 						"regions":
 						{
 						},
@@ -304,25 +334,25 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 32375,
+						"buffer_size": 31912,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15600,
-								15600
+								4658,
+								4658
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5583.0,
+						"translation.y": 1371.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -333,23 +363,23 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5939,
+						"buffer_size": 5886,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1925,
+								1925
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 555.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -360,7 +390,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12674,
+						"buffer_size": 12547,
 						"regions":
 						{
 						},
@@ -389,25 +419,25 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15179,
+						"buffer_size": 15268,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5898,
+								5898
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2394.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -418,20 +448,20 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 984,
+						"buffer_size": 985,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								311,
+								311
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -445,7 +475,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8397,
+						"buffer_size": 8392,
 						"regions":
 						{
 						},
@@ -472,15 +502,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5065,
+						"buffer_size": 5102,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1982,
-								1982
+								4232,
+								4232
 							]
 						],
 						"settings":
@@ -488,7 +518,7 @@
 							"syntax": "Packages/ConTeXt/Syntaxes/ConTeXt.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1494.0,
+						"translation.y": 4564.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -499,7 +529,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3506,
+						"buffer_size": 2801,
 						"regions":
 						{
 						},
@@ -556,7 +586,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"layout":
 	{
@@ -588,7 +618,7 @@
 	"project": "handleiding.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 66.0
 	},
 	"save_all_on_build": true,
 	"select_file":

@@ -267,6 +267,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Plasma in ",
 			"GLOBUSM",
 			"infull",
 			"\\[inner\\]",
@@ -391,8 +392,8 @@
 						"selection":
 						[
 							[
-								1347,
-								1347
+								1346,
+								1346
 							]
 						],
 						"settings":
@@ -447,8 +448,8 @@
 						"selection":
 						[
 							[
-								14569,
-								14569
+								14568,
+								14568
 							]
 						],
 						"settings":
@@ -476,8 +477,8 @@
 						"selection":
 						[
 							[
-								35,
-								35
+								34,
+								34
 							]
 						],
 						"settings":
@@ -505,8 +506,8 @@
 						"selection":
 						[
 							[
-								755,
-								755
+								10617,
+								10617
 							]
 						],
 						"settings":
@@ -516,7 +517,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2269.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
