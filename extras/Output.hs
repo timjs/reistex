@@ -1,7 +1,7 @@
 module Output where
 
+resetCode, redCode, greenCode, yellowCode, blueCode, magentaCode, cyanCode, whiteCode :: String
 resetCode     = "\ESC[0m"
-
 redCode       = "\ESC[31;01m"
 greenCode     = "\ESC[32;01m"
 yellowCode    = "\ESC[33;01m"
