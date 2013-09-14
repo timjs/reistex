@@ -69,6 +69,7 @@ data Symbol  = Brace
              | Bracket
              | Paren
              | Dollar
+             | At
              | Delimiter
              | StartStop Name
              | BeginEnd  Name
@@ -81,6 +82,7 @@ showOpen s = case s of
   Bracket     -> "["
   Paren       -> "("
   Dollar      -> "$"
+  At          -> "@"
   Delimiter   -> "\\left"
   StartStop n -> "\\start" ++ unpack n
   BeginEnd n  -> "\\begin{" ++ unpack n ++ "}"
@@ -91,17 +93,22 @@ showClose s = case s of
   Bracket     -> "]"
   Paren       -> ")"
   Dollar      -> "$"
+  At          -> "@"
   Delimiter   -> "\\right"
   StartStop n -> "\\stop" ++ unpack n
   BeginEnd n  -> "\\end{" ++ unpack n ++ "}"
 
-data State = State { inMath   :: Bool
+data Mode  = Normal
+           | Math
+           | Verbatim
+           deriving (Show, Eq, Ord, Enum)
+data State = State { mode     :: Mode
                    , position :: Position
                    , stack    :: Stack (Position,Symbol)
                    } deriving (Show, Eq)
 
 mkState :: State
-mkState = State { inMath   = False
+mkState = State { mode     = Normal
                 , position = 1
                 , stack    = [] }
 
@@ -112,24 +119,6 @@ comment :: Text -> Maybe Text
 comment s
   | Just r <- stripPrefix "%" s      = Just $ T.dropWhile (/= '\n') r
   | otherwise                        = Nothing
-
--- | Controleer of we in een woordelijke omgeving zitten. Alles tussen twee
--- apenstaartjes negeeren we.
-verbatim :: Text -> Maybe Text
-verbatim s
-  -- | Just r     <- stripPrefix "@" s
-  -- , r          <- T.dropWhile (/= '@') r
-  -- , Just (_,r) <- T.uncons r             = Just r
-  | Just r <- stripPrefix "@" s = Just $ T.tail (T.dropWhile (/= '@') r)
-  -- | Just r     <- stripPrefix "\\type{" s    = Just $ T.tail (T.dropWhile (/= '}') r)
-  -- | Just r     <- stripPrefix "\\type(" s    = Just $ T.tail (T.dropWhile (/= ')') r)
-  -- | Just r     <- stripPrefix "\\type[" s    = Just $ T.tail (T.dropWhile (/= ']') r)
-  -- | Just r     <- stripPrefix "\\type<" s    = Just $ T.tail (T.dropWhile (/= '>') r)
-  -- | Just r     <- stripPrefix "\\type"  s
-  -- , Just (c,r) <- uncons                     = Just $ T.tail (T.dropWhile (/=  c ) r)
-  -- | Just r     <- stripPrefix "\\starttyping" s
-  -- , r          <- dropTill "\\stoptyping" r  = Just $ T.tail $ T.dropWhile
-  | otherwise                                = Nothing
 
 -- | Controleer of de string begint met een geescaped procent teken, dollar
 -- teken of apenstaartje.
@@ -150,6 +139,13 @@ delimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
   , "\\uparrow", "\\Uparrow", "\\downarrow", "\\Downarrow", "\\updownarrow", "\\Updownarrow"
   , "\\llcorner", "\\lrcorner", "\\ulcorner", "\\urconrner"
   , "\\lmoustache", "\\rmoustache" ]
+
+-- | Controleer of we in een woordelijke omgeving zitten. Alles tussen twee
+-- apenstaartjes negeeren we.
+verbatim :: Text -> Maybe (Symbol,Text)
+verbatim s
+  | Just r <- stripPrefix "@" s      = Just (At, r)
+  | otherwise                        = Nothing
 
 math :: Text -> Maybe (Symbol,Text)
 math s
@@ -228,10 +224,10 @@ balanced s = go s mkState where
     | Just r     <- newLine s  = increase st >>= go r
     | Just r     <- escaped s  = go r st
     | Just r     <- comment s  = go r st
-    | Just r     <- verbatim s = go r st
-    | Just (m,r) <- math s     = decide st m >>= go r
-    | Just (o,r) <- opening s  = push st o >>= go r
-    | Just (c,r) <- closing s  = pop st c >>= go r
+    | Just (m,r) <- verbatim s = decide m st >>= go r
+    | Just (m,r) <- math s     = decide m st >>= go r
+    | Just (o,r) <- opening s  = push o st >>= go r
+    | Just (c,r) <- closing s  = pop c st >>= go r
     | otherwise                = go (T.tail s) st
 
 end :: State -> Either Error State
@@ -241,20 +237,31 @@ end st                                  = Right st
 increase :: State -> Either Error State
 increase state@State{position} = Right state{position = position + 1}
 
-decide :: State -> Symbol -> Either Error State
-decide state symbol
-  | inMath state = pop  state{inMath = False} symbol
-  | otherwise    = push state{inMath = True}  symbol
+switch :: Mode -> State -> Either Error State
+switch mode state = Right $ state{mode=mode}
 
-push :: State -> Symbol -> Either Error State
-push state@State{stack,position} open = Right state{stack = (position, open) : stack}
+decide :: Symbol -> State -> Either Error State
+decide Dollar state@State{mode} = case mode of
+  Math     -> pop  Dollar state >>= switch Normal
+  Normal   -> push Dollar state >>= switch Math
+  Verbatim -> Right state
+decide At state@State{mode} = case mode of
+  Verbatim -> pop  At state >>= switch Normal
+  _        -> push At state >>= switch Verbatim
 
-pop :: State -> Symbol -> Either Error State
-pop state@State{stack,position} close = case stack of
-  []                   -> Left $ "Line " ++ show position ++ ":\n   " ++ "Unexpected '" ++ showClose close ++ "', closed without opening"
-  (line,open):rest
-    | close == open    -> Right state{stack = rest}
-    | otherwise        -> Left $ "Line " ++ show position ++ ":\n   " ++ "Unexpected '" ++ showClose close ++ "', expected '" ++ showClose open ++ "'\n   " ++ "(to match with '" ++ showOpen open ++ "' at line " ++ show line ++ ")"
+push :: Symbol -> State -> Either Error State
+push open state@State{stack,position,mode} = case mode of
+  Verbatim -> Right state -- Don't push anything if we are in verbatim mode
+  _        -> Right state{stack = (position, open) : stack}
+
+pop :: Symbol -> State -> Either Error State
+pop close state@State{stack,position,mode} = case mode of
+  Verbatim -> Right state -- Don't pop anything if we are in verbatim mode
+  _        -> case stack of
+    []                   -> Left $ "Line " ++ show position ++ ":\n   " ++ "Unexpected '" ++ showClose close ++ "', closed without opening"
+    (line,open):rest
+      | close == open    -> Right state{stack = rest}
+      | otherwise        -> Left $ "Line " ++ show position ++ ":\n   " ++ "Unexpected '" ++ showClose close ++ "', expected '" ++ showClose open ++ "'\n   " ++ "(to match with '" ++ showOpen open ++ "' at line " ++ show line ++ ")"
 
 -- | Lees de tekst in uit een bestand, controleer of deze gebalanceerd is en
 -- geef het resultaat door.
