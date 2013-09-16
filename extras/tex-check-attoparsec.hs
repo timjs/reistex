@@ -7,7 +7,7 @@ import Data.Char
 import Data.Monoid
 import Data.Typeable
 
-import Data.ByteString.Char8 (ByteString, unpack)
+import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as BS
 import Data.Attoparsec.ByteString.Char8 hiding (isEndOfLine)
 
@@ -86,9 +86,9 @@ instance Exception BalancingError
 
 instance Show BalancingError where
   show e = case e of
-    EndOfFile s' l'          ->                            "Unexpected end of file, expected '"                    ++ unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
-    DoesNotMatch s l s' l'   -> "Line " ++ show l ++ ":\n   Unexpected '" ++ unpack (closeOf s) ++ "', expected '" ++ unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
-    ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ unpack (closeOf s) ++ "', closed without opening"
+    EndOfFile s' l'          ->                            "Unexpected end of file, expected '"                       ++ BS.unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ BS.unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
+    DoesNotMatch s l s' l'   -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', expected '" ++ BS.unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ BS.unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
+    ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', closed without opening"
     Unknown s                -> "A parse error occured: " ++ s
 
 -- between :: Char -> Char -> Parser ByteString
