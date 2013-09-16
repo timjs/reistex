@@ -111,14 +111,14 @@ comment s
 -- apenstaartjes negeeren we.
 verbatim :: ByteString -> Maybe (Symbol,ByteString)
 verbatim s
-  | Just r     <- stripPrefix "@" s        = Just (At, r)
+  | Just r     <- stripPrefix "@" s         = Just (At, r)
   | Just r     <- stripPrefix "\\type" s
-  , Just (c,r) <- BS.uncons r              = case c of
-                                               '{' -> Just (Brace, r)
-                                               '[' -> Just (Bracket, r)
-                                               '(' -> Just (Paren, r)
-                                               '<' -> Just (Angle, r)
-                                               _   -> Nothing
+  , Just (c,r) <- BS.uncons r               = case c of
+                                                '{' -> Just (Brace, r)
+                                                '[' -> Just (Bracket, r)
+                                                '(' -> Just (Paren, r)
+                                                '<' -> Just (Angle, r)
+                                                _   -> Nothing
   | Just r <- stripPrefix "\\starttyping" s = Just (StartStop "typing", r)
   | otherwise                               = Nothing
 

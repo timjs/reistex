@@ -131,16 +131,6 @@ verbatim  =  At                 <$ char '@'
                , Paren          <$ char '('
                , Angle          <$ char '<' ]
          <|> StartStop "typing" <$ string "\\starttyping"
-{-
-verbatim :: Parser [Char]
-verbatim  =  char '@' *> takeWith "@"
-         <|> string "\\type" *> choice
-             [ char '{' *> takeWith "}"
-             , char '[' *> takeWith "]"
-             , char '(' *> takeWith ")"
-             , char '<' *> takeWith ">" ]
-         <|> string "\\starttyping" *> takeWith "\\stoptyping"
--}
 
 -- | Controleer of de string begint met een geescaped procent teken, dollar
 -- teken of apenstaartje.
