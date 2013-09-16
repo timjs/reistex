@@ -1,14 +1,15 @@
 {-# LANGUAGE OverloadedStrings, NamedFieldPuns, DeriveDataTypeable #-}
 module Main where
 
-import Prelude hiding (takeWhile) -- TODO
+import Prelude hiding (catch, takeWhile)
 
 import Data.Char
-import Data.Attoparsec.ByteString.Char8 hiding (isEndOfLine)
-import Data.ByteString.Char8 (ByteString, unpack)
-import qualified Data.ByteString.Char8 as ByteString
-import Data.Typeable
 import Data.Monoid
+import Data.Typeable
+
+import Data.ByteString.Char8 (ByteString, unpack)
+import qualified Data.ByteString.Char8 as BS
+import Data.Attoparsec.ByteString.Char8 hiding (isEndOfLine)
 
 import Control.Applicative
 import Control.Exception
@@ -63,7 +64,7 @@ closeOf s = case s of
   StartStop n -> "\\stop" <> n
   BeginEnd  n -> "\\end{" <> n <> "}"
 
-type Line    = Int
+type Line  = Int
 data Mode  = Normal | Math
            deriving (Show, Eq, Ord, Enum)
 data State = State { mode  :: Mode
@@ -90,9 +91,9 @@ instance Show BalancingError where
     ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ unpack (closeOf s) ++ "', closed without opening"
     Unknown s                -> "A parse error occured: " ++ s
 
-between :: Char -> Char -> Parser ByteString
-between o c = char o *> takeTill (== c) <* char c
-{-# INLINE between #-}
+-- between :: Char -> Char -> Parser ByteString
+-- between o c = char o *> takeTill (== c) <* char c
+-- {-# INLINE between #-}
 
 word :: Parser ByteString
 word = takeWhile isLetter
@@ -126,7 +127,7 @@ verbatim :: Parser Symbol
 verbatim  =  At                 <$ char '@'
          <|> string "\\type" *> choice
                [ Brace          <$ char '{'
-               , Bracke         <$ char '['
+               , Bracket        <$ char '['
                , Paren          <$ char '('
                , Angle          <$ char '<' ]
          <|> StartStop "typing" <$ string "\\starttyping"
@@ -219,7 +220,6 @@ balanced = go mkState where
           <|> (endOfLine  >>  increase st >>= go)
           <|> (escaped    >>  go st)
           <|> (comment    >>  go st)
-          -- <|> (verbatim   >>  go st)
           <|> (verbatim   >>= skip st >>= go)
           <|> (math       >>= decide st >>= go)
           <|> (opening    >>= push st >>= go)
@@ -231,34 +231,33 @@ end State{stack=(line,open):_} = throw $ EndOfFile open line
 end _                          = return True
 
 increase :: Monad m => State -> m State
-increase state@State{line} = return state{line = line + 1}
+increase st@State{line} = return st{line = line + 1}
 
 decide :: Monad m => State -> Symbol -> m State
-decide state@State{mode} symbol = case mode of
-  Math   -> pop state{mode = Normal} symbol
-  Normal -> push state{mode = Math} symbol
+decide st@State{mode} y = case mode of
+  Math   -> pop st{mode = Normal} y
+  Normal -> push st{mode = Math} y
 
 push :: Monad m => State -> Symbol -> m State
-push state@State{stack,line} open = return state{stack = (line, open) : stack}
+push st@State{stack,line} open = return st{stack = (line, open) : stack}
 
 pop :: Monad m => State -> Symbol -> m State
-pop state@State{stack,line} close = case stack of
+pop st@State{stack,line} close = case stack of
   []                   -> throw $ ClosedWithoutOpening close line
   (line',open):rest
-    | close == open    -> return state{stack = rest}
+    | close == open    -> return st{stack = rest}
     | otherwise        -> throw $ DoesNotMatch close line open line'
 
 skip :: State -> Symbol -> Parser State
-skip state@State{line} symbol =     anyChar `manyTill` string (closeOf symbol)
-                                <|> throw (EndOfFile symbol line)
-                                >>  return state
+skip st@State{line} y  =  st <$ anyChar `manyTill` string (closeOf y)
+                      <|> throw (EndOfFile y line)
 
 -- | Lees de tekst in uit een bestand, controleer of deze gebalanceerd is en
 -- geef het resultaat door.
 run :: FilePath -> IO Bool
 run f = do
   putAct f
-  s <- ByteString.readFile f
+  s <- BS.readFile f
   case parseOnly balanced s of
     Right bool -> return bool
     Left  mesg -> throw $ Unknown mesg
@@ -268,7 +267,7 @@ run f = do
 
 -- | Hoofdfunctie waarbij we de commandoregel argumenten inlezen en controleren
 -- of die er überhaupt wel zijn. Vervolgens passen we @run@ toe op elk argument
--- en geven nog een conclusie of het count fouten.
+-- en geven nog een conclusie of het aantal fouten.
 main :: IO a
 main = do
   as <- getArgs

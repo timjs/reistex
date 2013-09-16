@@ -1,10 +1,15 @@
 {-# LANGUAGE OverloadedStrings, NamedFieldPuns, DeriveDataTypeable #-}
 module Main where
 
+import Prelude hiding (catch)
+
 import Data.Char
 import Data.Maybe
 import Data.Monoid
 import Data.Typeable
+
+import Data.ByteString.Char8 (ByteString)
+import qualified Data.ByteString.Char8 as BS
 
 import Control.Exception
 import Control.Monad
@@ -13,20 +18,6 @@ import System.Environment
 import System.Exit
 
 import Output
-
-import Data.ByteString.Char8 (ByteString)
-import qualified Data.ByteString.Char8 as BS
-
-stripPrefix :: ByteString -> ByteString -> Maybe ByteString
-stripPrefix p s
-  | p `BS.isPrefixOf` s = Just $ BS.drop (BS.length p) s
-  | otherwise          = Nothing
-
-stripTo :: ByteString -> ByteString -> ByteString
-stripTo _ ""           = ""
-stripTo i s
- | i `BS.isPrefixOf` s = BS.drop (BS.length i) s
- | otherwise           = stripTo i (BS.tail s)
 
 -- Allereerst definiëren we een paar type-synoniemen. We gebruiken een
 -- eenvoudige lijst als stapel (Stack), een foutmelding is een string en een
@@ -39,6 +30,7 @@ type Stack a = [a]
 data Symbol  = Brace
              | Bracket
              | Paren
+             | Angle
              | Dollar
              | At
              | Delimiter
@@ -52,27 +44,27 @@ openOf s = case s of
   Brace       -> "{"
   Bracket     -> "["
   Paren       -> "("
+  Angle       -> "<"
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\left"
   StartStop n -> "\\start" <> n
-  BeginEnd n  -> "\\begin{" <> n <> "}"
+  BeginEnd  n -> "\\begin{" <> n <> "}"
 
 closeOf :: Symbol -> ByteString
 closeOf s = case s of
   Brace       -> "}"
   Bracket     -> "]"
   Paren       -> ")"
+  Angle       -> ">"
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\right"
   StartStop n -> "\\stop" <> n
-  BeginEnd n  -> "\\end{" <> n <> "}"
+  BeginEnd  n -> "\\end{" <> n <> "}"
 
 type Line  = Int
-data Mode  = Normal
-           | Math
-           | Verbatim
+data Mode  = Normal | Math
            deriving (Show, Eq, Ord, Enum)
 data State = State { mode  :: Mode
                    , line  :: Line
@@ -96,6 +88,17 @@ instance Show BalancingError where
     DoesNotMatch s l s' l'   -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', expected '" ++ BS.unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ BS.unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
     ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', closed without opening"
 
+stripPrefix :: ByteString -> ByteString -> Maybe ByteString
+stripPrefix p s
+  | p `BS.isPrefixOf` s = Just $ BS.drop (BS.length p) s
+  | otherwise           = Nothing
+
+stripInfix :: ByteString -> ByteString -> Maybe ByteString
+stripInfix _ ""        = Nothing
+stripInfix i s
+ | i `BS.isPrefixOf` s = Just $ BS.drop (BS.length i) s
+ | otherwise           = stripInfix i (BS.tail s)
+
 -- | Controleer of de string begint met een procent teken. In dat geval gooien
 -- we alle tekens weg tot het einde van de regel, en geven de rest van de string
 -- terug.
@@ -104,12 +107,27 @@ comment s
   | Just r <- stripPrefix "%" s      = Just $ BS.dropWhile (/= '\n') r
   | otherwise                        = Nothing
 
+-- | Controleer of we in een woordelijke omgeving zitten. Alles tussen twee
+-- apenstaartjes negeeren we.
+verbatim :: ByteString -> Maybe (Symbol,ByteString)
+verbatim s
+  | Just r     <- stripPrefix "@" s        = Just (At, r)
+  | Just r     <- stripPrefix "\\type" s
+  , Just (c,r) <- BS.uncons r              = case c of
+                                               '{' -> Just (Brace, r)
+                                               '[' -> Just (Bracket, r)
+                                               '(' -> Just (Paren, r)
+                                               '<' -> Just (Angle, r)
+                                               _   -> Nothing
+  | Just r <- stripPrefix "\\starttyping" s = Just (StartStop "typing", r)
+  | otherwise                               = Nothing
+
 -- | Controleer of de string begint met een geescaped procent teken, dollar
 -- teken of apenstaartje.
 -- We willen immers niet dat we over de backslash heen lezen, en vervolgens de
 -- procent of het dollar teken aanzien voor commentaar dan wel wiskunde...
 escaped :: ByteString -> Maybe ByteString
-escaped s = listToMaybe $ mapMaybe (`stripPrefix` s) [ "\\%", "\\$", "\\@"]
+escaped s = listToMaybe $ mapMaybe (`stripPrefix` s) ["\\\\", "\\%", "\\$", "\\@"]
 
 -- | Controleer of de string begint met een reeks van tekens dat we als haakje
 -- kunnen gebruiken voor \left of \right. (Doen we op een creatieve manier
@@ -123,13 +141,6 @@ delimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
   , "\\uparrow", "\\Uparrow", "\\downarrow", "\\Downarrow", "\\updownarrow", "\\Updownarrow"
   , "\\llcorner", "\\lrcorner", "\\ulcorner", "\\urconrner"
   , "\\lmoustache", "\\rmoustache" ]
-
--- | Controleer of we in een woordelijke omgeving zitten. Alles tussen twee
--- apenstaartjes negeeren we.
-verbatim :: ByteString -> Maybe (Symbol,ByteString)
-verbatim s
-  | Just r <- stripPrefix "@" s      = Just (At, r)
-  | otherwise                        = Nothing
 
 math :: ByteString -> Maybe (Symbol,ByteString)
 math s
@@ -208,44 +219,38 @@ balanced s = go s mkState where
     | Just r     <- newLine s  = go r $ increase st
     | Just r     <- escaped s  = go r st
     | Just r     <- comment s  = go r st
-    | Just (m,r) <- verbatim s = go r $ decide m st
-    | Just (m,r) <- math s     = go r $ decide m st
+    | Just (d,r) <- verbatim s = uncurry go $ skip r d st
+    | Just (d,r) <- math s     = go r $ decide d st
     | Just (o,r) <- opening s  = go r $ push o st
     | Just (c,r) <- closing s  = go r $ pop c st
     | otherwise                = go (BS.tail s) st
 
 end :: State -> Bool
-end state@State{stack=(line,open):_} = throw $ EndOfFile open line
-end _                                = True
+end State{stack=(line,open):_} = throw $ EndOfFile open line
+end _                          = True
 
 increase :: State -> State
-increase state@State{line} = state{line = line + 1}
-
-switch :: Mode -> State -> State
-switch mode state = state{mode=mode}
+increase st@State{line} = st{line = line + 1}
 
 decide :: Symbol -> State -> State
-decide Dollar state@State{mode} = case mode of
-  Math     -> pop Dollar $ switch Normal state
-  Normal   -> switch Math $ push Dollar state
-  Verbatim -> state
-decide At state@State{mode} = case mode of
-  Verbatim -> pop At $ switch Normal state
-  _        -> switch Verbatim $ push At state
+decide y st@State{mode} = case mode of
+  Math   -> pop y st{mode = Normal}
+  Normal -> push y st{mode = Math}
 
 push :: Symbol -> State -> State
-push open state@State{stack,line,mode} = case mode of
-  Verbatim -> state -- Don't push anything if we are in verbatim mode
-  _        -> state{stack = (line, open) : stack}
+push open st@State{stack,line,mode} = st{stack = (line, open) : stack}
 
 pop :: Symbol -> State -> State
-pop close state@State{stack,line,mode} = case mode of
-  Verbatim -> state -- Don't pop anything if we are in verbatim mode
-  _        -> case stack of
-    []                   -> throw $ ClosedWithoutOpening close line
-    (line',open):rest
-      | close == open    -> state{stack = rest}
-      | otherwise        -> throw $ DoesNotMatch close line open line'
+pop close st@State{stack,line,mode} = case stack of
+  []                   -> throw $ ClosedWithoutOpening close line
+  (line',open):rest
+    | close == open    -> st{stack = rest}
+    | otherwise        -> throw $ DoesNotMatch close line open line'
+
+skip :: ByteString -> Symbol -> State -> (ByteString, State)
+skip s y st@State{line}
+  | Just r <- stripInfix (closeOf y) s = (r, st)
+  | otherwise                          = throw $ EndOfFile y line
 
 -- | Lees de tekst in uit een bestand, controleer of deze gebalanceerd is en
 -- geef het resultaat door.
