@@ -1,76 +1,32 @@
-{-# LANGUAGE OverloadedStrings, NamedFieldPuns, DeriveDataTypeable, CPP #-}
+{-# LANGUAGE OverloadedStrings, NamedFieldPuns, DeriveDataTypeable #-}
 module Main where
 
 import Data.Char
 import Data.Maybe
+import Data.Monoid
 import Data.Typeable
 
-import Control.Monad
 import Control.Exception
+import Control.Monad
 
 import System.Environment
 import System.Exit
 
-import Debug.Trace
-
 import Output
 
-#define BYTESTRING
-#define LAZY
-
-#if defined TEXT
-#if defined LAZY
-import Data.Text.Lazy (Text)
-import qualified Data.Text.Lazy as T
-import qualified Data.Text.Lazy.IO as T
-#else
-import Data.Text (Text)
-import qualified Data.Text as T
-import qualified Data.Text.IO as T
-#endif
-unpack = T.unpack
-stripPrefix = T.stripPrefix
-
-#elif defined BYTESTRING
-#if defined LAZY
-import Data.ByteString.Lazy.Char8 (ByteString)
-import qualified Data.ByteString.Lazy.Char8 as T
-#else
 import Data.ByteString.Char8 (ByteString)
-import qualified Data.ByteString.Char8 as T
-#endif
-type Text = ByteString
-unpack = T.unpack
+import qualified Data.ByteString.Char8 as BS
+
 stripPrefix :: ByteString -> ByteString -> Maybe ByteString
 stripPrefix p s
-  | p `T.isPrefixOf` s = Just $ T.drop (T.length p) s
+  | p `BS.isPrefixOf` s = Just $ BS.drop (BS.length p) s
   | otherwise          = Nothing
-stripInfix :: ByteString -> ByteString -> ByteString
-stripInfix _ "" = ""
-stripInfix i s
- | i `T.isPrefixOf` s  = T.drop (T.length i) s
- | otherwise           = stripInfix i (T.tail s)
 
-#elif defined STRING
-import qualified Data.List as T
-import qualified System.IO as T
-type Text = String
-stripPrefix = T.stripPrefix
-unpack = id
-#endif
-
-data BalancingError = EndOfFile Line Symbol Line
-                    | DoesNotMatch Symbol Line Symbol Line
-                    | ClosedWithoutOpening Symbol Line
-                    deriving (Typeable)
-type Line    = Int
-instance Exception BalancingError
-
-instance Show BalancingError where
-  show e = case e of
-    EndOfFile l s' l'        -> "Line " ++ show l ++ ":\n   Unexpected end of file, expected '"             ++ showClose s' ++ "'\n   " ++ "(to match with '" ++ showOpen s' ++ "' at line " ++ show l' ++ ")"
-    DoesNotMatch s l s' l'   -> "Line " ++ show l ++ ":\n   Unexpected '" ++ showClose s ++ "', expected '" ++ showClose s' ++ "'\n   " ++ "(to match with '" ++ showOpen s' ++ "' at line " ++ show l' ++ ")"
-    ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ showClose s ++ "', closed without opening"
+stripTo :: ByteString -> ByteString -> ByteString
+stripTo _ ""           = ""
+stripTo i s
+ | i `BS.isPrefixOf` s = BS.drop (BS.length i) s
+ | otherwise           = stripTo i (BS.tail s)
 
 -- Allereerst definiëren we een paar type-synoniemen. We gebruiken een
 -- eenvoudige lijst als stapel (Stack), een foutmelding is een string en een
@@ -89,30 +45,31 @@ data Symbol  = Brace
              | StartStop Name
              | BeginEnd  Name
              deriving (Show, Eq, Ord)
-type Name    = Text
+type Name    = ByteString
 
-showOpen :: Symbol -> String
-showOpen s = case s of
+openOf :: Symbol -> ByteString
+openOf s = case s of
   Brace       -> "{"
   Bracket     -> "["
   Paren       -> "("
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\left"
-  StartStop n -> "\\start" ++ unpack n
-  BeginEnd n  -> "\\begin{" ++ unpack n ++ "}"
+  StartStop n -> "\\start" <> n
+  BeginEnd n  -> "\\begin{" <> n <> "}"
 
-showClose :: Symbol -> String
-showClose s = case s of
+closeOf :: Symbol -> ByteString
+closeOf s = case s of
   Brace       -> "}"
   Bracket     -> "]"
   Paren       -> ")"
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\right"
-  StartStop n -> "\\stop" ++ unpack n
-  BeginEnd n  -> "\\end{" ++ unpack n ++ "}"
+  StartStop n -> "\\stop" <> n
+  BeginEnd n  -> "\\end{" <> n <> "}"
 
+type Line  = Int
 data Mode  = Normal
            | Math
            | Verbatim
@@ -127,25 +84,37 @@ mkState = State { mode  = Normal
                 , line  = 1
                 , stack = [] }
 
+data BalancingError = EndOfFile Symbol Line
+                    | DoesNotMatch Symbol Line Symbol Line
+                    | ClosedWithoutOpening Symbol Line
+                    deriving (Typeable)
+instance Exception BalancingError
+
+instance Show BalancingError where
+  show e = case e of
+    EndOfFile s' l'          ->                            "Unexpected end of file, expected '"                       ++ BS.unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ BS.unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
+    DoesNotMatch s l s' l'   -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', expected '" ++ BS.unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ BS.unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
+    ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', closed without opening"
+
 -- | Controleer of de string begint met een procent teken. In dat geval gooien
 -- we alle tekens weg tot het einde van de regel, en geven de rest van de string
 -- terug.
-comment :: Text -> Maybe Text
+comment :: ByteString -> Maybe ByteString
 comment s
-  | Just r <- stripPrefix "%" s      = Just $ T.dropWhile (/= '\n') r
+  | Just r <- stripPrefix "%" s      = Just $ BS.dropWhile (/= '\n') r
   | otherwise                        = Nothing
 
 -- | Controleer of de string begint met een geescaped procent teken, dollar
 -- teken of apenstaartje.
 -- We willen immers niet dat we over de backslash heen lezen, en vervolgens de
 -- procent of het dollar teken aanzien voor commentaar dan wel wiskunde...
-escaped :: Text -> Maybe Text
+escaped :: ByteString -> Maybe ByteString
 escaped s = listToMaybe $ mapMaybe (`stripPrefix` s) [ "\\%", "\\$", "\\@"]
 
 -- | Controleer of de string begint met een reeks van tekens dat we als haakje
 -- kunnen gebruiken voor \left of \right. (Doen we op een creatieve manier
 -- waarbij we optimaal gebruik maken van de luiheid van Haskell!)
-delimiter :: Text -> Maybe Text
+delimiter :: ByteString -> Maybe ByteString
 delimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
   [ ".", "(", ")", "\\{", "\\}", "[", "]", "<", ">", "|", "\\|", "/"
   , "\\lgroup", "\\rgroup", "\\lbrace", "\\rbrace", "\\langle", "\\rangle"
@@ -157,12 +126,12 @@ delimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
 
 -- | Controleer of we in een woordelijke omgeving zitten. Alles tussen twee
 -- apenstaartjes negeeren we.
-verbatim :: Text -> Maybe (Symbol,Text)
+verbatim :: ByteString -> Maybe (Symbol,ByteString)
 verbatim s
   | Just r <- stripPrefix "@" s      = Just (At, r)
   | otherwise                        = Nothing
 
-math :: Text -> Maybe (Symbol,Text)
+math :: ByteString -> Maybe (Symbol,ByteString)
 math s
   | Just r <- stripPrefix "$" s      = Just (Dollar, r)
   | otherwise                        = Nothing
@@ -177,7 +146,7 @@ math s
 -- controleren of dit de openings- of sluitings-dollar is. We houden in een
 -- extra argument @m@ bij of we in wiskundemodus zitten of niet. Dit helpt ons
 -- bij het onderscheid.
-opening :: Text -> Maybe (Symbol,Text)
+opening :: ByteString -> Maybe (Symbol,ByteString)
 opening s
   | Just r <- stripPrefix "{" s      = Just (Brace, r)
   | Just r <- stripPrefix "[" s      = Just (Bracket, r)
@@ -185,14 +154,14 @@ opening s
   | Just r <- stripPrefix "\\left" s
   , Just r <- delimiter r            = Just (Delimiter, r)
   | Just r <- stripPrefix "\\start" s
-  , (n,r)  <- T.span isLetter r      = Just (StartStop n, r)
+  , (n,r)  <- BS.span isLetter r      = Just (StartStop n, r)
   | Just r <- stripPrefix "\\begin{" s
-  , (n,r)  <- T.span isLetter r
+  , (n,r)  <- BS.span isLetter r
   , Just r <- stripPrefix "}" r      = Just (BeginEnd n, r)
   | otherwise                        = Nothing
 
 -- | Analoog aan @opening@, maar dan voor sluithaakjes en stop-commando's.
-closing :: Text -> Maybe (Symbol,Text)
+closing :: ByteString -> Maybe (Symbol,ByteString)
 closing s
   | Just r <- stripPrefix "}" s      = Just (Brace, r)
   | Just r <- stripPrefix "]" s      = Just (Bracket, r)
@@ -200,15 +169,15 @@ closing s
   | Just r <- stripPrefix "\\right" s
   , Just r <- delimiter r            = Just (Delimiter, r)
   | Just r <- stripPrefix "\\stop" s
-  , (n,r)  <- T.span isLetter r      = Just (StartStop n, r)
+  , (n,r)  <- BS.span isLetter r      = Just (StartStop n, r)
   | Just r <- stripPrefix "\\end{" s
-  , (n,r)  <- T.span isLetter r
+  , (n,r)  <- BS.span isLetter r
   , Just r <- stripPrefix "}" r      = Just (BeginEnd n, r)
   | otherwise                        = Nothing
 
 -- | Controleer of de string begint met een nieuwe regel. Strip deze en geef de
 -- rest van de string terug.
-newLine :: Text -> Maybe Text
+newLine :: ByteString -> Maybe ByteString
 newLine = stripPrefix "\n"
 
 -- | Recursief algoritme om te controleren of de string gebalanceerd is
@@ -232,7 +201,7 @@ newLine = stripPrefix "\n"
 --
 -- Het type van deze functie vraagt eigenlijk om een Writer Monad, maar omdat
 -- dit maar een script is, gaan we het ons niet te ingewikkeld maken...
-balanced :: Text -> Bool
+balanced :: ByteString -> Bool
 balanced s = go s mkState where
   go "" st                     = end st
   go s  st
@@ -243,11 +212,11 @@ balanced s = go s mkState where
     | Just (m,r) <- math s     = go r $ decide m st
     | Just (o,r) <- opening s  = go r $ push o st
     | Just (c,r) <- closing s  = go r $ pop c st
-    | otherwise                = go (T.tail s) st
+    | otherwise                = go (BS.tail s) st
 
 end :: State -> Bool
-end state@State{stack=(loc,open):_,line} = throw $ EndOfFile line open loc
-end _                             = True
+end state@State{stack=(line,open):_} = throw $ EndOfFile open line
+end _                                = True
 
 increase :: State -> State
 increase state@State{line} = state{line = line + 1}
@@ -274,16 +243,16 @@ pop close state@State{stack,line,mode} = case mode of
   Verbatim -> state -- Don't pop anything if we are in verbatim mode
   _        -> case stack of
     []                   -> throw $ ClosedWithoutOpening close line
-    (loc,open):rest
+    (line',open):rest
       | close == open    -> state{stack = rest}
-      | otherwise        -> throw $ DoesNotMatch close line open loc
+      | otherwise        -> throw $ DoesNotMatch close line open line'
 
 -- | Lees de tekst in uit een bestand, controleer of deze gebalanceerd is en
 -- geef het resultaat door.
 run :: FilePath -> IO Bool
 run f = do
   putAct f
-  s <- T.readFile f
+  s <- BS.readFile f
   evaluate (balanced s) `catch` \e -> do
     putErr $ show (e :: BalancingError)
     return False
