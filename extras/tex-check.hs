@@ -134,7 +134,8 @@ escaped s = listToMaybe $ mapMaybe (`stripPrefix` s) ["\\\\", "\\%", "\\$", "\\@
 -- waarbij we optimaal gebruik maken van de luiheid van Haskell!)
 delimiter :: ByteString -> Maybe ByteString
 delimiter s = listToMaybe $ mapMaybe (`stripPrefix` s)
-  [ ".", "(", ")", "\\{", "\\}", "[", "]", "<", ">", "|", "\\|", "/"
+  [ ".", "(", ")", "[", "]", "<", ">", "|", "/"
+  , "\\{", "\\}", "\\|"
   , "\\lgroup", "\\rgroup", "\\lbrace", "\\rbrace", "\\langle", "\\rangle"
   , "\\vert", "\\lvert", "\\rvert", "\\Vert", "\\lVert", "\\rVert"
   , "\\backslash", "\\lfloor", "\\rfloor", "\\lceil", "\\rceil"
@@ -165,7 +166,7 @@ opening s
   | Just r <- stripPrefix "\\left" s
   , Just r <- delimiter r            = Just (Delimiter, r)
   | Just r <- stripPrefix "\\start" s
-  , (n,r)  <- BS.span isLetter r      = Just (StartStop n, r)
+  , (n,r)  <- BS.span isLetter r     = Just (StartStop n, r)
   | Just r <- stripPrefix "\\begin{" s
   , (n,r)  <- BS.span isLetter r
   , Just r <- stripPrefix "}" r      = Just (BeginEnd n, r)
@@ -180,7 +181,7 @@ closing s
   | Just r <- stripPrefix "\\right" s
   , Just r <- delimiter r            = Just (Delimiter, r)
   | Just r <- stripPrefix "\\stop" s
-  , (n,r)  <- BS.span isLetter r      = Just (StartStop n, r)
+  , (n,r)  <- BS.span isLetter r     = Just (StartStop n, r)
   | Just r <- stripPrefix "\\end{" s
   , (n,r)  <- BS.span isLetter r
   , Just r <- stripPrefix "}" r      = Just (BeginEnd n, r)
@@ -238,10 +239,10 @@ decide y st@State{mode} = case mode of
   Normal -> push y st{mode = Math}
 
 push :: Symbol -> State -> State
-push open st@State{stack,line,mode} = st{stack = (line, open) : stack}
+push open st@State{stack,line} = st{stack = (line, open) : stack}
 
 pop :: Symbol -> State -> State
-pop close st@State{stack,line,mode} = case stack of
+pop close st@State{stack,line} = case stack of
   []                   -> throw $ ClosedWithoutOpening close line
   (line',open):rest
     | close == open    -> st{stack = rest}
