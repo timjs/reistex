@@ -1,13 +1,17 @@
-{-# LANGUAGE OverloadedStrings, NamedFieldPuns, CPP #-}
+{-# LANGUAGE OverloadedStrings, NamedFieldPuns, DeriveDataTypeable, CPP #-}
 module Main where
 
 import Data.Char
 import Data.Maybe
+import Data.Typeable
 
 import Control.Monad
+import Control.Exception
 
 import System.Environment
 import System.Exit
+
+import Debug.Trace
 
 import Output
 
@@ -55,12 +59,23 @@ stripPrefix = T.stripPrefix
 unpack = id
 #endif
 
+data BalancingError = EndOfFile Line Symbol Line
+                    | DoesNotMatch Symbol Line Symbol Line
+                    | ClosedWithoutOpening Symbol Line
+                    deriving (Typeable)
+type Line    = Int
+instance Exception BalancingError
+
+instance Show BalancingError where
+  show e = case e of
+    EndOfFile l s' l'        -> "Line " ++ show l ++ ":\n   Unexpected end of file, expected '"             ++ showClose s' ++ "'\n   " ++ "(to match with '" ++ showOpen s' ++ "' at line " ++ show l' ++ ")"
+    DoesNotMatch s l s' l'   -> "Line " ++ show l ++ ":\n   Unexpected '" ++ showClose s ++ "', expected '" ++ showClose s' ++ "'\n   " ++ "(to match with '" ++ showOpen s' ++ "' at line " ++ show l' ++ ")"
+    ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ showClose s ++ "', closed without opening"
+
 -- Allereerst definiëren we een paar type-synoniemen. We gebruiken een
 -- eenvoudige lijst als stapel (Stack), een foutmelding is een string en een
 -- regelnummer is een geheel getal.
 type Stack a = [a]
-type Error   = String
-type Position= Int
 
 -- | Een symbool is een abstract data type. Deze kunnen we goedkoper op de
 -- stapel zetten dan strings. Een kleine optimalisatie dus. We leiden een
@@ -102,15 +117,15 @@ data Mode  = Normal
            | Math
            | Verbatim
            deriving (Show, Eq, Ord, Enum)
-data State = State { mode     :: Mode
-                   , position :: Position
-                   , stack    :: Stack (Position,Symbol)
+data State = State { mode  :: Mode
+                   , line  :: Line
+                   , stack :: Stack (Line,Symbol)
                    } deriving (Show, Eq)
 
 mkState :: State
-mkState = State { mode     = Normal
-                , position = 1
-                , stack    = [] }
+mkState = State { mode  = Normal
+                , line  = 1
+                , stack = [] }
 
 -- | Controleer of de string begint met een procent teken. In dat geval gooien
 -- we alle tekens weg tot het einde van de regel, en geven de rest van de string
@@ -217,51 +232,51 @@ newLine = stripPrefix "\n"
 --
 -- Het type van deze functie vraagt eigenlijk om een Writer Monad, maar omdat
 -- dit maar een script is, gaan we het ons niet te ingewikkeld maken...
-balanced :: Text -> Either Error State
+balanced :: Text -> Bool
 balanced s = go s mkState where
   go "" st                     = end st
   go s  st
-    | Just r     <- newLine s  = increase st >>= go r
+    | Just r     <- newLine s  = go r $ increase st
     | Just r     <- escaped s  = go r st
     | Just r     <- comment s  = go r st
-    | Just (m,r) <- verbatim s = decide m st >>= go r
-    | Just (m,r) <- math s     = decide m st >>= go r
-    | Just (o,r) <- opening s  = push o st >>= go r
-    | Just (c,r) <- closing s  = pop c st >>= go r
+    | Just (m,r) <- verbatim s = go r $ decide m st
+    | Just (m,r) <- math s     = go r $ decide m st
+    | Just (o,r) <- opening s  = go r $ push o st
+    | Just (c,r) <- closing s  = go r $ pop c st
     | otherwise                = go (T.tail s) st
 
-end :: State -> Either Error State
-end State{stack=(line,open):_,position} = Left $ "Line " ++ show position ++ ":\n   " ++ "Unexpected end of file, expected '" ++ showClose open ++ "'\n   " ++ "(to match with '" ++ showOpen open ++ "' at line " ++ show line ++ ")"
-end st                                  = Right st
+end :: State -> Bool
+end state@State{stack=(loc,open):_,line} = throw $ EndOfFile line open loc
+end _                             = True
 
-increase :: State -> Either Error State
-increase state@State{position} = Right state{position = position + 1}
+increase :: State -> State
+increase state@State{line} = state{line = line + 1}
 
-switch :: Mode -> State -> Either Error State
-switch mode state = Right $ state{mode=mode}
+switch :: Mode -> State -> State
+switch mode state = state{mode=mode}
 
-decide :: Symbol -> State -> Either Error State
+decide :: Symbol -> State -> State
 decide Dollar state@State{mode} = case mode of
-  Math     -> pop  Dollar state >>= switch Normal
-  Normal   -> push Dollar state >>= switch Math
-  Verbatim -> Right state
+  Math     -> pop Dollar $ switch Normal state
+  Normal   -> switch Math $ push Dollar state
+  Verbatim -> state
 decide At state@State{mode} = case mode of
-  Verbatim -> pop  At state >>= switch Normal
-  _        -> push At state >>= switch Verbatim
+  Verbatim -> pop At $ switch Normal state
+  _        -> switch Verbatim $ push At state
 
-push :: Symbol -> State -> Either Error State
-push open state@State{stack,position,mode} = case mode of
-  Verbatim -> Right state -- Don't push anything if we are in verbatim mode
-  _        -> Right state{stack = (position, open) : stack}
+push :: Symbol -> State -> State
+push open state@State{stack,line,mode} = case mode of
+  Verbatim -> state -- Don't push anything if we are in verbatim mode
+  _        -> state{stack = (line, open) : stack}
 
-pop :: Symbol -> State -> Either Error State
-pop close state@State{stack,position,mode} = case mode of
-  Verbatim -> Right state -- Don't pop anything if we are in verbatim mode
+pop :: Symbol -> State -> State
+pop close state@State{stack,line,mode} = case mode of
+  Verbatim -> state -- Don't pop anything if we are in verbatim mode
   _        -> case stack of
-    []                   -> Left $ "Line " ++ show position ++ ":\n   " ++ "Unexpected '" ++ showClose close ++ "', closed without opening"
-    (line,open):rest
-      | close == open    -> Right state{stack = rest}
-      | otherwise        -> Left $ "Line " ++ show position ++ ":\n   " ++ "Unexpected '" ++ showClose close ++ "', expected '" ++ showClose open ++ "'\n   " ++ "(to match with '" ++ showOpen open ++ "' at line " ++ show line ++ ")"
+    []                   -> throw $ ClosedWithoutOpening close line
+    (loc,open):rest
+      | close == open    -> state{stack = rest}
+      | otherwise        -> throw $ DoesNotMatch close line open loc
 
 -- | Lees de tekst in uit een bestand, controleer of deze gebalanceerd is en
 -- geef het resultaat door.
@@ -269,9 +284,9 @@ run :: FilePath -> IO Bool
 run f = do
   putAct f
   s <- T.readFile f
-  case balanced s of
-    Right _ -> return True
-    Left e  -> putErr e >> return False
+  evaluate (balanced s) `catch` \e -> do
+    putErr $ show (e :: BalancingError)
+    return False
 
 -- | Hoofdfunctie waarbij we de commandoregel argumenten inlezen en controleren
 -- of die er überhaupt wel zijn. Vervolgens passen we @run@ toe op elk argument
