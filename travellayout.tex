@@ -727,6 +727,15 @@ setbounds currentpicture to boundingbox OverlayBox;
    \inserttitle{\bgroup\em}{\egroup.\space}{}%
    \inserturl{\bgroup\tt}{\egroup.}{}}
 
+\starttexdefinition completepublications
+  \dosingleempty\docompletepublications
+\stoptexdefinition
+
+\starttexdefinition docompletepublications [#1]
+  \section{\headtext{pubs}}
+  \placepublications[#1]
+\stoptexdefinition
+
 %D \section{Eenheden}
 
 \define[1]\unit
