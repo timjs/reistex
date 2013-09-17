@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, NamedFieldPuns, DeriveDataTypeable #-}
+{-# LANGUAGE OverloadedStrings, NamedFieldPuns, DeriveDataTypeable, CPP #-}
 module Main where
 
 import Prelude hiding (catch, takeWhile)
@@ -9,7 +9,6 @@ import Data.Typeable
 
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as BS
-import Data.Attoparsec.ByteString.Char8 hiding (isEndOfLine)
 
 import Control.Applicative
 import Control.Exception
@@ -19,6 +18,12 @@ import System.Environment
 import System.Exit
 
 import Output
+
+#ifdef ATTOPARSEC
+import Data.Attoparsec.ByteString.Char8 hiding (isEndOfLine)
+#else
+import Parser
+#endif
 
 -- Allereerst definiëren we een paar type-synoniemen. We gebruiken een
 -- eenvoudige lijst als stapel (Stack), een foutmelding is een string en een
