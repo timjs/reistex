@@ -24,32 +24,32 @@ type Line    = Int
 data Symbol  = Brace
              | Bracket
              | Paren
-             | Math
-             | Delim
-             | Block Name
-             | Env   Name
+             | Dollar
+             | Delimiter
+             | StartStop Name
+             | BeginEnd  Name
              deriving (Eq, Ord)
 type Name    = String
 
 open :: Symbol -> String
 open s = case s of
-  Brace   -> "{"
-  Bracket -> "["
-  Paren   -> "("
-  Math    -> "$"
-  Delim   -> "\\left"
-  Block n  -> "\\start" ++ n
-  Env n   -> "\\begin{" ++ n ++ "}"
+  Brace       -> "{"
+  Bracket     -> "["
+  Paren       -> "("
+  Dollar        -> "$"
+  Delimiter   -> "\\left"
+  StartStop n -> "\\start" ++ n
+  BeginEnd n  -> "\\begin{" ++ n ++ "}"
 
 close :: Symbol -> String
 close s = case s of
-  Brace   -> "}"
-  Bracket -> "]"
-  Paren   -> ")"
-  Math    -> "$"
-  Delim   -> "\\right"
-  Block n  -> "\\stop" ++ n
-  Env n   -> "\\end{" ++ n ++ "}"
+  Brace       -> "}"
+  Bracket     -> "]"
+  Paren       -> ")"
+  Dollar        -> "$"
+  Delimiter   -> "\\right"
+  StartStop n -> "\\stop" ++ n
+  BeginEnd n  -> "\\end{" ++ n ++ "}"
 
 -- | /O(n)/ Bereken hoe vaak @x@ in de lijst voorkomt.
 count :: (Eq a) => a -> [a] -> Int
@@ -71,33 +71,33 @@ count x (y:ys)
 -- bij het onderscheid.
 stripOpening :: Bool -> String -> Maybe (Symbol, Bool, String)
 stripOpening m s
-  | Just r <- stripPrefix "$" s      = if m then Nothing else Just (Math, True, r)
+  | Just r <- stripPrefix "$" s      = if m then Nothing else Just (Dollar, True, r)
   | Just r <- stripPrefix "{" s      = Just (Brace, m, r)
   | Just r <- stripPrefix "[" s      = Just (Bracket, m, r)
   | Just r <- stripPrefix "(" s      = Just (Paren, m, r)
   | Just r <- stripPrefix "\\left" s
-  , Just r <- stripDelimiter r       = Just (Delim, m, r)
+  , Just r <- stripDelimiter r       = Just (Delimiter, m, r)
   | Just r <- stripPrefix "\\start" s
-  , (n,r)  <- span isLetter r        = Just (Block n, m, r)
+  , (n,r)  <- span isLetter r        = Just (StartStop n, m, r)
   | Just r <- stripPrefix "\\begin{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just (Env n, m, r)
+  , Just r <- stripPrefix "}" r      = Just (BeginEnd n, m, r)
   | otherwise                        = Nothing
 
 -- | Analoog aan @stripOpening@, maar dan voor sluithaakjes en stop-commando's.
 stripClosing :: Bool -> String -> Maybe (Symbol, Bool, String)
 stripClosing m s
-  | Just r <- stripPrefix "$" s      = if m then Just (Math, False, r) else Nothing
+  | Just r <- stripPrefix "$" s      = if m then Just (Dollar, False, r) else Nothing
   | Just r <- stripPrefix "}" s      = Just (Brace, m, r)
   | Just r <- stripPrefix "]" s      = Just (Bracket, m, r)
   | Just r <- stripPrefix ")" s      = Just (Paren, m, r)
   | Just r <- stripPrefix "\\right" s
-  , Just r <- stripDelimiter r       = Just (Delim, m, r)
+  , Just r <- stripDelimiter r       = Just (Delimiter, m, r)
   | Just r <- stripPrefix "\\stop" s
-  , (n,r)  <- span isLetter r        = Just (Block n, m, r)
+  , (n,r)  <- span isLetter r        = Just (StartStop n, m, r)
   | Just r <- stripPrefix "\\end{" s
   , (n,r)  <- span isLetter r
-  , Just r <- stripPrefix "}" r      = Just (Env n, m, r)
+  , Just r <- stripPrefix "}" r      = Just (BeginEnd n, m, r)
   | otherwise                        = Nothing
 
 -- | Controleer of de string begint met een reeks van tekens dat we als haakje

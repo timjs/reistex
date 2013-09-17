@@ -1,7 +1,7 @@
 module Output where
 
+resetCode, redCode, greenCode, yellowCode, blueCode, magentaCode, cyanCode, whiteCode :: String
 resetCode     = "\ESC[0m"
-
 redCode       = "\ESC[31;01m"
 greenCode     = "\ESC[32;01m"
 yellowCode    = "\ESC[33;01m"
@@ -26,9 +26,11 @@ putErr s = putStrLn $ red    "!! " ++ s
 putWrn s = putStrLn $ yellow "** " ++ s
 putInd s = putStrLn $        "   " ++ s
 
+{-
 (<>) :: (Show a, Show b) => a -> b -> String
 {-# INLINE (<>) #-}
 {-# SPECIALIZE (<>) :: (Show a) => a -> String -> String #-}
 {-# SPECIALIZE (<>) :: (Show b) => String -> b -> String #-}
 {-# SPECIALIZE (<>) :: String -> String -> String #-}
 a <> b = show a ++ show b
+-}
