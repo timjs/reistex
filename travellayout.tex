@@ -624,10 +624,6 @@ setbounds currentpicture to boundingbox OverlayBox;
 \stoptexdefinition
 
 \starttexdefinition stopchapter
-  \doifnot {\getvariable{chapter}{publications}} {no}
-    {\section{\headtext{pubs}}
-     \kern 6pt% Hack om publicaties geen ruimte te laten opslokken.
-     \placepublications}
   \setvariables[chapter]
     [title=,
      label=,
@@ -733,6 +729,7 @@ setbounds currentpicture to boundingbox OverlayBox;
 
 \starttexdefinition docompletepublications [#1]
   \section{\headtext{pubs}}
+  \kern 6pt% Hack om publicaties geen ruimte te laten opslokken.
   \placepublications[#1]
 \stoptexdefinition
 
