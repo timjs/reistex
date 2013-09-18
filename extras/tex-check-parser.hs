@@ -37,7 +37,7 @@ type Stack a = [a]
 data Symbol  = Brace
              | Bracket
              | Paren
-             | Angle
+             | Chevron
              | Dollar
              | At
              | Delimiter
@@ -51,7 +51,7 @@ openOf s = case s of
   Brace       -> "{"
   Bracket     -> "["
   Paren       -> "("
-  Angle       -> "<"
+  Chevron     -> "<"
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\left"
@@ -63,7 +63,7 @@ closeOf s = case s of
   Brace       -> "}"
   Bracket     -> "]"
   Paren       -> ")"
-  Angle       -> ">"
+  Chevron     -> ">"
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\right"
@@ -135,7 +135,7 @@ verbatim  =  At                 <$ char '@'
                [ Brace          <$ char '{'
                , Bracket        <$ char '['
                , Paren          <$ char '('
-               , Angle          <$ char '<' ]
+               , Chevron        <$ char '<' ]
          <|> StartStop "typing" <$ string "\\starttyping"
 
 -- | Controleer of de string begint met een geescaped procent teken, dollar

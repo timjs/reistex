@@ -30,7 +30,7 @@ type Stack a = [a]
 data Symbol  = Brace
              | Bracket
              | Paren
-             | Angle
+             | Chevron
              | Dollar
              | At
              | Delimiter
@@ -44,7 +44,7 @@ openOf s = case s of
   Brace       -> "{"
   Bracket     -> "["
   Paren       -> "("
-  Angle       -> "<"
+  Chevron     -> "<"
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\left"
@@ -56,7 +56,7 @@ closeOf s = case s of
   Brace       -> "}"
   Bracket     -> "]"
   Paren       -> ")"
-  Angle       -> ">"
+  Chevron     -> ">"
   Dollar      -> "$"
   At          -> "@"
   Delimiter   -> "\\right"
@@ -117,7 +117,7 @@ verbatim s
                                                 '{' -> Just (Brace, r)
                                                 '[' -> Just (Bracket, r)
                                                 '(' -> Just (Paren, r)
-                                                '<' -> Just (Angle, r)
+                                                '<' -> Just (Chevron, r)
                                                 _   -> Nothing -- returns here, does not check next choices!
   | Just r <- stripPrefix "\\starttyping" s = Just (StartStop "typing", r)
   | otherwise                               = Nothing
