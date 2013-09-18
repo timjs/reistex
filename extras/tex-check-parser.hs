@@ -19,6 +19,7 @@ import System.Exit
 
 import Output
 
+#define ATTOPARSEC
 #ifdef ATTOPARSEC
 import Data.Attoparsec.ByteString.Char8 hiding (isEndOfLine)
 #else
@@ -221,22 +222,22 @@ balanced = go mkState where
           <|> (closing    >>= pop st >>= go)
           <|> (anyChar    >>  go st)
 
-end :: Monad m => State -> m Bool
+end :: State -> Parser Bool
 end State{stack=(line,open):_} = throw $ EndOfFile open line
 end _                          = return True
 
-increase :: Monad m => State -> m State
+increase :: State -> Parser State
 increase st@State{line} = return st{line = line + 1}
 
-decide :: Monad m => State -> Symbol -> m State
-decide st@State{mode} y = case mode of
-  Math   -> pop st{mode = Normal} y
-  Normal -> push st{mode = Math} y
+decide :: State -> Symbol -> Parser State
+decide st@State{mode} = case mode of
+  Math   -> pop st{mode = Normal}
+  Normal -> push st{mode = Math}
 
-push :: Monad m => State -> Symbol -> m State
+push :: State -> Symbol -> Parser State
 push st@State{stack,line} open = return st{stack = (line, open) : stack}
 
-pop :: Monad m => State -> Symbol -> m State
+pop :: State -> Symbol -> Parser State
 pop st@State{stack,line} close = case stack of
   []                   -> throw $ ClosedWithoutOpening close line
   (line',open):rest
