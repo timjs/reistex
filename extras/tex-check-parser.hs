@@ -95,7 +95,7 @@ instance Show BalancingError where
     EndOfFile s' l'          ->                            "Unexpected end of file, expected '"                       ++ BS.unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ BS.unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
     DoesNotMatch s l s' l'   -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', expected '" ++ BS.unpack (closeOf s') ++ "'\n   " ++ "(to close '" ++ BS.unpack (openOf s') ++ "' from line " ++ show l' ++ ")"
     ClosedWithoutOpening s l -> "Line " ++ show l ++ ":\n   Unexpected '" ++ BS.unpack (closeOf s) ++ "', closed without opening"
-    Unknown s                -> "A parse error occured: " ++ s
+    Unknown s                -> "An unknown error occured:\n   " ++ s
 
 -- between :: Char -> Char -> Parser ByteString
 -- between o c = char o *> takeTill (== c) <* char c
@@ -255,8 +255,8 @@ run f = do
   putAct f
   s <- BS.readFile f
   case parseOnly balanced s of
-    Right bool -> return bool
-    Left  mesg -> throw $ Unknown mesg
+    Right b -> return b
+    Left  m -> throw $ Unknown m
   `catch` \e -> do
     putErr $ show (e :: BalancingError)
     return False
