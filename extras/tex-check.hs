@@ -118,7 +118,7 @@ verbatim s
                                                 '[' -> Just (Bracket, r)
                                                 '(' -> Just (Paren, r)
                                                 '<' -> Just (Angle, r)
-                                                _   -> Nothing
+                                                _   -> Nothing -- returns here, does not check next choices!
   | Just r <- stripPrefix "\\starttyping" s = Just (StartStop "typing", r)
   | otherwise                               = Nothing
 
