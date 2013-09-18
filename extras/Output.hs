@@ -1,4 +1,19 @@
-module Output where
+module Output
+  -- * Colors
+  ( red
+  , green
+  , yellow
+  , blue
+  , magenta
+  , cyan
+  , white
+  -- * Output
+  , putAct
+  , putInf
+  , putErr
+  , putWrn
+  , putInd
+  ) where
 
 resetCode, redCode, greenCode, yellowCode, blueCode, magentaCode, cyanCode, whiteCode :: String
 resetCode     = "\ESC[0m"
@@ -25,12 +40,3 @@ putInf s = putStrLn $ white  ":: " ++ s
 putErr s = putStrLn $ red    "!! " ++ s
 putWrn s = putStrLn $ yellow "** " ++ s
 putInd s = putStrLn $        "   " ++ s
-
-{-
-(<>) :: (Show a, Show b) => a -> b -> String
-{-# INLINE (<>) #-}
-{-# SPECIALIZE (<>) :: (Show a) => a -> String -> String #-}
-{-# SPECIALIZE (<>) :: (Show b) => String -> b -> String #-}
-{-# SPECIALIZE (<>) :: String -> String -> String #-}
-a <> b = show a ++ show b
--}
