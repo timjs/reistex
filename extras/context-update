@@ -7,5 +7,7 @@
 cd /vol/impuls/context
 
 rsync -tv rsync://contextgarden.net/minimals/setup/first-setup.sh .
-./first-setup.sh --context=current
+./first-setup.sh
 rm first-setup.sh
+
+cd -
